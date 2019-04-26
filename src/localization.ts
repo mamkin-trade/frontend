@@ -13,7 +13,7 @@ export const messages = {
             title: 'Наш рейтинг'
         },
         feats: {
-            register: 'Регистриурешься 🧨',
+            register: 'Регистриурешься 💪',
             money: 'Получаешь виртуальные $10,000 💰',
             success: 'Показываешь всем, на что способен 💣'
         },
@@ -33,7 +33,7 @@ export const messages = {
             title: 'Leaderboard'
         },
         feats: {
-            register: 'Login 🧨',
+            register: 'Login 💪',
             money: 'Get $10,000 💰',
             success: 'Show\'em how it\'s done 💣'
         },
