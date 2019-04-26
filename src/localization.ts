@@ -17,26 +17,26 @@ export const messages = {
             money: 'Получаешь виртуальные $10,000 💰',
             success: 'Показываешь всем, на что способен 💣'
         },
-        open: 'Проект разрабытвается в <a href="https://github.com/mamkin-trade"><b>Open Source</b></a>'
+        open: 'Код в <a href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>'
     },
     ru: {
-        title: '*МАМКИН ТРЕЙДЕР*',
-        info: 'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для твоего психического здоровья. ',
+        title: '*MAMKIN TRADE*',
+        info: 'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health.',
         footer: {
             languages: {
                 ru: 'Русский',
                 en: 'English',
             },
         }, 
-        facebook: 'Войти через Facebook',
+        facebook: 'Login with Facebook',
         rating: {
-            title: 'Наш рейтинг'
+            title: 'Leaderboard'
         },
         feats: {
-            register: 'Регистриурешься 🧨',
-            money: 'Получаешь виртуальные $10,000 💰',
-            success: 'Показываешь всем, на что способен 💣'
+            register: 'Login 🧨',
+            money: 'Get $10,000 💰',
+            success: 'Show\'em how it\'s done 💣'
         },
-        open: 'Проект разрабытвается в <a href="https://github.com/mamkin-trade"><b>Open Source</b></a>'
+        open: 'Fully <a href="https://github.com/mamkin-trade"><b>open source</b></a>'
     },
   }
