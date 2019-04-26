@@ -8,7 +8,7 @@ import VueI18n from 'vue-i18n'
 import { messages } from './localization'
 
 Vue.use(VueI18n);
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 Vue.use(FBSignInButton)
 
 const i18n = new VueI18n({
