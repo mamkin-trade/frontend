@@ -1,0 +1,134 @@
+@import './fonts.scss';
+body {
+    font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 1.5;
+    font-feature-settings: "kern";
+    -moz-font-feature-settings: "kern";
+    -webkit-font-feature-settings: "kern";
+}
+
+.fb-signin-button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 46px;
+    border-radius: 3px;
+    background-color: #4267b2;
+    color: #fff;
+    margin-bottom: 50px;
+  }
+
+.land-head {
+    background-color: #FBFBFB;
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.land-header {
+    margin: 0;
+    font-size: 54px;
+    margin-bottom: 20px;
+}
+
+.land-info {
+    font-size: 22px;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.land-feats {
+    margin: 0 auto;
+    width: 60%;
+    margin-bottom: 50px;
+    span {
+        display: block;
+        font-size: 22px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+.land-open {
+    font-size: 22px;
+    margin-bottom: 20px;
+    a {
+        text-decoration: none;
+    }
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.rating {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 0;
+    font-size: 20px;
+    
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+    td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    ul {
+        list-style: none
+    }
+    .rating-index {
+        font-weight: bold;
+       
+    }
+    .rating-name {
+        
+    }
+    .rating-balance {
+       
+    }
+}
+
+.btn-lang {
+    background: 0 0;
+    border: 0;
+    color: #6e717f;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0;
+    outline: 0;
+    padding: 3px 5px;
+    position: relative;
+    transition: all .2s ease;
+    transform: translate3d(0,0,0);
+  
+    &:after {
+      background: #1f2e82;
+      bottom: 0;
+      content: '';
+      height: 1px;
+      left: 50%;
+      position: absolute;
+      width: 0;
+      transition: width .2s ease,left .2s ease;
+    }
+    &.active {
+      color: #1f2e82;
+      cursor: default;
+      font-size: 18px;
+      font-weight: 900;
+      &:after {
+        left: 0;
+        width: 100%;
+      }
+    }
+  }
