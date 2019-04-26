@@ -1,5 +1,5 @@
 export const messages = {
-    en: {
+    ru: {
         title: '*МАМКИН ТРЕЙДЕР*',
         info: 'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для твоего психического здоровья. ',
         footer: {
@@ -19,7 +19,7 @@ export const messages = {
         },
         open: 'Код в <a href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>'
     },
-    ru: {
+    en: {
         title: '*MAMKIN TRADE*',
         info: 'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health.',
         footer: {
