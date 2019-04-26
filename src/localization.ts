@@ -34,7 +34,7 @@ export const messages = {
         },
         feats: {
             register: 'Login 💪',
-            money: 'Get $10,000 💰',
+            money: 'Get virtual $10,000 💰',
             success: 'Show\'em how it\'s done 💣'
         },
         open: 'Fully <a href="https://github.com/mamkin-trade"><b>open source</b></a>'
