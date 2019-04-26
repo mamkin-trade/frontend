@@ -1,17 +1,38 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "target": "es2017",
-    "lib": ["es2015"],
+    "module": "commonjs",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "outDir": "dist",
     "baseUrl": ".",
+    "types": [
+      "webpack-env"
+    ],
     "paths": {
-      "*": ["node_modules/*", "src/types/*"]
+      "@/*": [
+        "src/*"
+      ]
     },
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

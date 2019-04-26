@@ -16,7 +16,7 @@ import axios from 'axios'
 export default Vue.extend({
   name: 'home',
   components: {
-  
+    
   },
   data () {
     return {
@@ -31,7 +31,7 @@ export default Vue.extend({
       FB.api('/me', dude => {
         console.log(`Good to see you, ${dude.name}.`)
         console.log(response)
-        axios.post('https://188.166.96.198:1338/login/facebook', {accessToken: response.authResponse.accessToken}).then(res => {
+        axios.post('http://188.166.96.198:1338/login/facebook', {accessToken: response.authResponse.accessToken}).then(res => {
           console.log(res)
         })
       })
@@ -41,7 +41,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    axios.get('https://188.166.96.198:1338/users/leaderboard').then(res => {
+    axios.get('http://188.166.96.198:1338/users/leaderboard').then(res => {
       console.log(res.data)
     })
   }
