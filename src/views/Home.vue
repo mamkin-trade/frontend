@@ -62,7 +62,7 @@ export default Vue.extend({
         console.log(`Good to see you, ${dude.name}.`)
         console.log(response)
         //  @ts-ignore
-        axios.post('http://188.166.96.198:1338/login/facebook', {accessToken: response.authResponse.accessToken}).then(res => {
+        axios.post('https://backend.mamkin.trade/login/facebook', {accessToken: response.authResponse.accessToken}).then(res => {
           console.log(res)
         })
       })

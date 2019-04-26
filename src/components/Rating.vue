@@ -22,7 +22,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    axios.get('http://188.166.96.198:1338/users/leaderboard').then(res => {
+    axios.get('https://backend.mamkin.trade/users/leaderboard').then(res => {
       console.log(res.data)
       let temp = res.data
       //  @ts-ignore
