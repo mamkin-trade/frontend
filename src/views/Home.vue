@@ -57,9 +57,11 @@ export default Vue.extend({
   },
   methods: {
     onSignInSuccess (response: Response) {
+      //  @ts-ignore
       FB.api('/me', dude => {
         console.log(`Good to see you, ${dude.name}.`)
         console.log(response)
+        //  @ts-ignore
         axios.post('http://188.166.96.198:1338/login/facebook', {accessToken: response.authResponse.accessToken}).then(res => {
           console.log(res)
         })
