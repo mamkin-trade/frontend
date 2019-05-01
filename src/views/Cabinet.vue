@@ -6,8 +6,9 @@
         <span class="balance-title">Стоимость портфеля</span>
         <span class="balance-value">${{$root.$store.state.user.formatted}} USD</span>
       </div>
-      <div class="cabinet-email">
-        <span>{{$root.$store.state.user.email}}</span>
+      <div class="cabinet-user">
+        <span class="user-name">{{$root.$store.state.user.name}}</span>
+        <span class="user-email">{{$root.$store.state.user.email}}</span>
       </div>
       <div class="cabinet-logout">
         <span @click="logout">Выйти</span>
@@ -60,7 +61,7 @@ export default Vue.extend({
   align-items: center;
   margin-bottom: 20px;
 
-  .cabinet-header, .cabinet-balance, .cabinet-email, .cabinet-logout {
+  .cabinet-header, .cabinet-balance, .cabinet-user, .cabinet-logout {
     display: inline-block;
   }
   .cabinet-header {
@@ -77,8 +78,16 @@ export default Vue.extend({
       font-weight: bold;
     }
   }
-  .cabinet-email {
+  .cabinet-user {
     flex: 1 1 auto;
+    span {
+      display: block;
+      justify-content: flex-end;
+    }
+    .user-email {
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
   .cabinet-logout {
     cursor: pointer;
