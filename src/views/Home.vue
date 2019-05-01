@@ -25,14 +25,7 @@
     <span v-html="$t('open')"></span>
   </div>
 
-  <div class="footer-language">
-      <button :class="{active: selected === 1}"
-              class="btn-lang" v-on:click="$i18n.locale = 'en'"
-              @click="selected = 1">{{ $t('footer.languages.en') }}</button>
-      <button :class="{active: selected === 2}"
-              class="btn-lang " v-on:click="$i18n.locale = 'ru'"
-              @click="selected = 2">{{ $t('footer.languages.ru') }}</button>
-    </div>
+  <Footer/>
   </div>
 </template>
 
@@ -40,11 +33,14 @@
 import Vue from 'vue'
 import axios from 'axios'
 import Rating from '../components/Rating.vue'
+import Footer from '../components/shared/Footer.vue'
+import store from '../store'
 
 export default Vue.extend({
   name: 'home',
   components: {
-    Rating
+    Rating,
+    Footer
   },
   data () {
     return {
@@ -64,6 +60,9 @@ export default Vue.extend({
         //  @ts-ignore
         axios.post('https://backend.mamkin.trade/login/facebook', {accessToken: response.authResponse.accessToken}).then(res => {
           console.log(res)
+          const user = res.data
+          store.commit('setUser', user)
+          this.$router.replace('cabinet')
         })
       })
     },
