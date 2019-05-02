@@ -1,6 +1,6 @@
 @import './fonts.scss';
 body {
-    font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
+    font-family: 'Comic Neue', 'Comic Sans MS', sans-serif !important;
     font-weight: 400;
     font-size: 1.25em;
     line-height: 1.5;
@@ -80,6 +80,7 @@ h2 {
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
+        font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
     }
     ul {
         list-style: none

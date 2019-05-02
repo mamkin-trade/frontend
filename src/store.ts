@@ -21,7 +21,7 @@ export default new Vuex.Store({
     setUser: (state, data) => {
       let temp = data
 
-      temp.formatted = temp.balance.usd.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      temp.formatted = temp.overallBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       state.user = data
     },
     logout: (state) => {

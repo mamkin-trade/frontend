@@ -14,9 +14,18 @@
         <span @click="logout">Выйти</span>
       </div>
     </div>
+    
+    <div class="cont">
+      <div class='cabinet-tickers'>
+        <Tickers/>
+      </div>
+      <div class='cabinet-balance'>
+        <Balance/>
+      </div>
+    </div>
 
     <div>
-      <h2>{{ $t('rating.title') }}</h2>
+      <h3>{{ $t('rating.title') }}</h3>
       <Rating/>
     </div>
 
@@ -28,6 +37,8 @@
 import Vue from 'vue'
 import axios from 'axios'
 import Rating from '../components/Rating.vue'
+import Tickers from '../components/Tickers.vue'
+import Balance from '../components/Balance.vue'
 import Footer from '../components/shared/Footer.vue'
 import store from '../store'
 
@@ -35,7 +46,9 @@ export default Vue.extend({
   name: 'home',
   components: {
     Rating,
-    Footer
+    Footer,
+    Tickers,
+    Balance
   },
   data () {
     return {
@@ -91,6 +104,15 @@ export default Vue.extend({
   }
   .cabinet-logout {
     cursor: pointer;
+    flex: 1 1 auto;
+  }
+}
+
+.cont {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .cabinet-balance, .cabinet-tickers {
     flex: 1 1 auto;
   }
 }
