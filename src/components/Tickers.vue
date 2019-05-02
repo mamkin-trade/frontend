@@ -41,6 +41,10 @@ export default Vue.extend({
           // @ts-ignore
           arr.push(temp[item])
       })
+
+      arr = arr.filter(item => {
+        if (item.volume) return item
+      })
       
       arr.map(item => {
         item.pairFormatted = item.pair.slice(0,3) + '/' + item.pair.slice(3)
@@ -63,9 +67,6 @@ export default Vue.extend({
     margin-top: 0;
     font-size: 20px;
     font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
-    
-
-    
     .tickers-table {
       max-height: 50vh;
       overflow-y: scroll;
@@ -125,6 +126,5 @@ export default Vue.extend({
           color: #F24359
         }
     }
-    
 }
 </style>
