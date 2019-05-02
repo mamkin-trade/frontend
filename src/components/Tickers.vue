@@ -44,7 +44,7 @@ export default Vue.extend({
       
       arr.map(item => {
         item.pairFormatted = item.pair.slice(0,3) + '/' + item.pair.slice(3)
-        item.volumeFormatted = item.volume.toFixed(3)
+        item.volumeFormatted = item.volume ? item.volume.toFixed(3) : '0'
         item.change = item.dailyChangePerc > 0 ? 'up' : item.dailyChangePerc == 0 ? '' : 'down'
         return item
       })
