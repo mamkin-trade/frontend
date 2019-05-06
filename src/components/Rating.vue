@@ -13,6 +13,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios'
+import store from '../store'
+import api from '../utils/api'
 
 export default Vue.extend({
   name: 'Rating',
@@ -22,16 +24,13 @@ export default Vue.extend({
     }
   },
   mounted() {
-    axios.get('https://backend.mamkin.trade/users/leaderboard').then(res => {
-      console.log(res.data)
-      let temp = res.data
-      //  @ts-ignore
-      temp.forEach(item => {
-          item.balance = item.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      })
-      this.leaders = res.data
-      
-    })
+    api.getRating()
+    
+    const self = this
+    setInterval(function() {
+      self.leaders = store.getters.ratingList
+    }, 500)
+    console.log('ALARM', this.leaders)
   }
 });
 </script>

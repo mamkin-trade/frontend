@@ -15,7 +15,9 @@ export default new Vuex.Store({
       token: '',
       overallBalance: 0,
       formatted: ''
-    }
+    },
+    tickers: [],
+    rating: []
   },
   mutations: {
     setUser: (state, data) => {
@@ -36,9 +38,23 @@ export default new Vuex.Store({
         overallBalance: 0,
         formatted: ''
       }
+    },
+    setTickers: (state, data) => {
+      Vue.set(state, 'tickers', data);
+    },
+    setRating: (state, data) => {
+      Vue.set(state, 'rating', data);
     }
   },
   actions: {
 
+  },
+  getters: {
+    tickersList: state => {
+      return state.tickers;
+    },
+    ratingList: state => {
+      return state.rating;
+    },
   }
 })

@@ -5,14 +5,24 @@
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "strictFunctionTypes": true,
+    "noEmit": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
     "baseUrl": ".",
     "noImplicitAny": true,
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
     "types": [
-      "webpack-env"
+      "node"
     ],
     "paths": {
       "@/*": [
@@ -23,7 +33,9 @@
       "esnext",
       "dom",
       "dom.iterable",
-      "scripthost"
+      "scripthost",
+      "es6",
+      "es2015"
     ]
   },
   "include": [
@@ -35,5 +47,9 @@
   ],
   "exclude": [
     "node_modules"
+  ],
+  "files": [
+    "types/shims-tsx.d.ts",
+    "types/shims-vue.d.ts"
   ]
 }

@@ -2,13 +2,14 @@
   <div class="tickers">
       <h3>Валютные пары</h3>
       <div class='scrollbar'>
+        <input v-model="search">
         <div class='tickers-table'>
           <table>
             <th class='tickers-index'>Пара</th>
             <th class='tickers-name'>Цена</th>
             <th class='tickers-balance'>Изменение</th> 
             <th class='tickers-balance'>Объем</th> 
-            <tr v-for="ticker in tickers">
+            <tr v-for="ticker in filteredList">
                 <td class='tickers-pair'>{{ticker.pairFormatted}}</td>
                 <td class='tickers-name'>{{ticker.lastPrice}}</td>
                 <td class='tickers-change' :class="ticker.change">{{ticker.dailyChangePerc}}%</td> 
@@ -23,38 +24,40 @@
 <script lang="ts">
 import Vue from 'vue';
 import axios from 'axios'
+import store from '../store'
+import api from '../utils/api'
 
 export default Vue.extend({
   name: 'Tickers',
   data () {
     return {
-        tickers: new Array
+      tickers: [],
+      search: ''
     }
   },
   mounted() {
-    axios.get('https://backend.mamkin.trade/market/tickers').then(res => {
-      console.log(res.data)
-      let temp = res.data
-      let arr = new Array
-
-      Object.keys(temp).forEach(item => {
-          // @ts-ignore
-          arr.push(temp[item])
-      })
-
-      arr = arr.filter(item => {
-        if (item.volume) return item
-      })
-      
-      arr.map(item => {
-        item.pairFormatted = item.pair.slice(0,3) + '/' + item.pair.slice(3)
-        item.volumeFormatted = item.volume ? item.volume.toFixed(3) : '0'
-        item.change = item.dailyChangePerc > 0 ? 'up' : item.dailyChangePerc == 0 ? '' : 'down'
-        return item
-      })
-
-      this.tickers = arr
-    })
+    api.getTickers()
+    
+    const self = this
+    setInterval(function() {
+      // @ts-ignore
+      self.tickers = store.getters.tickersList
+    }, 500)
+  },
+  methods: {
+    // @ts-ignore
+    sortBySearch: function(item) {
+      // @ts-ignore
+      const search = this.search.toUpperCase();
+      if (search === '') return true;
+      else return item.pairFormatted && item.pairFormatted.toUpperCase().indexOf(search) > -1
+    } as CallableFunction,
+  },
+  computed: {
+    filteredList: function() {
+      // @ts-ignore
+      return (this.tickers.filter(this.sortBySearch))
+    }
   }
 });
 </script>
