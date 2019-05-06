@@ -39,7 +39,7 @@ export default {
         let temp = res.data
          //  @ts-ignore
         temp.forEach(item => {
-          item.balance = item.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          item.overallBalance = item.overallBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         })
 
         store.commit('setRating', temp)

@@ -4,7 +4,7 @@
         <tr v-for="leader, index in leaders">
             <td class='rating-index'>{{index + 1}}</td>
             <td class='rating-name'>{{leader.name}}</td>
-            <td class='rating-balance'>${{leader.balance}}</td> 
+            <td class='rating-balance'>${{leader.overallBalance}}</td> 
         </tr>
       </table>
   </div>
