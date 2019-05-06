@@ -8,24 +8,28 @@
         <span>{{ $t('feats.register') }}</span>
         <span>{{ $t('feats.money') }}</span>
         <span>{{ $t('feats.success') }}</span>
-      </div>
-  <fb-signin-button
-    :params="fbSignInParams"
-    @success="onSignInSuccess"
-    @error="onSignInError">
-    {{ $t('facebook') }}
-  </fb-signin-button>
+    </div>
+    <fb-signin-button
+      :params="fbSignInParams"
+      @success="onSignInSuccess"
+      @error="onSignInError">
+      {{ $t('facebook') }}
+    </fb-signin-button>
 
-  <div>
-    <h2>{{ $t('rating.title') }}</h2>
-    <rating></rating>
-  </div>
+    <div>
+      <h2>{{ $t('rating.title') }}</h2>
+      <rating></rating>
+    </div>
 
-  <div class='land-open'>
-    <span v-html="$t('open')"></span>
-  </div>
+    <div class='land-open'>
+      <span v-html="$t('open')"></span>
+    </div>
 
-  <Footer/>
+    <div class="privacy-link">
+      <router-link class="" to="/privacy">{{ $t('privacy') }}</router-link>
+    </div>
+
+    <Footer/>
   </div>
 </template>
 

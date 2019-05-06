@@ -2,6 +2,7 @@ export const messages = {
     ru: {
         title: '*МАМКИН ТРЕЙДЕР*',
         info: 'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для твоего психического здоровья. ',
+        privacy: 'Политика конфиденциальности',
         footer: {
             languages: {
                 ru: 'Русский',
@@ -22,6 +23,7 @@ export const messages = {
     en: {
         title: '*MAMKIN TRADE*',
         info: 'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health.',
+        privacy: 'Privacy Policy',
         footer: {
             languages: {
                 ru: 'Русский',
