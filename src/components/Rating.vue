@@ -1,35 +1,26 @@
-<template>
-  <div class="rating">
-      <table>
-        <tr v-for="leader, index in ratingList">
-          <td class='rating-index'>{{index + 1}}</td>
-          <td class='rating-name'>{{leader.name}}</td>
-          <td class='rating-balance'>${{formatNumber(leader.overallBalance)}}</td> 
-        </tr>
-      </table>
-  </div>
+<template lang="pug">
+  .rating
+    table
+      tbody
+        tr(v-for='leader, index in ratingList')
+          td.rating-index {{index + 1}}
+          td.rating-name {{leader.name}}
+          td.rating-balance ${{formatNumber(leader.overallBalance)}}
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import axios from 'axios'
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import store from '../store'
 import { formatNumber } from '../utils/format'
 
-export default Vue.extend({
-  name: 'Rating',
-  data () {
-    return {}
-  },
-  methods: {
-    formatNumber: formatNumber
-  },
-  computed: {
-    ratingList() {
-      return store.getters.ratingList
-    }
+@Component
+export default class Rating extends Vue {
+  formatNumber = formatNumber
+  get ratingList() {
+    return store.getters.ratingList
   }
-});
+}
 </script>
 
 <style scoped lang="scss">

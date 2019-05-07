@@ -1,36 +1,24 @@
-<template>
-  <div class="home">
-    <div class='cabinet-head'>
-      <h1 class='cabinet-header'>{{ $t('title') }}</h1>
-      <div class="cabinet-balance">
-        <span class="balance-title">Стоимость портфеля</span>
-        <span class="balance-value">${{$root.$store.state.user.formatted}} USD</span>
-      </div>
-      <div class="cabinet-user">
-        <span class="user-name">{{$root.$store.state.user.name}}</span>
-        <span class="user-email">{{$root.$store.state.user.email}}</span>
-      </div>
-      <div class="cabinet-logout">
-        <span @click="logout">Выйти</span>
-      </div>
-    </div>
-    
-    <div class="cont">
-      <div class='cabinet-tickers'>
-        <Tickers/>
-      </div>
-      <div class='cabinet-balance'>
-        <Balance/>
-      </div>
-    </div>
-
-    <div>
-      <h3>{{ $t('rating.title') }}</h3>
-      <Rating/>
-    </div>
-
-    <Footer/>
-  </div>
+<template lang="pug">
+  .home
+    .cabinet-head
+      h1.cabinet-header {{ $t('title') }}
+      .cabinet-balance
+        span.balance-title Стоимость портфеля
+        span.balance-value ${{$root.$store.state.user.formatted}} USD
+      .cabinet-user
+        span.user-name {{$root.$store.state.user.name}}
+        span.user-email {{$root.$store.state.user.email}}
+      .cabinet-logout
+        span(@click='logout') Выйти
+    .cont
+      .cabinet-tickers
+        tickers.
+      .cabinet-balance
+        balance.  
+    div
+      h3 {{ $t('rating.title') }}
+      Rating
+    Footer
 </template>
 
 <script lang="ts">

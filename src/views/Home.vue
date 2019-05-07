@@ -1,36 +1,21 @@
-<template>
-  <div class="home">
-    <div class='land-head'>
-      <h1 class='land-header'>{{ $t('title') }}</h1>
-      <div class='land-info' v-html="$t('info')"></div>
-    </div>
-    <div class='land-feats'> 
-        <span>{{ $t('feats.register') }}</span>
-        <span>{{ $t('feats.money') }}</span>
-        <span>{{ $t('feats.success') }}</span>
-    </div>
-    <fb-signin-button
-      :params="fbSignInParams"
-      @success="onSignInSuccess"
-      @error="onSignInError">
-      {{ $t('facebook') }}
-    </fb-signin-button>
-
-    <div>
-      <h2>{{ $t('rating.title') }}</h2>
-      <rating></rating>
-    </div>
-
-    <div class='land-open'>
-      <span v-html="$t('open')"></span>
-    </div>
-
-    <div class="privacy-link">
-      <router-link class="" to="/privacy">{{ $t('privacy') }}</router-link>
-    </div>
-
-    <Footer/>
-  </div>
+<template lang="pug">
+  .home
+    .land-head
+      h1.land-header {{ $t('title') }}
+      .land-info(v-html='$t("info")')
+    .land-feats
+      span {{ $t('feats.register') }}
+      span {{ $t('feats.money') }}
+      span {{ $t('feats.success') }}
+    fb-signin-button(:params='fbSignInParams', @success='onSignInSuccess', @error='onSignInError') {{ $t('facebook') }}  
+    div
+      h2 {{ $t('rating.title') }}
+      Rating
+    .land-open
+      span(v-html='$t("open")')
+    .privacy-link
+      router-link(to='/privacy') {{ $t('privacy') }}
+    Footer
 </template>
 
 <script lang="ts">
