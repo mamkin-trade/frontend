@@ -1,7 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import { updateRating } from './utils/api'
+import { updateTickers } from './utils/api'
 Vue.use(Vuex)
+updateRating()
+updateTickers()
+
+setInterval(() => {
+  updateRating()
+}, 600 * 1000)
+
+setInterval(() => {
+  updateTickers()
+}, 60 * 1000)
 
 export default new Vuex.Store({
   state: {

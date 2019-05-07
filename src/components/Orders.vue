@@ -25,7 +25,6 @@
 import Vue from 'vue';
 import axios from 'axios'
 import store from '../store'
-import api from '../utils/api'
 
 export default Vue.extend({
   name: 'Orders',
@@ -35,13 +34,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    /*//api.getTickers()
     
-    const self = this
-    setInterval(function() {
-      // @ts-ignore
-      self.tickers = store.getters.tickersList
-    }, 500)*/
   },
   methods: {
 

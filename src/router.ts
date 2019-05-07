@@ -12,20 +12,20 @@ const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
     },
     {
       path: '/privacy',
       name: 'privacy',
-      component: PrivacyPolicy
+      component: PrivacyPolicy,
     },
     {
       path: '/cabinet',
       name: 'cabinet',
       component: Cabinet,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
     },
   ]
 })
@@ -35,7 +35,7 @@ router.beforeEach((to, from, next) => {
   const currentUser = store.state.user
 
   console.log(requiresAuth && !currentUser.token)
-  
+
   if (requiresAuth && !currentUser.token) next('/')
   else if (!requiresAuth && currentUser.token) next('cabinet')
   else next()

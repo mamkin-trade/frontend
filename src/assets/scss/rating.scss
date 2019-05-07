@@ -1,0 +1,25 @@
+.rating {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 0;
+  font-size: 20px;
+    
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
+  }
+  ul {
+    list-style: none
+  }
+  .rating-index {
+    font-weight: bold;
+  }
+}
