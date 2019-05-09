@@ -1,52 +1,41 @@
-<template>
-  <div class="tickers">
-      <h3>Валютные пары</h3>
-      <div class='scrollbar'>
-        <input v-model="search">
-        <div class='tickers-table'>
-          <table>
-            <th class='tickers-index'>Пара</th>
-            <th class='tickers-name'>Цена</th>
-            <th class='tickers-balance'>Изменение</th> 
-            <th class='tickers-balance'>Объем</th> 
-            <tr>
-                <td class='tickers-index'>Пара</td>
-                <td class='tickers-name'>Цена</td>
-                <td class='tickers-balance'>Изменение</td> 
-                <td class='tickers-balance'>Объем</td> 
-            </tr>
-          </table>
-        </div>
-      </div>
-  </div>
+<template lang='pug'>
+  .orders
+    h3 Ордера
+    .scrollbar
+      .tickers-table
+        table
+          tbody
+            tr
+              th.tickers-index Дата
+              th.tickers-name Операция
+              th.tickers-balance Цена
+              th.tickers-balance Количество
+              th.tickers-balance Сумма
+            tr
+              td.tickers-index Дата
+              td.tickers-name Операция
+              td.tickers-balance Цена
+              td.tickers-balance Количество
+              td.tickers-balance Сумма
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue from 'vue'
+import Component from 'vue-class-component'
 import axios from 'axios'
 import store from '../store'
 
-export default Vue.extend({
-  name: 'Orders',
-  data () {
-    return {
-      orders: [],
-    }
-  },
+@Component
+export default class Orders extends Vue {
+  orders = []
   mounted() {
     
-  },
-  methods: {
-
-  },
-  computed: {
-    
   }
-});
+}
 </script>
 
 <style scoped lang="scss">
-.tickers {
+.orders {
     width: 90%;
     margin: 0 auto;
     margin-bottom: 20px;

@@ -2,17 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { updateRating } from './utils/api'
 import { updateTickers } from './utils/api'
+import { updateOrders } from './utils/api'
 Vue.use(Vuex)
-updateRating()
-updateTickers()
-
-setInterval(() => {
-  updateRating()
-}, 600 * 1000)
-
-setInterval(() => {
-  updateTickers()
-}, 60 * 1000)
 
 export default new Vuex.Store({
   state: {
@@ -28,7 +19,8 @@ export default new Vuex.Store({
       formatted: ''
     },
     tickers: [],
-    rating: []
+    rating: [],
+    orders: []
   },
   mutations: {
     setUser: (state, data) => {
@@ -55,6 +47,9 @@ export default new Vuex.Store({
     },
     setRating: (state, data) => {
       Vue.set(state, 'rating', data);
+    },
+    setOrders: (state, data) => {
+      Vue.set(state, 'orders', data);
     }
   },
   actions: {
@@ -67,5 +62,24 @@ export default new Vuex.Store({
     ratingList: state => {
       return state.rating;
     },
+    ordersList: state => {
+      return state.orders;
+    },
   }
 })
+
+updateRating()
+updateTickers()
+updateOrders()
+
+setInterval(() => {
+  updateRating()
+}, 600 * 1000)
+
+setInterval(() => {
+  updateTickers()
+}, 60 * 1000)
+
+setInterval(() => {
+  updateOrders()
+}, 10 * 1000)

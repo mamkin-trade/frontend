@@ -14,7 +14,7 @@
             tr(v-for='ticker in filteredList')
               td.tickers-pair {{formatPair(ticker.pair)}}
               td.tickers-name {{ticker.lastPrice}}
-              td.tickers-change(:class='ticker.change') {{ticker.dailyChangePerc}}%
+              td.tickers-change(:class='getChangeDirection(ticker) ? getChangeDirection(ticker) === 1 ? "down" : "up" : "none"') {{ticker.dailyChangePerc}}%
               td.tickers-balance {{formatVolume(ticker.volume)}}
 </template>
 
@@ -25,13 +25,14 @@ import store from '../store'
 import { formatVolume } from '../utils/format'
 import { formatPair } from '../utils/format'
 import { Ticker } from '../models/ticker'
+import { getChangeDirection } from '../utils/changeDirection'
 
 @Component
 export default class Tickers extends Vue {
   search = ''
-  mounted() {}
   formatVolume = formatVolume
   formatPair = formatPair
+  getChangeDirection = getChangeDirection
   sortBySearch(item: Ticker) {
     const search = this.search.toUpperCase();
     if (search === '') return true;

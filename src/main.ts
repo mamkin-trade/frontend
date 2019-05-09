@@ -2,8 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-//  @ts-ignore
-import FBSignInButton from 'vue-facebook-signin-button'
+import { FBSignInButton } from './middlewares/facebook'
 import VueI18n from 'vue-i18n'
 import { messages } from './localization'
 

@@ -14,7 +14,8 @@
       .cabinet-tickers
         tickers.
       .cabinet-balance
-        balance.  
+        balance. 
+        Orders.
     div
       h3 {{ $t('rating.title') }}
       Rating
@@ -26,6 +27,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import Rating from '../components/Rating.vue'
 import Tickers from '../components/Tickers.vue'
+import Orders from '../components/Orders.vue'
 import Balance from '../components/Balance.vue'
 import Footer from '../components/shared/Footer.vue'
 import store from '../store'
@@ -36,7 +38,8 @@ export default Vue.extend({
     Rating,
     Footer,
     Tickers,
-    Balance
+    Balance,
+    Orders
   },
   data () {
     return {
