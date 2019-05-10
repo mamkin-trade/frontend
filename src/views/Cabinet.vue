@@ -15,7 +15,8 @@
         tickers.
       .cabinet-balance
         balance. 
-        Orders.
+        OrderForm
+    Orders.
     div
       h3 {{ $t('rating.title') }}
       Rating
@@ -29,6 +30,7 @@ import Rating from "../components/Rating.vue";
 import Tickers from "../components/Tickers.vue";
 import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
+import OrderForm from "../components/OrderForm.vue";
 import Footer from "../components/shared/Footer.vue";
 import * as store from "../store";
 import Component from "vue-class-component";
@@ -40,7 +42,8 @@ import { formatNumber } from "../utils/format";
     Footer,
     Tickers,
     Balance,
-    Orders
+    Orders,
+    OrderForm
   }
 })
 export default class Cabinet extends Vue {
