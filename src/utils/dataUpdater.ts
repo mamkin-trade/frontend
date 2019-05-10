@@ -19,7 +19,7 @@ async function updateLeaderboard() {
   }
   leaderboardUpdating = true
   try {
-    store.setLeaderboard(store.store, await getLeaderboard())
+    store.setLeaderboard(await getLeaderboard())
   } finally {
     leaderboardUpdating = false
   }
@@ -32,7 +32,7 @@ async function updateTickers() {
   }
   tickersUpdating = true
   try {
-    store.setTickers(store.store, Object.values(await getTickers()))
+    store.setTickers(Object.values(await getTickers()))
   } finally {
     tickersUpdating = false
   }
@@ -45,9 +45,9 @@ async function updateOrders() {
   }
   ordersUpdating = true
   try {
-    const user = store.user(store.store)
+    const user = store.user()
     if (user) {
-      store.setOrders(store.store, await getOrders(user))
+      store.setOrders(await getOrders(user))
     }
   } finally {
     ordersUpdating = false

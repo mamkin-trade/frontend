@@ -19,7 +19,7 @@ export default class Rating extends Vue {
   formatNumber = formatNumber;
 
   get leaderboard() {
-    return store.leaderboard(store.store);
+    return store.leaderboard();
   }
 }
 </script>

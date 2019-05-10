@@ -40,7 +40,7 @@ export default class Home extends Vue {
   onSignInSuccess(response: any) {
     FB.api("/me", async (dude: any) => {
       const user = await loginFacebook(response.authResponse.accessToken);
-      store.setUser(store.store, user);
+      store.setUser(user);
       this.$router.replace("cabinet");
     });
   }

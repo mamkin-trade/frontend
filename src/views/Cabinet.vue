@@ -4,7 +4,7 @@
       h1.cabinet-header {{ $t('title') }}
       .cabinet-balance
         span.balance-title Стоимость портфеля
-        span.balance-value ${{formatNumber($root.$store.state.user.overallBalance)}} USD
+        span.balance-value ${{formatNumber(overallBalance())}} USD
       .cabinet-user
         span.user-name {{$root.$store.state.user.name}}
         span.user-email {{$root.$store.state.user.email}}
@@ -49,8 +49,16 @@ import { formatNumber } from "../utils/format";
 export default class Cabinet extends Vue {
   formatNumber = formatNumber;
 
+  overallBalance() {
+    const user = store.user();
+    if (!user) {
+      return 0;
+    }
+    return user.overallBalance;
+  }
+
   logout() {
-    store.logout(store.store);
+    store.logout();
     this.$router.replace("/");
   }
 }

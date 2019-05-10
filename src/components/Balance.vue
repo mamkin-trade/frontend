@@ -20,7 +20,7 @@ import { formatNumber } from "../utils/format";
 @Component
 export default class Balance extends Vue {
   get balance() {
-    const user = store.user(store.store);
+    const user = store.user();
     if (!user) {
       return [];
     }

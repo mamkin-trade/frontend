@@ -36,7 +36,7 @@ export default class Tickers extends Vue {
   search = "";
 
   get tickers() {
-    return store.tickers(store.store);
+    return store.tickers();
   }
   get filteredTickers() {
     return this.tickers.filter(

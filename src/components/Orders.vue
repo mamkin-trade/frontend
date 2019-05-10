@@ -34,7 +34,7 @@ import * as store from "../store";
 @Component
 export default class Orders extends Vue {
   get orders() {
-    return store.orders(store.store);
+    return store.orders();
   }
 }
 </script>
