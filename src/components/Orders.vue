@@ -7,16 +7,22 @@
           tbody
             tr
               th.tickers-index Дата
-              th.tickers-name Операция
+              th.tickers-name Количество
               th.tickers-balance Цена
-              th.tickers-balance Количество
-              th.tickers-balance Сумма
-            tr
-              td.tickers-index Дата
-              td.tickers-name Операция
-              td.tickers-balance Цена
-              td.tickers-balance Количество
-              td.tickers-balance Сумма
+              th.tickers-balance Сторона
+              th.tickers-balance Тип
+              th.tickers-balance Завершено
+              th.tickers-balance Отменено
+              th.tickers-balance Выполнено
+            tr(v-for='order in orders')
+              td.tickers-index {{order.createdAt}}
+              td.tickers-name {{order.amount}}
+              td.tickers-balance {{order.price}}
+              td.tickers-balance {{order.side}}
+              td.tickers-balance {{order.type}}
+              td.tickers-balance {{order.completed}}
+              td.tickers-balance {{order.cancelled}}
+              td.tickers-balance {{order.completionDate || '—'}}
 </template>
 
 <script lang="ts">
@@ -27,7 +33,9 @@ import * as store from "../store";
 
 @Component
 export default class Orders extends Vue {
-  orders = [];
+  get orders() {
+    return store.orders(store.store);
+  }
 }
 </script>
 

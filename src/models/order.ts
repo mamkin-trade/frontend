@@ -1,7 +1,8 @@
 export interface Order {
+  createdAt: Date
   symbol: string
   amount: number
-  price	: number
+  price: number
   side: string
   type: string
   completed: boolean
