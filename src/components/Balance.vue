@@ -12,25 +12,28 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import store from '../store'
+import Vue from "vue";
+import Component from "vue-class-component";
+import * as store from "../store";
+import { formatNumber } from "../utils/format";
 
 @Component
 export default class Balance extends Vue {
-  balance = new Array
-  mounted() {
-    let temp = store.state.user.balance
-    let arr = new Array
-    Object.keys(temp).forEach(item => {
-      // @ts-ignore
-      arr.push({currency: item.toUpperCase(), value: temp[item].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")})
-    })
-    this.balance = arr
+  get balance() {
+    const user = store.user(store.store);
+    if (!user) {
+      return [];
+    }
+    return Object.keys(user.balance).map(key => {
+      return {
+        currency: key,
+        value: formatNumber(user.balance[key])
+      };
+    });
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import '../assets/scss/balance';
+@import "../assets/scss/balance";
 </style>

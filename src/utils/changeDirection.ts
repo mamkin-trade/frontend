@@ -1,9 +1,9 @@
 import { Ticker } from '../models/ticker'
 
 export enum ChangeDirection {
-  none,
-  down,
-  up,
+  none = 'none',
+  down = 'down',
+  up = 'up',
 }
 
 export function getChangeDirection(ticker: Ticker) {

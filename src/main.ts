@@ -1,23 +1,20 @@
+// Dependencies
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
-import { FBSignInButton } from './middlewares/facebook'
-import VueI18n from 'vue-i18n'
-import { messages } from './localization'
+import { i18n } from './utils/i18n'
+import { store } from './store'
+import { startUpdatingData } from './utils/dataUpdater'
 
-Vue.use(VueI18n);
 Vue.config.productionTip = true
-Vue.use(FBSignInButton)
 
-const i18n = new VueI18n({
-  locale: 'ru',
-  messages,
-});
+Vue.use(require('vue-facebook-signin-button'))
+
+startUpdatingData()
 
 new Vue({
   i18n,
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
 }).$mount('#app')

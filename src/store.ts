@@ -1,85 +1,69 @@
+// Dependencies
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { updateRating } from './utils/api'
-import { updateTickers } from './utils/api'
-import { updateOrders } from './utils/api'
+import { Ticker } from './models/ticker'
+import { User } from './models/user'
+import { Order } from './models/order'
+import { getStoreAccessors } from 'vuex-typescript'
+
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+interface State {
+  user?: User
+
+  tickers: Ticker[]
+  leaderboard: User[]
+  orders: Order[]
+}
+
+const storeOptions = {
   state: {
-    user: {
-      balance: {
-        usd: 0
-      },
-      _id: '',
-      email: '',
-      name: '',
-      token: '',
-      overallBalance: 0,
-      formatted: ''
-    },
     tickers: [],
-    rating: [],
-    orders: []
+    leaderboard: [],
+    orders: [],
   },
   mutations: {
-    setUser: (state, data) => {
-      let temp = data
+    setUser: (state: State, user: User) => {
+      state.user = user
+    },
+    logout: (state: State) => {
+      state.user = undefined
+    },
 
-      temp.formatted = temp.overallBalance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      state.user = data
+    setTickers: (state: State, tickers: Ticker[]) => {
+      Vue.set(state, 'tickers', tickers)
     },
-    logout: (state) => {
-      state.user = {
-        balance: {
-          usd: 0
-        },
-        _id: '',
-        email: '',
-        name: '',
-        token: '',
-        overallBalance: 0,
-        formatted: ''
-      }
+    setLeaderboard: (state: State, leaderboard: User[]) => {
+      Vue.set(state, 'leaderboard', leaderboard)
     },
-    setTickers: (state, data) => {
-      Vue.set(state, 'tickers', data);
+    setOrders: (state: State, orders: Order[]) => {
+      Vue.set(state, 'orders', orders)
     },
-    setRating: (state, data) => {
-      Vue.set(state, 'rating', data);
-    },
-    setOrders: (state, data) => {
-      Vue.set(state, 'orders', data);
-    }
-  },
-  actions: {
-
   },
   getters: {
-    tickersList: state => {
-      return state.tickers;
-    },
-    ratingList: state => {
-      return state.rating;
-    },
-    ordersList: state => {
-      return state.orders;
-    },
-  }
-})
+    user: (state: State) => state.user,
 
-updateRating()
-updateTickers()
-updateOrders()
+    tickers: (state: State) => state.tickers,
+    leaderboard: (state: State) => state.leaderboard,
+    orders: (state: State) => state.orders,
+  },
+}
 
-setInterval(() => {
-  updateRating()
-}, 600 * 1000)
+export const store = new Vuex.Store<State>(storeOptions)
 
-setInterval(() => {
-  updateTickers()
-}, 60 * 1000)
+const { commit, read } = getStoreAccessors<State, State>('')
 
-setInterval(() => {
-  updateOrders()
-}, 10 * 1000)
+const getters = storeOptions.getters
+export const user = read(getters.user)
+
+export const tickers = read(getters.tickers)
+export const leaderboard = read(getters.leaderboard)
+export const orders = read(getters.orders)
+
+const mutations = storeOptions.mutations
+export const setUser = commit(mutations.setUser)
+export const logout = commit(mutations.logout)
+
+export const setTickers = commit(mutations.setTickers)
+export const setLeaderboard = commit(mutations.setLeaderboard)
+export const setOrders = commit(mutations.setOrders)

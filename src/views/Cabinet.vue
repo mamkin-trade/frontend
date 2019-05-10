@@ -4,7 +4,7 @@
       h1.cabinet-header {{ $t('title') }}
       .cabinet-balance
         span.balance-title Стоимость портфеля
-        span.balance-value ${{$root.$store.state.user.formatted}} USD
+        span.balance-value ${{formatNumber($root.$store.state.user.overallBalance)}} USD
       .cabinet-user
         span.user-name {{$root.$store.state.user.name}}
         span.user-email {{$root.$store.state.user.email}}
@@ -23,39 +23,37 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import axios from 'axios'
-import Rating from '../components/Rating.vue'
-import Tickers from '../components/Tickers.vue'
-import Orders from '../components/Orders.vue'
-import Balance from '../components/Balance.vue'
-import Footer from '../components/shared/Footer.vue'
-import store from '../store'
+import Vue from "vue";
+import axios from "axios";
+import Rating from "../components/Rating.vue";
+import Tickers from "../components/Tickers.vue";
+import Orders from "../components/Orders.vue";
+import Balance from "../components/Balance.vue";
+import Footer from "../components/shared/Footer.vue";
+import * as store from "../store";
+import Component from "vue-class-component";
+import { formatNumber } from "../utils/format";
 
-export default Vue.extend({
-  name: 'home',
+@Component({
   components: {
     Rating,
     Footer,
     Tickers,
     Balance,
     Orders
-  },
-  data () {
-    return {
-      lol: 2,
-    }
-  },
-  methods: {
-    logout() {
-      store.commit('logout')
-      this.$router.replace('/')
-    }
-  },
-});
+  }
+})
+export default class Cabinet extends Vue {
+  formatNumber = formatNumber;
+
+  logout() {
+    store.logout(store.store);
+    this.$router.replace("/");
+  }
+}
 </script>
 <style lang='scss'>
-@import '../assets/scss/style';
+@import "../assets/scss/style";
 
 .cabinet-head {
   text-align: left;
@@ -65,7 +63,10 @@ export default Vue.extend({
   align-items: center;
   margin-bottom: 20px;
 
-  .cabinet-header, .cabinet-balance, .cabinet-user, .cabinet-logout {
+  .cabinet-header,
+  .cabinet-balance,
+  .cabinet-user,
+  .cabinet-logout {
     display: inline-block;
   }
   .cabinet-header {
@@ -103,7 +104,8 @@ export default Vue.extend({
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  .cabinet-balance, .cabinet-tickers {
+  .cabinet-balance,
+  .cabinet-tickers {
     flex: 1 1 auto;
   }
 }

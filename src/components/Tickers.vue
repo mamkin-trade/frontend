@@ -11,43 +11,43 @@
               th.tickers-name Цена
               th.tickers-balance Изменение
               th.tickers-balance Объем
-            tr(v-for='ticker in filteredList')
+            tr(v-for='ticker in filteredTickers')
               td.tickers-pair {{formatPair(ticker.pair)}}
               td.tickers-name {{ticker.lastPrice}}
-              td.tickers-change(:class='getChangeDirection(ticker) ? getChangeDirection(ticker) === 1 ? "down" : "up" : "none"') {{ticker.dailyChangePerc}}%
+              td.tickers-change(:class='getChangeDirection(ticker)') {{ticker.dailyChangePerc}}%
               td.tickers-balance {{formatVolume(ticker.volume)}}
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import store from '../store'
-import { formatVolume } from '../utils/format'
-import { formatPair } from '../utils/format'
-import { Ticker } from '../models/ticker'
-import { getChangeDirection } from '../utils/changeDirection'
+import Vue from "vue";
+import Component from "vue-class-component";
+import * as store from "../store";
+import { formatVolume } from "../utils/format";
+import { formatPair } from "../utils/format";
+import { Ticker } from "../models/ticker";
+import { getChangeDirection } from "../utils/changeDirection";
 
 @Component
 export default class Tickers extends Vue {
-  search = ''
-  formatVolume = formatVolume
-  formatPair = formatPair
-  getChangeDirection = getChangeDirection
-  sortBySearch(item: Ticker) {
-    const search = this.search.toUpperCase();
-    if (search === '') return true;
-    else return formatPair(item.pair) && formatPair(item.pair).toUpperCase().indexOf(search) > -1
+  formatVolume = formatVolume;
+  formatPair = formatPair;
+  getChangeDirection = getChangeDirection;
+
+  search = "";
+
+  get tickers() {
+    return store.tickers(store.store);
   }
-  get tickersList() {
-    return store.getters.tickersList
+  get filteredTickers() {
+    return this.tickers.filter(
+      ticker =>
+        !this.search ||
+        formatPair(ticker.pair).indexOf(this.search.toUpperCase()) > -1
+    );
   }
-  get filteredList() {
-    console.log('ALARMA', this.tickersList )
-    return (this.tickersList.filter(this.sortBySearch))
-  } 
 }
 </script>
 
 <style scoped lang="scss">
-@import '../assets/scss/tickers';
+@import "../assets/scss/tickers";
 </style>

@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Cabinet from './views/Cabinet.vue'
 import PrivacyPolicy from './views/PrivatePolicy.vue'
-import store from './store'
+import { store } from './store'
 
 Vue.use(Router)
 
@@ -27,18 +27,18 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-  ]
+  ],
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const currentUser = store.state.user
+  const user = store.state.user
 
-  console.log(requiresAuth && !currentUser.token)
-
-  if (requiresAuth && !currentUser.token) next('/')
-  else if (!requiresAuth && currentUser.token) next('cabinet')
-  else next()
+  if (requiresAuth && !user) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
-export default router;
+export default router
