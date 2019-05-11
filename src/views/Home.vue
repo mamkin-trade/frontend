@@ -13,7 +13,7 @@
       .headline {{ $t('home.leaderboard') }}
 
     Rating
-    
+
     .caption.text-xs-center
       div(v-html='$t("home.opensource")')
       router-link(to='/privacy') {{ $t('home.privacy') }}
@@ -23,7 +23,6 @@
 import Vue from "vue";
 import axios from "axios";
 import Rating from "../components/Rating.vue";
-import Footer from "../components/shared/Footer.vue";
 import { loginFacebook } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
@@ -33,8 +32,7 @@ declare const FB: any;
 
 @Component({
   components: {
-    Rating,
-    Footer
+    Rating
   }
 })
 export default class Home extends Vue {

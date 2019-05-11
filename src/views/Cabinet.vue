@@ -20,7 +20,6 @@
     div
       h3 {{ $t('rating.title') }}
       Rating
-    Footer
 </template>
 
 <script lang="ts">
@@ -31,7 +30,6 @@ import Tickers from "../components/Tickers.vue";
 import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
 import OrderForm from "../components/OrderForm.vue";
-import Footer from "../components/shared/Footer.vue";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
@@ -39,7 +37,6 @@ import { formatNumber } from "../utils/format";
 @Component({
   components: {
     Rating,
-    Footer,
     Tickers,
     Balance,
     Orders,

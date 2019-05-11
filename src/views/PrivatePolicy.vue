@@ -38,7 +38,6 @@
       h3 Contact Us
       p If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.
     router-link(to='/') Main
-    Footer
 </template>
 
 <script lang="ts">
