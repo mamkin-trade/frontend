@@ -14,7 +14,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import * as store from "../store";
+import * as store from "../plugins/store";
 import { formatNumber } from "../utils/format";
 
 @Component

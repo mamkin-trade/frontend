@@ -21,7 +21,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import * as store from "../store";
+import * as store from "../plugins/store";
 import { formatVolume } from "../utils/format";
 import { formatPair } from "../utils/format";
 import { Ticker } from "../models/ticker";
@@ -40,7 +40,7 @@ export default class Tickers extends Vue {
     return store.tickers();
   }
   get pair() {
-    return store.pair()
+    return store.pair();
   }
   get filteredTickers() {
     return this.tickers.filter(

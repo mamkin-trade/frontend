@@ -1,17 +1,17 @@
 <template lang="pug">
-  .rating
-    table
-      tbody
-        tr(v-for='leader, index in leaderboard')
-          td.rating-index {{index + 1}}
-          td.rating-name {{leader.name}}
-          td.rating-balance ${{formatNumber(leader.overallBalance)}}
+  .py-2
+    v-card(flat v-for='(user, index) in leaderboard' :key='index')
+      v-layout(row)
+        v-flex.xs2.pl-2 {{index + 1}}.
+        v-flex.xs5 {{user.name}}
+        v-flex.xs5 ${{formatNumber(user.overallBalance)}}
+      v-divider
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import * as store from "../store";
+import * as store from "../plugins/store";
 import { formatNumber } from "../utils/format";
 
 @Component
@@ -24,6 +24,3 @@ export default class Rating extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-@import "../assets/scss/rating";
-</style>

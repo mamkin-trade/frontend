@@ -31,7 +31,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
-import * as store from "../store";
+import * as store from "../plugins/store";
 import { formatPair } from "../utils/format";
 import { formatDate } from "../utils/format";
 import { formatBool } from "../utils/format";

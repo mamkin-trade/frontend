@@ -1,21 +1,22 @@
 <template lang="pug">
-  .home
-    .land-head
-      h1.land-header {{ $t('title') }}
-      .land-info(v-html='$t("info")')
-    .land-feats
-      span {{ $t('feats.register') }}
-      span {{ $t('feats.money') }}
-      span {{ $t('feats.success') }}
-    fb-signin-button(:params='{ scope: "email", return_scopes: true}', @success='onSignInSuccess', @error='onSignInError') {{ $t('facebook') }}  
-    div
-      h2 {{ $t('rating.title') }}
-      Rating
-    .land-open
-      span(v-html='$t("open")')
-    .privacy-link
-      router-link(to='/privacy') {{ $t('privacy') }}
-    Footer
+  .home.pa-4
+    .text-xs-center
+      .headline
+        span(v-html='$t("home.info")')
+      .py-4
+        p {{$t('home.rules.register')}}
+        p {{$t('home.rules.money')}}
+        p {{$t('home.rules.success')}}
+      
+      fb-signin-button(:params='{ scope: "email", return_scopes: true}', @success='onSignInSuccess', @error='onSignInError') {{$t('home.facebook')}}
+
+      .headline {{ $t('home.leaderboard') }}
+
+    Rating
+    
+    .caption.text-xs-center
+      div(v-html='$t("home.opensource")')
+      router-link(to='/privacy') {{ $t('home.privacy') }}
 </template>
 
 <script lang="ts">
@@ -24,7 +25,7 @@ import axios from "axios";
 import Rating from "../components/Rating.vue";
 import Footer from "../components/shared/Footer.vue";
 import { loginFacebook } from "../utils/api";
-import * as store from "../store";
+import * as store from "../plugins/store";
 import Component from "vue-class-component";
 
 // FB object is global, declaring here for TS
@@ -52,7 +53,3 @@ export default class Home extends Vue {
   }
 }
 </script>
-
-<style lang='scss'>
-@import "../assets/scss/style";
-</style>

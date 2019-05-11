@@ -30,16 +30,16 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
-import * as store from "../store";
-import { createOrder } from '../utils/api';
+import * as store from "../plugins/store";
+import { createOrder } from "../utils/api";
 import { formatPair } from "../utils/format";
 
 @Component
 export default class OrderForm extends Vue {
-  amount = 0
-  side = 'sell'
-  type = 'market'
-  createOrder = createOrder
+  amount = 0;
+  side = "sell";
+  type = "market";
+  createOrder = createOrder;
   formatPair = formatPair;
 
   get pair() {
@@ -66,7 +66,8 @@ export default class OrderForm extends Vue {
       margin-right: 10px;
       width: 30%;
     }
-    select, input {
+    select,
+    input {
       font-size: 20px;
       width: 30%;
       padding: 5px;

@@ -32,7 +32,7 @@ import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
 import OrderForm from "../components/OrderForm.vue";
 import Footer from "../components/shared/Footer.vue";
-import * as store from "../store";
+import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
 

@@ -1,6 +1,6 @@
 // Dependencies
 import { getLeaderboard, getTickers, getOrders } from './api'
-import * as store from '../store'
+import * as store from '../plugins/store'
 
 export function startUpdatingData() {
   updateLeaderboard()

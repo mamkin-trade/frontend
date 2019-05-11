@@ -1,9 +1,9 @@
 // Dependencies
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { Ticker } from './models/ticker'
-import { User } from './models/user'
-import { Order } from './models/order'
+import { Ticker } from '../models/ticker'
+import { User } from '../models/user'
+import { Order } from '../models/order'
 
 Vue.use(Vuex)
 
@@ -23,7 +23,7 @@ const storeOptions = {
     tickers: [],
     leaderboard: [],
     orders: [],
-    pair: 'BTCUSD'
+    pair: 'BTCUSD',
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -44,14 +44,17 @@ const storeOptions = {
     },
     setPair(state: State, pair: String) {
       state.pair = pair
-    }
+    },
   },
   getters: {
     user: (state: State) => state.user,
+
     tickers: (state: State) => state.tickers,
     leaderboard: (state: State) => state.leaderboard,
     orders: (state: State) => state.orders,
     pair: (state: State) => state.pair,
+
+    isLoggedIn: (state: State) => !!state.user,
   },
 }
 
@@ -59,12 +62,15 @@ export const store = new Vuex.Store<State>(storeOptions)
 
 // Getters
 const getters = store.getters
+
 export const user = () => getters.user as User | undefined
 export const pair = () => getters.pair as String
 
 export const tickers = () => getters.tickers as Ticker[]
 export const leaderboard = () => getters.leaderboard as User[]
 export const orders = () => getters.orders as Order[]
+
+export const isLoggedIn = () => getters.isLoggedIn as boolean
 
 // Mutations
 export const setUser = (user: User) => {
