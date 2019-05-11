@@ -5,6 +5,9 @@
   margin-top: 0;
   font-size: 20px;
   font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
+  .active {
+    background-color: #fbfbfb;
+  }
   .tickers-table {
     max-height: 50vh;
     overflow-y: scroll;
@@ -42,6 +45,13 @@
     text-align: left;
     padding: 8px;
     font-family: 'Comic Neue', 'Comic Sans MS', sans-serif;
+  }
+  tr {
+    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+      background-color: #fbfbfb;
+    }
   }
   td {
       border: 1px solid #dddddd;

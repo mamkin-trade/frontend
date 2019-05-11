@@ -7,6 +7,7 @@
           tbody
             tr
               th.tickers-index Дата
+              th.tickers-index Пара
               th.tickers-name Количество
               th.tickers-balance Цена
               th.tickers-balance Сторона
@@ -15,14 +16,15 @@
               th.tickers-balance Отменено
               th.tickers-balance Выполнено
             tr(v-for='order in orders')
-              td.tickers-index {{order.createdAt}}
+              td.tickers-index {{formatDate(order.createdAt)}}
+              td.tickers-name {{formatPair(order.symbol)}}
               td.tickers-name {{order.amount}}
               td.tickers-balance {{order.price}}
               td.tickers-balance {{order.side}}
               td.tickers-balance {{order.type}}
-              td.tickers-balance {{order.completed}}
-              td.tickers-balance {{order.cancelled}}
-              td.tickers-balance {{order.completionDate || '—'}}
+              td.tickers-balance {{formatBool(order.completed)}}
+              td.tickers-balance {{formatBool(order.cancelled)}}
+              td.tickers-balance {{formatDate(order.completionDate) || '—'}}
 </template>
 
 <script lang="ts">
@@ -30,9 +32,15 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import axios from "axios";
 import * as store from "../store";
+import { formatPair } from "../utils/format";
+import { formatDate } from "../utils/format";
+import { formatBool } from "../utils/format";
 
 @Component
 export default class Orders extends Vue {
+  formatPair = formatPair;
+  formatDate = formatDate;
+  formatBool = formatBool;
   get orders() {
     return store.orders();
   }

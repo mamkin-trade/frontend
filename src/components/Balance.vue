@@ -26,7 +26,7 @@ export default class Balance extends Vue {
     }
     return Object.keys(user.balance).map(key => {
       return {
-        currency: key,
+        currency: key.toUpperCase(),
         value: formatNumber(user.balance[key])
       };
     });

@@ -11,7 +11,7 @@
               th.tickers-name Цена
               th.tickers-balance Изменение
               th.tickers-balance Объем
-            tr(v-for='ticker in filteredTickers')
+            tr(v-for='ticker in filteredTickers' @click='setPair(ticker.pair)' :class='{active: pair === ticker.pair}')
               td.tickers-pair {{formatPair(ticker.pair)}}
               td.tickers-name {{ticker.lastPrice}}
               td.tickers-change(:class='getChangeDirection(ticker)') {{ticker.dailyChangePerc}}%
@@ -32,11 +32,15 @@ export default class Tickers extends Vue {
   formatVolume = formatVolume;
   formatPair = formatPair;
   getChangeDirection = getChangeDirection;
+  setPair = store.setPair;
 
   search = "";
 
   get tickers() {
     return store.tickers();
+  }
+  get pair() {
+    return store.pair()
   }
   get filteredTickers() {
     return this.tickers.filter(

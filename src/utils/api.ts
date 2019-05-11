@@ -19,8 +19,8 @@ export async function getOrders(user: User) {
   return (await axios.get(API_URL + 'orders/user/' + user._id)).data as Order[]
 }
 
-export async function createOrder(user: User) {
-  return (await axios.post(API_URL + 'orders/order/', {symbol: 'BTCUSD', amount: 1, side: 'buy', type: 'market'}, {headers: {token: user.token}})).data as Order[]
+export async function createOrder(user: User, symbol: String, amount: Number, side: String, type: String) {
+  return (await axios.post(API_URL + 'orders/order/', {symbol: symbol, amount: +amount, side: side, type: type}, {headers: {token: user.token}})).data as Order[]
 }
 
 export async function loginFacebook(accessToken: string) {

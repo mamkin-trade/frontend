@@ -13,6 +13,7 @@ interface State {
   tickers: Ticker[]
   leaderboard: User[]
   orders: Order[]
+  pair: String
 }
 
 const storeOptions = {
@@ -22,6 +23,7 @@ const storeOptions = {
     tickers: [],
     leaderboard: [],
     orders: [],
+    pair: 'BTCUSD'
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -40,12 +42,16 @@ const storeOptions = {
     setOrders(state: State, orders: Order[]) {
       state.orders = orders
     },
+    setPair(state: State, pair: String) {
+      state.pair = pair
+    }
   },
   getters: {
     user: (state: State) => state.user,
     tickers: (state: State) => state.tickers,
     leaderboard: (state: State) => state.leaderboard,
     orders: (state: State) => state.orders,
+    pair: (state: State) => state.pair,
   },
 }
 
@@ -54,6 +60,7 @@ export const store = new Vuex.Store<State>(storeOptions)
 // Getters
 const getters = store.getters
 export const user = () => getters.user as User | undefined
+export const pair = () => getters.pair as String
 
 export const tickers = () => getters.tickers as Ticker[]
 export const leaderboard = () => getters.leaderboard as User[]
@@ -75,4 +82,7 @@ export const setLeaderboard = (leaderboard: User[]) => {
 }
 export const setOrders = (orders: Order[]) => {
   store.commit('setOrders', orders)
+}
+export const setPair = (pair: String) => {
+  store.commit('setPair', pair)
 }

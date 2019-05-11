@@ -1,7 +1,29 @@
 <template lang='pug'>
   .orders
     h3 Создание ордера
-    button(@click="createOrder($root.$store.state.user)") lol
+    //- button(@click="createOrder($root.$store.state.user)") lol
+
+    div.order-form
+      div
+        span Пара
+        span {{formatPair(pair)}}
+      div
+        span Количество
+        input(v-model='amount')
+      div
+        span Сторона
+        select 
+          option(value='sell' v-model='side') Sell
+          option(value='buy' v-model='side') Buy
+      div
+        span Тип 
+        select Тип
+          option(value='market' v-model='type') Market
+          option(value='limit' v-model='type') Limit
+    
+
+      div.create-order-cont
+        button.create-order(@click="createOrder($root.$store.state.user, pair, amount, side, type)") Создать ордер
 </template>
 
 <script lang="ts">
@@ -10,10 +32,19 @@ import Component from "vue-class-component";
 import axios from "axios";
 import * as store from "../store";
 import { createOrder } from '../utils/api';
+import { formatPair } from "../utils/format";
 
 @Component
 export default class OrderForm extends Vue {
+  amount = 0
+  side = 'sell'
+  type = 'market'
   createOrder = createOrder
+  formatPair = formatPair;
+
+  get pair() {
+    return store.pair();
+  }
 }
 </script>
 
@@ -25,64 +56,35 @@ export default class OrderForm extends Vue {
   margin-top: 0;
   font-size: 20px;
   font-family: "Comic Neue", "Comic Sans MS", sans-serif;
-  .tickers-table {
-    max-height: 50vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
-      background-color: #fff;
-      width: 16px;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: #fff;
-    }
-    &::-webkit-scrollbar-track:hover {
-      background-color: #f4f4f4;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #babac0;
-      border-radius: 16px;
-      height: 15%;
-      border: 5px solid #fff;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: #a0a0a5;
-      border: 4px solid #f4f4f4;
-    }
-    &::-webkit-scrollbar-button {
-      display: none;
-    }
-  }
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  th {
+  .order-form {
     text-align: left;
-    padding: 8px;
-    font-family: "Comic Neue", "Comic Sans MS", sans-serif;
-  }
-  td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    font-family: "Comic Neue", "Comic Sans MS", sans-serif;
-  }
-  ul {
-    list-style: none;
-  }
-  .tickers-pair {
-    font-weight: bold;
-  }
-  .tickers-change {
-    font-weight: bold;
-    &.up {
-      color: #38c250;
+    div {
+      margin-bottom: 10px;
     }
-    &.down {
-      color: #f24359;
+    span {
+      display: inline-block;
+      margin-right: 10px;
+      width: 30%;
     }
+    select, input {
+      font-size: 20px;
+      width: 30%;
+      padding: 5px;
+    }
+  }
+  .create-order {
+    font-family: "Comic Neue", "Comic Sans MS", sans-serif;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    width: 191px;
+    height: 36px;
+    border: solid 1px #00aded;
+    background: #00aded;
+  }
+  .create-order-cont {
+    margin-top: 20px;
+    text-align: center;
   }
 }
 </style>
