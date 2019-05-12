@@ -1,19 +1,23 @@
 <template lang="pug">
   nav
-    v-toolbar(flat, app)
+    v-toolbar(flat app)
       // Title
       v-toolbar-title.text-uppercase.grey--text
-        span {{ $t('title') }}
+        v-tooltip(v-if='user' bottom)
+          span(slot='activator') {{$t('title')}}
+          span {{user.name}}, {{user.email}}
+        span(v-else slot='activator') {{$t('title')}}
       v-spacer
       // Language picker
       v-menu(offset-y)
-        v-btn(flat, slot='activator', color='grey', fab) {{currentLocale.icon}}
+        v-btn(flat slot='activator' color='grey' fab) {{currentLocale.icon}}
         v-list
           v-list-tile(v-for='locale in locales' @click='changeLanguage(locale.code)')
             v-list-tile-title {{locale.icon}}
       // Logout
-      v-btn(flat, color='grey' v-if='isLoggedIn')
-        v-icon(right) exit_to_app
+      div(v-if='isLoggedIn')
+        v-btn(flat fab color='grey' @click='logout')
+          v-icon exit_to_app
 </template>
 
 <script lang="ts">
@@ -37,9 +41,16 @@ export default class Navbar extends Vue {
       }
     }
   }
+  get user() {
+    return store.user();
+  }
 
   changeLanguage(locale: string) {
     i18n.locale = locale;
+  }
+  logout() {
+    store.logout();
+    this.$router.replace("/");
   }
 }
 </script>

@@ -1,57 +1,74 @@
 <template lang="pug">
   .tickers
-    h3 Валютные пары
-    .scrollbar
-      input(v-model='search')
-      .tickers-table
-        table
-          tbody
-            tr
-              th.tickers-index Пара
-              th.tickers-name Цена
-              th.tickers-balance Изменение
-              th.tickers-balance Объем
-            tr(v-for='ticker in filteredTickers' @click='setPair(ticker.pair)' :class='{active: pair === ticker.pair}')
-              td.tickers-pair {{formatPair(ticker.pair)}}
-              td.tickers-name {{ticker.lastPrice}}
-              td.tickers-change(:class='getChangeDirection(ticker)') {{ticker.dailyChangePerc}}%
-              td.tickers-balance {{formatVolume(ticker.volume)}}
+    v-card(flat)
+      v-card-title.py-0 {{$t("tickers.title")}}
+        v-spacer
+        v-text-field(append-icon='search'
+        :label='$t("search")'
+        single-line
+        v-model='search')
+    v-data-table(:headers='headers'
+    :items='tickers'
+    :loading='!tickers.length'
+    :no-data-text='$t("loading")'
+    :no-results-text='$t("noResults")'
+    :search='search'
+    :rowsPerPageItems='rowsPerPageItems()'
+    :rows-per-page-text='$t("rowsPerPageText")')
+      template(v-slot:items='props')
+        td {{formatPair(props.item.pair)}}
+        td {{props.item.lastPrice}}
+        td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
+        td
+          v-tooltip(bottom)
+            span(slot='activator') {{formatVolume(props.item.volume)}}
+            span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as store from "../plugins/store";
-import { formatVolume } from "../utils/format";
-import { formatPair } from "../utils/format";
+import { formatVolume, formatNumber, formatPair } from "../utils/format";
 import { Ticker } from "../models/ticker";
-import { getChangeDirection } from "../utils/changeDirection";
+import { getChangeDirection, ChangeDirection } from "../utils/changeDirection";
+import { i18n } from "../plugins/i18n";
+import { rowsPerPageItems } from "../utils/rowsPerPageItems";
 
 @Component
 export default class Tickers extends Vue {
   formatVolume = formatVolume;
   formatPair = formatPair;
-  getChangeDirection = getChangeDirection;
-  setPair = store.setPair;
+  formatNumber = formatNumber;
+  rowsPerPageItems = rowsPerPageItems;
 
   search = "";
+
+  get headers() {
+    return [
+      {
+        text: i18n.t("tickers.pair"),
+        value: "pair"
+      },
+      { text: i18n.t("price"), value: "lastPrice" },
+      { text: i18n.t("tickers.change"), value: "dailyChangePerc" },
+      { text: i18n.t("tickers.volume"), value: "volume" }
+    ];
+  }
 
   get tickers() {
     return store.tickers();
   }
-  get pair() {
-    return store.pair();
-  }
-  get filteredTickers() {
-    return this.tickers.filter(
-      ticker =>
-        !this.search ||
-        formatPair(ticker.pair).indexOf(this.search.toUpperCase()) > -1
-    );
+
+  volumeClass(ticker: Ticker) {
+    const direction = getChangeDirection(ticker);
+    if (direction === ChangeDirection.up) {
+      return "green--text";
+    } else if (direction === ChangeDirection.down) {
+      return "red--text";
+    } else {
+      return "";
+    }
   }
 }
 </script>
-
-<style scoped lang="scss">
-@import "../assets/scss/tickers";
-</style>

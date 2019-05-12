@@ -1,5 +1,6 @@
-import momen from 'moment'
-import moment = require('moment');
+// Dependencies
+import moment = require('moment')
+import { i18n } from '../plugins/i18n'
 
 export function formatNumber(n: number) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -14,10 +15,13 @@ export function formatVolume(volume: number) {
 }
 
 export function formatDate(date: string) {
-  return moment(date).format('YYYY-MM-DD hh:mm')
+  return moment(date).format('DD.MM.YYYY hh:mm')
+}
+
+export function formatShortDate(date: string) {
+  return moment(date).format('MM.DD')
 }
 
 export function formatBool(bool: Boolean) {
-  if (bool) return 'Yes'
-  else return 'No'
+  return i18n.t(bool ? 'bool.yes' : 'bool.no')
 }

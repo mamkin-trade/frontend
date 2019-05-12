@@ -5,11 +5,9 @@ import * as store from '../plugins/store'
 export function startUpdatingData() {
   updateLeaderboard()
   updateTickers()
-  updateOrders()
 
   setInterval(updateLeaderboard, 10 * 1000)
   setInterval(updateTickers, 10 * 1000)
-  setInterval(updateOrders, 10 * 1000)
 }
 
 let leaderboardUpdating = false
@@ -35,21 +33,5 @@ async function updateTickers() {
     store.setTickers(Object.values(await getTickers()))
   } finally {
     tickersUpdating = false
-  }
-}
-
-let ordersUpdating = false
-async function updateOrders() {
-  if (ordersUpdating) {
-    return
-  }
-  ordersUpdating = true
-  try {
-    const user = store.user()
-    if (user) {
-      store.setOrders(await getOrders(user))
-    }
-  } finally {
-    ordersUpdating = false
   }
 }

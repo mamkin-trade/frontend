@@ -12,7 +12,6 @@ interface State {
 
   tickers: Ticker[]
   leaderboard: User[]
-  orders: Order[]
   pair: String
 }
 
@@ -22,7 +21,6 @@ const storeOptions = {
 
     tickers: [],
     leaderboard: [],
-    orders: [],
     pair: 'BTCUSD',
   },
   mutations: {
@@ -39,9 +37,6 @@ const storeOptions = {
     setLeaderboard(state: State, leaderboard: User[]) {
       state.leaderboard = leaderboard
     },
-    setOrders(state: State, orders: Order[]) {
-      state.orders = orders
-    },
     setPair(state: State, pair: String) {
       state.pair = pair
     },
@@ -51,7 +46,6 @@ const storeOptions = {
 
     tickers: (state: State) => state.tickers,
     leaderboard: (state: State) => state.leaderboard,
-    orders: (state: State) => state.orders,
     pair: (state: State) => state.pair,
 
     isLoggedIn: (state: State) => !!state.user,
@@ -68,7 +62,6 @@ export const pair = () => getters.pair as String
 
 export const tickers = () => getters.tickers as Ticker[]
 export const leaderboard = () => getters.leaderboard as User[]
-export const orders = () => getters.orders as Order[]
 
 export const isLoggedIn = () => getters.isLoggedIn as boolean
 
@@ -85,9 +78,6 @@ export const setTickers = (tickers: Ticker[]) => {
 }
 export const setLeaderboard = (leaderboard: User[]) => {
   store.commit('setLeaderboard', leaderboard)
-}
-export const setOrders = (orders: Order[]) => {
-  store.commit('setOrders', orders)
 }
 export const setPair = (pair: String) => {
   store.commit('setPair', pair)

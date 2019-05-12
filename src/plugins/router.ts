@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import Cabinet from '../views/Cabinet.vue'
-import PrivacyPolicy from '../views/PrivatePolicy.vue'
+import PrivacyPolicy from '../views/PrivacyPolicy.vue'
 import { store } from './store'
 
 Vue.use(Router)

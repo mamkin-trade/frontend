@@ -8,11 +8,11 @@
         p {{$t('home.rules.money')}}
         p {{$t('home.rules.success')}}
       
-      fb-signin-button(:params='{ scope: "email", return_scopes: true}', @success='onSignInSuccess', @error='onSignInError') {{$t('home.facebook')}}
+      fb-signin-button(:params='{ scope: "email", return_scopes: true}' @success='onSignInSuccess' @error='onSignInError') {{$t('home.facebook')}}
 
-      .headline {{ $t('home.leaderboard') }}
+      .headline.pt-4.pb-2 {{ $t('leaderboard.title') }}
 
-    Rating
+    Leaderboard.pb-4
 
     .caption.text-xs-center
       div(v-html='$t("home.opensource")')
@@ -22,7 +22,7 @@
 <script lang="ts">
 import Vue from "vue";
 import axios from "axios";
-import Rating from "../components/Rating.vue";
+import Leaderboard from "../components/Leaderboard.vue";
 import { loginFacebook } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
@@ -32,7 +32,7 @@ declare const FB: any;
 
 @Component({
   components: {
-    Rating
+    Leaderboard
   }
 })
 export default class Home extends Vue {
@@ -51,3 +51,14 @@ export default class Home extends Vue {
   }
 }
 </script>
+
+<style>
+.fb-signin-button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 46px;
+  border-radius: 3px;
+  background-color: #4267b2;
+  color: #fff;
+}
+</style>

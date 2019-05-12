@@ -1,31 +1,22 @@
 <template lang="pug">
-  .home
-    .cabinet-head
-      h1.cabinet-header {{ $t('title') }}
-      .cabinet-balance
-        span.balance-title Стоимость портфеля
-        span.balance-value ${{formatNumber(overallBalance())}} USD
-      .cabinet-user
-        span.user-name {{$root.$store.state.user.name}}
-        span.user-email {{$root.$store.state.user.email}}
-      .cabinet-logout
-        span(@click='logout') Выйти
-    .cont
-      .cabinet-tickers
-        tickers.
-      .cabinet-balance
-        balance. 
+  v-container
+    v-layout(row wrap)
+      v-flex.py-1(xs 12)
+        Balance
+      v-flex.py-1(xs 12)
+        Tickers
+      v-flex.py-1(xs 12)
         OrderForm
-    Orders.
-    div
-      h3 {{ $t('rating.title') }}
-      Rating
+      v-flex.py-1(xs 12)
+        Orders
+      v-flex.py-1(xs 12)
+        Leaderboard(needsTitle)
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import axios from "axios";
-import Rating from "../components/Rating.vue";
+import Leaderboard from "../components/Leaderboard.vue";
 import Tickers from "../components/Tickers.vue";
 import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
@@ -36,7 +27,7 @@ import { formatNumber } from "../utils/format";
 
 @Component({
   components: {
-    Rating,
+    Leaderboard,
     Tickers,
     Balance,
     Orders,
@@ -53,68 +44,5 @@ export default class Cabinet extends Vue {
     }
     return user.overallBalance;
   }
-
-  logout() {
-    store.logout();
-    this.$router.replace("/");
-  }
 }
 </script>
-<style lang='scss'>
-@import "../assets/scss/style";
-
-.cabinet-head {
-  text-align: left;
-  padding: 0 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 20px;
-
-  .cabinet-header,
-  .cabinet-balance,
-  .cabinet-user,
-  .cabinet-logout {
-    display: inline-block;
-  }
-  .cabinet-header {
-    flex: 1 1 auto;
-  }
-  .cabinet-balance {
-    flex: 1 1 auto;
-    span {
-      display: block;
-      justify-content: flex-end;
-    }
-    .balance-value {
-      font-size: 20px;
-      font-weight: bold;
-    }
-  }
-  .cabinet-user {
-    flex: 1 1 auto;
-    span {
-      display: block;
-      justify-content: flex-end;
-    }
-    .user-email {
-      font-size: 20px;
-      font-weight: bold;
-    }
-  }
-  .cabinet-logout {
-    cursor: pointer;
-    flex: 1 1 auto;
-  }
-}
-
-.cont {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  .cabinet-balance,
-  .cabinet-tickers {
-    flex: 1 1 auto;
-  }
-}
-</style>
