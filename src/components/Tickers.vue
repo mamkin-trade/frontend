@@ -14,7 +14,8 @@
     :no-results-text='$t("noResults")'
     :search='search'
     :rowsPerPageItems='rowsPerPageItems()'
-    :rows-per-page-text='$t("rowsPerPageText")')
+    :rows-per-page-text='$t("rowsPerPageText")'
+    disable-initial-sort)
       template(v-slot:items='props')
         tr(:class='isSelected(props.item.pair) ? "blue lighten-5" : ""'
         @click='select(props.item.pair)')

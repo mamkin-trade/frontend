@@ -5,7 +5,8 @@
     v-data-table(:headers='headers'
     :items='balance'
     :rowsPerPageItems='rowsPerPageItems()'
-    :rows-per-page-text='$t("rowsPerPageText")')
+    :rows-per-page-text='$t("rowsPerPageText")'
+    disable-initial-sort)
       template(v-slot:items='props')
         td {{ props.item.currency }}
         td {{ formatNumber(props.item.amount) }}

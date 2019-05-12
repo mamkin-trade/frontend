@@ -9,7 +9,8 @@
     :no-data-text='$t("orders.noOrdersYet")'
     :rowsPerPageItems='rowsPerPageItems(false)'
     :rows-per-page-text='$t("rowsPerPageText")'
-    :loading='loading')
+    :loading='loading'
+    disable-initial-sort)
       template(v-slot:items='props')
         td.pa-0.text-xs-center
           v-icon(small
