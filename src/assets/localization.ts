@@ -3,7 +3,7 @@ export const messages = {
     title: '*МАМКИН ТРЕЙДЕР*',
     home: {
       info:
-        'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для вашего психического здоровья.',
+        'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для вашего психического здоровья',
       rules: {
         register: 'Регистрируетесь 💪',
         money: 'Получаете виртуальные $10,000 💰',
@@ -79,7 +79,7 @@ export const messages = {
     title: '*MAMKIN TRADE*',
     home: {
       info:
-        'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health.',
+        'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health',
       rules: {
         register: 'Login 💪',
         money: 'Get virtual $10,000 💰',
