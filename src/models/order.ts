@@ -1,4 +1,5 @@
 export interface Order {
+  _id: string
   createdAt: Date
   symbol: string
   amount: number

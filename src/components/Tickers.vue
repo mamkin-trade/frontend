@@ -1,5 +1,5 @@
 <template lang="pug">
-  .tickers
+  div
     v-card(flat)
       v-card-title.py-0 {{$t("tickers.title")}}
         v-spacer
@@ -16,13 +16,15 @@
     :rowsPerPageItems='rowsPerPageItems()'
     :rows-per-page-text='$t("rowsPerPageText")')
       template(v-slot:items='props')
-        td {{formatPair(props.item.pair)}}
-        td {{props.item.lastPrice}}
-        td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
-        td
-          v-tooltip(bottom)
-            span(slot='activator') {{formatVolume(props.item.volume)}}
-            span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
+        tr(:class='isSelected(props.item.pair) ? "blue lighten-5" : ""'
+        @click='select(props.item.pair)')
+          td {{formatPair(props.item.pair)}}
+          td {{props.item.lastPrice}}
+          td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
+          td
+            v-tooltip(bottom)
+              span(slot='activator') {{formatVolume(props.item.volume)}}
+              span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
 </template>
 
 <script lang="ts">
@@ -47,7 +49,7 @@ export default class Tickers extends Vue {
   get headers() {
     return [
       {
-        text: i18n.t("tickers.pair"),
+        text: i18n.t("pair"),
         value: "pair"
       },
       { text: i18n.t("price"), value: "lastPrice" },
@@ -69,6 +71,14 @@ export default class Tickers extends Vue {
     } else {
       return "";
     }
+  }
+
+  isSelected(pair: string) {
+    return pair === store.pair();
+  }
+
+  select(pair: string) {
+    store.setPair(pair);
   }
 }
 </script>

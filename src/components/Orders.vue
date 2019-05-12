@@ -11,6 +11,12 @@
     :rows-per-page-text='$t("rowsPerPageText")'
     :loading='loading')
       template(v-slot:items='props')
+        td.pa-0.text-xs-center
+          v-icon(small
+          v-if='!props.item.cancelled && !props.item.completed' 
+          :disabled='orderDeleting'
+          @click='deleteOrder(props.item)') delete
+          span(v-else) —
         td
           v-tooltip(bottom)
             span(slot='activator') {{formatShortDate(props.item.createdAt)}}
@@ -26,7 +32,7 @@
           v-tooltip(bottom)
             span(slot='activator') {{formatShortDate(props.item.completionDate)}}
             span {{formatDate(props.item.completionDate)}}
-        rd(v-else) —
+        td(v-else) —
 </template>
 
 <script lang="ts">
@@ -67,11 +73,14 @@ export default class Orders extends Vue {
   get headers() {
     return [
       {
+        sortable: false
+      },
+      {
         text: i18n.t("orders.created"),
         value: "createdAt",
         sortable: false
       },
-      { text: i18n.t("orders.pair"), value: "symbol", sortable: false },
+      { text: i18n.t("pair"), value: "symbol", sortable: false },
       {
         text: i18n.t("amount"),
         value: "amount",
@@ -83,12 +92,12 @@ export default class Orders extends Vue {
         sortable: false
       },
       {
-        text: i18n.t("orders.side"),
+        text: i18n.t("side"),
         value: "side",
         sortable: false
       },
       {
-        text: i18n.t("orders.type"),
+        text: i18n.t("type"),
         value: "type",
         sortable: false
       },
@@ -110,27 +119,81 @@ export default class Orders extends Vue {
     ];
   }
 
+  timer?: NodeJS.Timeout;
   mounted() {
     this.updateOrders();
+
+    this.timer = setInterval(() => {
+      this.updateOrders(false);
+    }, 10 * 1000);
+  }
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
 
   @Watch("pagination")
-  onPaginationChanged(val: any, oldVal: any) {}
+  onPaginationChanged(val: any, oldVal: any) {
+    this.updateOrders();
+  }
 
-  async updateOrders() {
+  ordersUpdating = false;
+  async updateOrders(showLoading = true) {
+    if (this.ordersUpdating) {
+      return;
+    }
     const user = store.user();
     if (!user) {
       return;
     }
+    this.ordersUpdating = true;
+    if (showLoading) {
+      this.loading = true;
+    }
+    try {
+      const { page, rowsPerPage } = this.pagination;
 
-    this.loading = true;
-    const { page, rowsPerPage } = this.pagination;
+      const response = await api.getOrders(
+        user,
+        page * rowsPerPage,
+        rowsPerPage
+      );
+      this.totalOrders = response.count;
+      this.orders = response.orders;
+    } finally {
+      this.ordersUpdating = false;
+      this.loading = false;
+    }
+  }
 
-    const response = await api.getOrders(user, page * rowsPerPage, rowsPerPage);
-    this.totalOrders = response.count;
-    this.orders = response.orders;
-
-    this.loading = false;
+  orderDeleting = false;
+  async deleteOrder(order: Order) {
+    if (this.orderDeleting) {
+      return;
+    }
+    const user = store.user();
+    if (!user) {
+      return;
+    }
+    this.orderDeleting = true;
+    try {
+      await api.deleteOrder(user, order);
+      await this.updateOrders();
+      store.setSnackbar({
+        message: "snackbar.orderDeleted",
+        color: "success",
+        active: true
+      });
+    } catch (err) {
+      store.setSnackbar({
+        message: "errors.general",
+        color: "error",
+        active: true
+      });
+    } finally {
+      this.orderDeleting = true;
+    }
   }
 }
 </script>

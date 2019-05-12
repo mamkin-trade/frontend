@@ -1,13 +1,15 @@
 // Dependencies
-import { getLeaderboard, getTickers, getOrders } from './api'
+import * as api from './api'
 import * as store from '../plugins/store'
 
 export function startUpdatingData() {
   updateLeaderboard()
   updateTickers()
+  updateUser()
 
   setInterval(updateLeaderboard, 10 * 1000)
   setInterval(updateTickers, 10 * 1000)
+  setInterval(updateUser, 10 * 1000)
 }
 
 let leaderboardUpdating = false
@@ -17,7 +19,7 @@ async function updateLeaderboard() {
   }
   leaderboardUpdating = true
   try {
-    store.setLeaderboard(await getLeaderboard())
+    store.setLeaderboard(await api.getLeaderboard())
   } finally {
     leaderboardUpdating = false
   }
@@ -30,8 +32,24 @@ async function updateTickers() {
   }
   tickersUpdating = true
   try {
-    store.setTickers(Object.values(await getTickers()))
+    store.setTickers(Object.values(await api.getTickers()))
   } finally {
     tickersUpdating = false
+  }
+}
+
+let userUpdating = false
+async function updateUser() {
+  if (userUpdating) {
+    return
+  }
+  userUpdating = true
+  try {
+    const user = store.user()
+    if (user) {
+      store.setUser({ ...(await api.getUser(user._id)), token: user.token })
+    }
+  } finally {
+    userUpdating = false
   }
 }

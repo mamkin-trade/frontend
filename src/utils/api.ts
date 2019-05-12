@@ -24,22 +24,33 @@ export async function getOrders(user: User, skip: number, limit: number) {
   }
 }
 
-export async function createOrder(
+export async function postOrder(
   user: User,
-  symbol: String,
-  amount: Number,
-  side: String,
-  type: String
+  symbol: string,
+  amount: number,
+  side: string,
+  type: string,
+  price?: number
 ) {
   return (await axios.post(
     `${base}/orders/order`,
-    { symbol: symbol, amount: +amount, side: side, type: type },
+    { symbol, amount, side, type, price },
     { headers: { token: user.token } }
-  )).data as Order[]
+  )).data as Order
+}
+
+export async function deleteOrder(user: User, order: Order) {
+  return (await axios.delete(`${base}/orders/order/${order._id}`, {
+    headers: { token: user.token },
+  })).data as Order
 }
 
 export async function loginFacebook(accessToken: string) {
   return (await axios.post(`${base}/login/facebook`, {
     accessToken,
   })).data as User
+}
+
+export async function getUser(id: string) {
+  return (await axios.get(`${base}/users/${id}`)).data as User
 }

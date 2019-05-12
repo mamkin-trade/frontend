@@ -3,7 +3,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { Ticker } from '../models/ticker'
 import { User } from '../models/user'
-import { Order } from '../models/order'
 
 Vue.use(Vuex)
 
@@ -13,6 +12,15 @@ interface State {
   tickers: Ticker[]
   leaderboard: User[]
   pair: String
+
+  snackbar: SnackbarState
+}
+
+interface SnackbarState {
+  message: String
+  submessage?: String
+  active: Boolean
+  color: String
 }
 
 const storeOptions = {
@@ -22,6 +30,13 @@ const storeOptions = {
     tickers: [],
     leaderboard: [],
     pair: 'BTCUSD',
+
+    snackbar: {
+      message: '',
+      active: false,
+      submessage: undefined,
+      color: 'success',
+    },
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -40,6 +55,10 @@ const storeOptions = {
     setPair(state: State, pair: String) {
       state.pair = pair
     },
+
+    setSnackbar(state: State, snackbar: SnackbarState) {
+      state.snackbar = snackbar
+    },
   },
   getters: {
     user: (state: State) => state.user,
@@ -49,6 +68,16 @@ const storeOptions = {
     pair: (state: State) => state.pair,
 
     isLoggedIn: (state: State) => !!state.user,
+
+    currentTicker: (state: State) => {
+      for (const ticker of state.tickers) {
+        if (ticker.pair === state.pair) {
+          return ticker
+        }
+      }
+    },
+
+    snackbar: (state: State) => state.snackbar,
   },
 }
 
@@ -58,12 +87,16 @@ export const store = new Vuex.Store<State>(storeOptions)
 const getters = store.getters
 
 export const user = () => getters.user as User | undefined
-export const pair = () => getters.pair as String
+export const pair = () => getters.pair as string
 
 export const tickers = () => getters.tickers as Ticker[]
 export const leaderboard = () => getters.leaderboard as User[]
 
 export const isLoggedIn = () => getters.isLoggedIn as boolean
+
+export const currentTicker = () => getters.currentTicker as Ticker
+
+export const snackbar = () => getters.snackbar as SnackbarState
 
 // Mutations
 export const setUser = (user: User) => {
@@ -81,4 +114,12 @@ export const setLeaderboard = (leaderboard: User[]) => {
 }
 export const setPair = (pair: String) => {
   store.commit('setPair', pair)
+}
+
+export const setSnackbar = (snackbar: SnackbarState) => {
+  store.commit('setSnackbar', snackbar)
+}
+
+export const hideSnackbar = () => {
+  store.commit('setSnackbar', { ...store.state.snackbar, active: false })
 }
