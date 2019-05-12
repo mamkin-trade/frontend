@@ -1,15 +1,15 @@
 <template lang="pug">
   v-container
     v-layout(row wrap)
-      v-flex.py-1(xs 12)
-        Balance
-      v-flex.py-1(xs 12)
-        Tickers
-      v-flex.py-1(xs 12)
+      v-flex.pa-1(xs12 md4 lg3)
         OrderForm
-      v-flex.py-1(xs 12)
+      v-flex.pa-1(xs12 md8 lg6)
+        Tickers
+      v-flex.pa-1(xs12 md4 lg3)
+        Balance
+      v-flex.pa-1(xs12 md8 lg12)
         Orders
-      v-flex.py-1(xs 12)
+      v-flex.pa-1(xs12)
         Leaderboard(needsTitle)
 </template>
 

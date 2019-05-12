@@ -2,9 +2,12 @@
   v-card(flat)
     v-card-title {{$t("orderForm.title")}}
     v-form(ref='form').pa-4
-      v-text-field(:label='$t("pair")'
-      v-model='pair'
-      disabled)
+      v-tooltip(right)
+        v-text-field(:label='$t("pair")'
+        v-model='pair'
+        disabled
+        slot='activator')
+        span {{$t("pairTip")}}
       v-select(:items='localizedSides'
       :label='$t("side")'
       v-model='side')

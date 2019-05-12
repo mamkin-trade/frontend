@@ -73,6 +73,7 @@ export const messages = {
       orderDeleted: 'Ордер успешно удален',
     },
     cancel: 'Отменить',
+    pairTip: 'Попробуйте выбрать тикер',
   },
   en: {
     title: '*MAMKIN TRADE*',
@@ -148,5 +149,6 @@ export const messages = {
       orderDeleted: 'Order was deleted successfully',
     },
     cancel: 'Cancel',
+    pairTip: 'Try selecting a ticker',
   },
 }
