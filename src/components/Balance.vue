@@ -41,12 +41,15 @@ export default class Balance extends Vue {
     if (!user) {
       return [];
     }
-    return Object.keys(user.balance).map(key => {
-      return {
-        currency: key.toUpperCase(),
-        amount: formatNumber(user.balance[key])
-      };
-    });
+    return Object.keys(user.balance)
+      .map(key => {
+        return {
+          currency: key.toUpperCase(),
+          amount: formatNumber(user.balance[key]),
+          numberAmount: user.balance[key]
+        };
+      })
+      .filter(v => v.numberAmount > 0);
   }
 
   get overallBalance() {
