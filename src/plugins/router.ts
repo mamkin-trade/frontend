@@ -38,7 +38,11 @@ router.beforeEach((to, _, next) => {
   if (requiresAuth && !user) {
     next('/')
   } else {
-    next()
+    if (to.path === '/' && user) {
+      next('/cabinet')
+    } else {
+      next()
+    }
   }
 })
 
