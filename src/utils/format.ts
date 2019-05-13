@@ -1,14 +1,26 @@
 // Dependencies
 import moment = require('moment')
 import { i18n } from '../plugins/i18n'
+import { precision } from './precision'
+const commaNumber = require('comma-number')
 
-export function formatNumber(n: number, sig?: number) {
+const balanceFormat = commaNumber.bindWith(' ', '.')
+
+interface formatNumberOptions {
+  sig?: number
+  currency?: string
+}
+
+export function formatNumber(n: number, options: formatNumberOptions = {}) {
   let res = n
-  if (sig !== undefined) {
-    const tens = 10 ** sig
+  if (options.sig !== undefined) {
+    const tens = 10 ** options.sig
+    res = Math.floor(n * tens) / tens
+  } else if (options.currency) {
+    const tens = 10 ** precision(options.currency)
     res = Math.floor(n * tens) / tens
   }
-  return res.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return balanceFormat(res)
 }
 
 export function formatPair(pair: string) {

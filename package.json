@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "comma-number": "^2.0.1",
     "moment": "^2.24.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",

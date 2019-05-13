@@ -45,7 +45,7 @@ export default class Balance extends Vue {
       .map(key => {
         return {
           currency: key.toUpperCase(),
-          amount: formatNumber(user.balance[key]),
+          amount: formatNumber(user.balance[key], { currency: key }),
           numberAmount: user.balance[key]
         };
       })
@@ -57,7 +57,7 @@ export default class Balance extends Vue {
     if (!user) {
       return formatNumber(0);
     }
-    return formatNumber(user.overallBalance, 2);
+    return formatNumber(user.overallBalance, { currency: "USD" });
   }
 }
 </script>
