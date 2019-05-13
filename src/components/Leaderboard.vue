@@ -6,7 +6,7 @@
       template(v-slot:items='props')
         td {{ props.item.index }}
         td {{ props.item.name }}
-        td ${{ props.item.overallBalance }}
+        td ${{ formatNumber(props.item.overallBalance, 2) }}
 </template>
 
 <script lang="ts">

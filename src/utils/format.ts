@@ -2,8 +2,13 @@
 import moment = require('moment')
 import { i18n } from '../plugins/i18n'
 
-export function formatNumber(n: number) {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+export function formatNumber(n: number, sig?: number) {
+  let res = n
+  if (sig !== undefined) {
+    const tens = 10 ** sig
+    res = Math.floor(n * tens) / tens
+  }
+  return res.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
 export function formatPair(pair: string) {

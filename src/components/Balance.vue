@@ -54,7 +54,7 @@ export default class Balance extends Vue {
     if (!user) {
       return formatNumber(0);
     }
-    return formatNumber(user.overallBalance);
+    return formatNumber(user.overallBalance, 2);
   }
 }
 </script>
