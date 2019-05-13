@@ -81,7 +81,7 @@ export const messages = {
       info:
         'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health',
       rules: {
-        register: 'Login 💪',
+        register: 'Login 💪 test',
         money: 'Get virtual $10,000 💰',
         success: "Show'em how it's done 💣",
       },
