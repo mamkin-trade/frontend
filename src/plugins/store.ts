@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { Ticker } from '../models/ticker'
 import { User } from '../models/user'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -79,6 +80,7 @@ const storeOptions = {
 
     snackbar: (state: State) => state.snackbar,
   },
+  plugins: [createPersistedState()],
 }
 
 export const store = new Vuex.Store<State>(storeOptions)
