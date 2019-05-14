@@ -207,7 +207,7 @@ export default class OrderForm extends Vue {
       await api.postOrder(
         user,
         store.pair(),
-        +this.amount,
+        this.amount,
         this.side,
         this.type,
         this.isMarket ? undefined : +this.price

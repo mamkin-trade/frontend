@@ -27,7 +27,7 @@ export async function getOrders(user: User, skip: number, limit: number) {
 export async function postOrder(
   user: User,
   symbol: string,
-  amount: number,
+  amount: string,
   side: string,
   type: string,
   price?: number
