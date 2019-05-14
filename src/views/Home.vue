@@ -45,10 +45,11 @@ export default class Home extends Vue {
     });
   }
   onSignInError(error: Error) {
-    console.log(
-      "Something went wrong with Facebook login, please, try again later.",
-      error
-    );
+    store.setSnackbar({
+      message: "errors.facebook",
+      color: "error",
+      active: true
+    });
   }
 }
 </script>
