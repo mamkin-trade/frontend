@@ -207,7 +207,10 @@ export default class OrderForm extends Vue {
   }
 
   useAll() {
-    this.amount = `${this.maximumAmount}`;
+    this.amount = `${new Big(this.maximumAmount).round(
+      precision(this.pair),
+      0
+    )}`;
   }
 }
 </script>
