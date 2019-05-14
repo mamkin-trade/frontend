@@ -12,7 +12,7 @@
 
       .headline.pt-4.pb-2 {{ $t('leaderboard.title') }}
 
-    Leaderboard.pb-4
+    Leaderboard.pb-4.md-6
 
     .caption.text-xs-center
       div(v-html='$t("home.opensource")')
