@@ -39,9 +39,17 @@ declare const FB: any;
 export default class Home extends Vue {
   onSignInSuccess(response: any) {
     FB.api("/me", async (dude: any) => {
-      const user = await loginFacebook(response.authResponse.accessToken);
-      store.setUser(user);
-      this.$router.replace("cabinet");
+      try {
+        const user = await loginFacebook(response.authResponse.accessToken);
+        store.setUser(user);
+        this.$router.replace("cabinet");
+      } catch(err) {
+        store.setSnackbar({
+          message: "errors.facebook",
+          color: "error",
+          active: true
+        });
+      }
     });
   }
   onSignInError(error: Error) {
