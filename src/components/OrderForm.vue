@@ -170,7 +170,9 @@ export default class OrderForm extends Vue {
     );
   }
   get currentPrice() {
-    return new Big(store.currentTicker().lastPrice || 0).toString();
+    return this.side === "buy"
+      ? new Big(store.currentTicker().ask || 0).toString()
+      : new Big(store.currentTicker().bid || 0).toString();
   }
 
   @Watch("side")

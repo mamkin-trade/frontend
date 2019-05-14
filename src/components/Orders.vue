@@ -24,7 +24,7 @@
             span {{formatDate(props.item.createdAt)}}
         td {{formatPair(props.item.symbol)}}
         td {{formatNumber(props.item.amount)}}
-        td {{formatNumber(props.item.price)}}
+        td {{props.item.price}}
         td {{$t(props.item.side)}}
         td {{$t(props.item.type)}}
         td {{formatBool(props.item.completed)}}
