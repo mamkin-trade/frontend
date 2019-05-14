@@ -23,7 +23,7 @@
             span(slot='activator') {{formatShortDate(props.item.createdAt)}}
             span {{formatDate(props.item.createdAt)}}
         td {{formatPair(props.item.symbol)}}
-        td {{formatNumber(props.item.amount)}}
+        td {{props.item.amount}}
         td {{props.item.price}}
         td {{$t(props.item.side)}}
         td {{$t(props.item.type)}}
