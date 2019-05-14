@@ -15,7 +15,10 @@ interface formatNumberOptions {
   currency?: string
 }
 
-export function formatNumber(n: number, options: formatNumberOptions = {}) {
+export function formatNumber(
+  n: number | Big,
+  options: formatNumberOptions = {}
+) {
   let res = new Big(n)
   res.toString()
   if (options.sig !== undefined) {

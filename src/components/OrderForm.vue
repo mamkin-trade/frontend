@@ -4,7 +4,7 @@
     v-form(ref='form').pa-4
       v-tooltip(right)
         v-text-field(:label='$t("pair")'
-        v-model='pair'
+        :value='formatPair(pair)'
         disabled
         slot='activator')
         span {{$t("pairTip")}}
@@ -18,7 +18,8 @@
       :label='$t("price")'
       v-model='isMarket ? currentPrice : price'
       type='number'
-      :suffix='secondCurrency')
+      :suffix='secondCurrency'
+      :rules='priceRules')
       v-text-field(:label='$t("amount")'
       v-model='amount'
       type='number'
@@ -26,7 +27,7 @@
       :suffix='firstCurrency'
       :rules='amountRules')
       v-text-field(:label='$t("total")'
-      :value='amount * (isMarket ? currentPrice : price)'
+      :value='total'
       disabled
       type='number'
       :suffix='secondCurrency')
@@ -46,30 +47,36 @@ import Component from "vue-class-component";
 import axios from "axios";
 import * as store from "../plugins/store";
 import * as api from "../utils/api";
-import { formatPair } from "../utils/format";
+import { formatPair, formatNumber } from "../utils/format";
 import { i18n } from "../plugins/i18n";
 import { setTimeout } from "timers";
 import { maxAvailable } from "../utils/maxAvailable";
+import { Big } from "big.js";
+import { minimumOrderSize, maximumOrderSize } from "../utils/orderSize";
+import { precision } from "../utils/precision";
 
 @Component
 export default class OrderForm extends Vue {
-  amount = 0;
+  formatPair = formatPair;
+
   side = "sell";
   sides = ["sell", "buy"];
   type = "market";
   types = ["limit", "market"];
+
   price = "";
+  amount = "";
 
   loading = false;
 
   get pair() {
-    return formatPair(store.pair());
+    return store.pair();
   }
   get firstCurrency() {
-    return store.pair().substr(0, 3);
+    return this.pair.substr(0, 3);
   }
   get secondCurrency() {
-    return store.pair().substr(3);
+    return this.pair.substr(3);
   }
   get localizedSides() {
     return this.sides.map(t => {
@@ -84,11 +91,73 @@ export default class OrderForm extends Vue {
   get isMarket() {
     return this.type === "market";
   }
-  get currentPrice() {
-    return store.currentTicker().lastPrice;
+
+  // Rules
+  get priceRules() {
+    return [
+      (v: string) =>
+        new Big(v || "0").s === 1 || i18n.t("errors.greaterThanZero"),
+      (v: string) =>
+        !new Big(v || "0").eq(0) || i18n.t("errors.greaterThanZero"),
+      (v: string) =>
+        new Big(v || "0").gte(
+          new Big(1).div(
+            new Big(10).pow(
+              precision(this.firstCurrency) + precision(this.secondCurrency)
+            )
+          )
+        ) ||
+        i18n.t("errors.greaterThanMinimumPrice", {
+          minimumPrice: new Big(1)
+            .div(
+              new Big(10).pow(
+                precision(this.firstCurrency) + precision(this.secondCurrency)
+              )
+            )
+            .toString()
+        }),
+      (v: string) =>
+        new Big(v || "0").lte("100000000") ||
+        i18n.t("errors.lessThanMaximumPrice", {
+          maximumPrice: "100000000"
+        })
+    ];
   }
+  get amountRules() {
+    return [
+      (v: string) =>
+        new Big(v || "0").s === 1 || i18n.t("errors.greaterThanZero"),
+      (v: string) =>
+        +v <= +this.maximumAmount || i18n.t("errors.insufficientFunds"),
+      (v: string) =>
+        new Big(v || "0").gte(minimumOrderSize(this.pair)) ||
+        i18n.t("errors.minimumOrderSize", {
+          minimumOrderSize: minimumOrderSize(this.pair)
+        }),
+      (v: string) =>
+        new Big(v || "0").lte(maximumOrderSize(this.pair)) ||
+        i18n.t("errors.maximumOrderSize", {
+          maximumOrderSize: maximumOrderSize(this.pair)
+        })
+    ];
+  }
+
+  // Amounts
+  get total() {
+    let price = this.isMarket
+      ? new Big(store.currentTicker().lastPrice || 0)
+      : new Big(this.price || 0);
+    return price
+      .mul(new Big(this.amount || 0))
+      .round(precision(this.secondCurrency), 0);
+  }
+
+  // Computed
   get amountHint() {
-    return `${i18n.t("maximum")} ${this.maximumAmount} ${this.firstCurrency}`;
+    return `${i18n.t("available")} ${new Big(this.maximumAmount).round(
+      precision(this.pair),
+      0
+    )} ${this.firstCurrency}`;
   }
   get maximumAmount() {
     return (
@@ -99,12 +168,8 @@ export default class OrderForm extends Vue {
       ) || 0
     );
   }
-  get amountRules() {
-    return [
-      (v: string) => +v > 0 || i18n.t("errors.amountGreaterThanZero"),
-      (v: string) =>
-        +v <= this.maximumAmount || i18n.t("errors.insufficientFunds")
-    ];
+  get currentPrice() {
+    return new Big(store.currentTicker().lastPrice || 0).toString();
   }
 
   async submit() {
@@ -120,7 +185,7 @@ export default class OrderForm extends Vue {
       await api.postOrder(
         user,
         store.pair(),
-        this.amount,
+        +this.amount,
         this.side,
         this.type,
         this.isMarket ? undefined : +this.price
@@ -142,7 +207,7 @@ export default class OrderForm extends Vue {
   }
 
   useAll() {
-    this.amount = this.maximumAmount;
+    this.amount = `${this.maximumAmount}`;
   }
 }
 </script>
