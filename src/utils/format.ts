@@ -2,7 +2,11 @@
 import moment = require('moment')
 import { i18n } from '../plugins/i18n'
 import { precision } from './precision'
+import { Big } from 'big.js'
 const commaNumber = require('comma-number')
+
+Big.PE = 40
+Big.NE = -40
 
 const balanceFormat = commaNumber.bindWith(' ', '.')
 
@@ -12,15 +16,14 @@ interface formatNumberOptions {
 }
 
 export function formatNumber(n: number, options: formatNumberOptions = {}) {
-  let res = n
+  let res = new Big(n)
+  res.toString()
   if (options.sig !== undefined) {
-    const tens = 10 ** options.sig
-    res = Math.floor(n * tens) / tens
+    res = res.round(options.sig, 0)
   } else if (options.currency) {
-    const tens = 10 ** precision(options.currency)
-    res = Math.floor(n * tens) / tens
+    res = res.round(precision(options.currency), 0)
   }
-  return balanceFormat(res)
+  return balanceFormat(res.toString())
 }
 
 export function formatPair(pair: string) {
@@ -28,7 +31,7 @@ export function formatPair(pair: string) {
 }
 
 export function formatVolume(volume: number) {
-  return volume.toFixed(3)
+  return formatNumber(volume, { sig: 3 })
 }
 
 export function formatDate(date: string) {

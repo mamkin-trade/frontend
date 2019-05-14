@@ -20,7 +20,7 @@
         tr(:class='isSelected(props.item.pair) ? "blue lighten-5" : ""'
         @click='select(props.item.pair)')
           td {{formatPair(props.item.pair)}}
-          td {{props.item.lastPrice}}
+          td {{formatNumber(props.item.lastPrice)}}
           td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
           td
             v-tooltip(bottom)

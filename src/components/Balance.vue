@@ -9,7 +9,7 @@
     disable-initial-sort)
       template(v-slot:items='props')
         td {{ props.item.currency }}
-        td {{ formatNumber(props.item.amount) }}
+        td {{ props.item.amount }}
       template(v-slot:footer)
         td(:colspan="headers.length")
            strong {{$t("balance.overall")}}: ${{overallBalance}}
