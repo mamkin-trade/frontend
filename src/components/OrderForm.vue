@@ -54,6 +54,7 @@ import { maxAvailable } from "../utils/maxAvailable";
 import { Big } from "big.js";
 import { minimumOrderSize, maximumOrderSize } from "../utils/orderSize";
 import { precision } from "../utils/precision";
+import { Watch } from "vue-property-decorator";
 
 @Component
 export default class OrderForm extends Vue {
@@ -170,6 +171,27 @@ export default class OrderForm extends Vue {
   }
   get currentPrice() {
     return new Big(store.currentTicker().lastPrice || 0).toString();
+  }
+
+  @Watch("side")
+  onSideChanged(val: any, oldVal: any) {
+    if (val !== oldVal) {
+      (this.$refs.form as any).resetValidation();
+    }
+  }
+
+  @Watch("type")
+  onTypeChanged(val: any, oldVal: any) {
+    if (val !== oldVal) {
+      (this.$refs.form as any).resetValidation();
+    }
+  }
+
+  @Watch("pair")
+  onPairChanged(val: any, oldVal: any) {
+    if (val !== oldVal) {
+      (this.$refs.form as any).resetValidation();
+    }
   }
 
   async submit() {
