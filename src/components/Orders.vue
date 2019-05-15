@@ -29,7 +29,7 @@
         td {{$t(props.item.type)}}
         td {{formatBool(props.item.completed)}}
         td {{formatBool(props.item.cancelled)}}
-        td(v-if='!props.item.completionDate')
+        td(v-if='props.item.completionDate')
           v-tooltip(bottom)
             span(slot='activator') {{formatShortDate(props.item.completionDate)}}
             span {{formatDate(props.item.completionDate)}}
