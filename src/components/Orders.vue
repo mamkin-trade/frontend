@@ -163,7 +163,7 @@ export default class Orders extends Vue {
       const { page, rowsPerPage } = this.pagination;
       const response = await api.getOrders(
         this.$props.userId || user,
-        page * rowsPerPage,
+        (page - 1) * rowsPerPage,
         rowsPerPage
       );
       this.totalOrders = response.count;
