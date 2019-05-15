@@ -73,9 +73,13 @@ export default class Tickers extends Vue {
   volumeClass(ticker: Ticker) {
     const direction = getChangeDirection(ticker);
     if (direction === ChangeDirection.up) {
-      return "green--text";
+      return this.isDark
+        ? "green--text text--lighten-2"
+        : "green--text text--darken-2";
     } else if (direction === ChangeDirection.down) {
-      return "red--text";
+      return this.isDark
+        ? "red--text text--lighten-2"
+        : "red--text text--darken-2";
     } else {
       return "";
     }
