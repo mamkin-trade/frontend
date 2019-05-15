@@ -65,19 +65,19 @@ export default class Navbar extends Vue {
 </script>
 
 <style>
-nav.a:link {
+nav a:link {
   text-decoration: none;
 }
 
-nav.a:visited {
+nav a:visited {
   text-decoration: none;
 }
 
-nav.a:hover {
+nav a:hover {
   text-decoration: underline;
 }
 
-nav.a:active {
+nav a:active {
   text-decoration: underline;
 }
 </style>
