@@ -50,8 +50,6 @@ export default class Balance extends Vue {
       } finally {
         this.userLoading = false;
       }
-    } else {
-      this.user = store.user();
     }
   }
 
@@ -63,18 +61,19 @@ export default class Balance extends Vue {
   }
 
   get balance() {
-    if (!this.user || !this.user.balance) {
+    const user = this.$props.userId ? this.user : store.user();
+    if (!user || !user.balance) {
       return [];
     }
-    return Object.keys(this.user.balance)
+    return Object.keys(user.balance)
       .map(key => {
-        if (!this.user) {
+        if (!user) {
           return undefined;
         }
         return {
           currency: key.toUpperCase(),
-          amount: formatNumber(this.user.balance[key], { currency: key }),
-          numberAmount: this.user.balance[key]
+          amount: formatNumber(user.balance[key], { currency: key }),
+          numberAmount: user.balance[key]
         };
       })
       .filter(v => !!v)
@@ -82,10 +81,11 @@ export default class Balance extends Vue {
   }
 
   get overallBalance() {
-    if (!this.user || !this.user.balance) {
+    const user = this.$props.userId ? this.user : store.user();
+    if (!user || !user.balance) {
       return formatNumber(0);
     }
-    return formatNumber(this.user.overallBalance, { currency: "USD" });
+    return formatNumber(user.overallBalance, { currency: "USD" });
   }
 
   open() {
