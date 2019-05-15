@@ -54,6 +54,7 @@ export async function updateUser() {
         token: user.token,
         email: user.email,
         facebookId: user.facebookId,
+        telegramId: user.telegramId,
       })
     }
   } finally {
