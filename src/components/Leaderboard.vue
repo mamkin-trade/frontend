@@ -6,7 +6,7 @@
       template(v-slot:items='props')
         td {{ props.item.index }}
         td {{ props.item.name }}
-        td ${{ formatNumber(props.item.overallBalance, { sig: 2 }) }}
+        td.text-no-wrap ${{ formatNumber(props.item.overallBalance, { sig: 2 }) }}
         td
           v-icon(small @click='open(props.item._id)') link
 </template>
