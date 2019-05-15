@@ -83,7 +83,7 @@ export const messages = {
     cancel: 'Отменить',
     pairTip: 'Попробуйте выбрать тикер',
     support:
-      'Вопросы? Пишите <a target="_blank" href="https://t.me/borodutch">@borodutch</a>',
+      'Вопросы? Присоединяйтесь к <a target="_blank" href="https://t.me/joinchat/BIlEBxNgY3QDF3bzmigJsQ">нашей Телеграм группе</a>',
     stats:
       'Пользователей: {userCount}, ордеров: {ordersCount}, торгуется: ${totalUSDTraded}',
   },
@@ -171,7 +171,7 @@ export const messages = {
     cancel: 'Cancel',
     pairTip: 'Try selecting a ticker',
     support:
-      'Questions? Contact <a target="_blank" href="https://t.me/borodutch">@borodutch</a>',
+      'Questions? Join <a target="_blank" href="https://t.me/joinchat/BIlEBxNgY3QDF3bzmigJsQ">our Telegram group</a>',
     stats:
       'Users: {userCount}, orders: {ordersCount}, traded: ${totalUSDTraded}',
   },
