@@ -19,6 +19,8 @@ interface State {
   language?: String
 
   dark: Boolean
+
+  favPairs: String[]
 }
 
 interface SnackbarState {
@@ -46,6 +48,8 @@ const storeOptions = {
     string: undefined,
 
     dark: false,
+
+    favPairs: [],
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -75,6 +79,10 @@ const storeOptions = {
     setDark(state: State, dark: Boolean) {
       state.dark = dark
     },
+
+    setFavPairs(state: State, favPairs: String[]) {
+      state.favPairs = favPairs
+    },
   },
   getters: {
     user: (state: State) => state.user,
@@ -97,6 +105,8 @@ const storeOptions = {
 
     language: (state: State) => state.language,
     dark: (state: State) => state.dark,
+
+    favPairs: (state: State) => state.favPairs,
   },
   plugins: [createPersistedState()],
 }
@@ -120,6 +130,8 @@ export const snackbar = () => getters.snackbar as SnackbarState
 
 export const language = () => getters.language as string | undefined
 export const dark = () => getters.dark as boolean
+
+export const favPairs = () => getters.favPairs as string[]
 
 // Mutations
 export const setUser = (user: User) => {
@@ -151,4 +163,8 @@ export const setLanguage = (language: String) => {
 }
 export const setDark = (dark: Boolean) => {
   store.commit('setDark', dark)
+}
+
+export const setFavPairs = (favPairs: String[]) => {
+  store.commit('setFavPairs', favPairs)
 }

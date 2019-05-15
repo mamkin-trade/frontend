@@ -29,6 +29,8 @@
             v-tooltip(bottom)
               span(slot='activator') {{formatVolume(props.item.volume)}}
               span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
+          td
+            v-icon(small @click='toggleFav(props.item.pair)') {{isFavorite(props.item.pair) ? "star" : "star_border"}}
 </template>
 
 <script lang="ts">
@@ -58,7 +60,10 @@ export default class Tickers extends Vue {
       },
       { text: i18n.t("price"), value: "lastPrice" },
       { text: i18n.t("tickers.change"), value: "dailyChangePerc" },
-      { text: i18n.t("tickers.volume"), value: "volume" }
+      { text: i18n.t("tickers.volume"), value: "volume" },
+      {
+        sortable: false
+      }
     ];
   }
 
@@ -91,6 +96,21 @@ export default class Tickers extends Vue {
 
   select(pair: string) {
     store.setPair(pair);
+  }
+
+  isFavorite(pair: string) {
+    return store.favPairs().indexOf(pair) > -1;
+  }
+
+  toggleFav(pair: string) {
+    let favPairs = store.favPairs();
+    if (store.favPairs().indexOf(pair) > -1) {
+      favPairs = favPairs.filter(p => p !== pair);
+      store.setFavPairs(favPairs);
+    } else {
+      favPairs.push(pair);
+      store.setFavPairs(favPairs);
+    }
   }
 }
 </script>
