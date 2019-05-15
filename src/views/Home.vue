@@ -9,7 +9,7 @@
           p {{$t('home.rules.money')}}
           p {{$t('home.rules.success')}}
         
-        //- vue-telegram-login(mode='callback' telegram-login='mamkintrade_bot' @callback='yourCallbackFunction' radius='3')
+        vue-telegram-login(mode='callback' telegram-login='mamkintrade_bot' @callback='yourCallbackFunction' radius='3')
         fb-signin-button(:params='{ scope: "email", return_scopes: true}' @success='onSignInSuccess' @error='onSignInError') {{$t('home.facebook')}}
 
         .headline.pt-4.pb-3 {{ $t('leaderboard.title') }}
@@ -73,16 +73,7 @@ export default class Home extends Vue {
     });
   }
   onTelegramAuth(user: any) {
-    alert(
-      "Logged in as " +
-        user.first_name +
-        " " +
-        user.last_name +
-        " (" +
-        user.id +
-        (user.username ? ", @" + user.username : "") +
-        ")"
-    );
+    alert(JSON.stringify(user));
   }
 }
 </script>
