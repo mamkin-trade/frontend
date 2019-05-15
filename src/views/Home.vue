@@ -12,7 +12,8 @@
 
       .headline.pt-4.pb-2 {{ $t('leaderboard.title') }}
 
-    Leaderboard.pb-4
+    .md-6
+      Leaderboard.pb-4
 
     .caption.text-xs-center
       div(v-html='$t("home.opensource")')
@@ -38,16 +39,25 @@ declare const FB: any;
 export default class Home extends Vue {
   onSignInSuccess(response: any) {
     FB.api("/me", async (dude: any) => {
-      const user = await loginFacebook(response.authResponse.accessToken);
-      store.setUser(user);
-      this.$router.replace("cabinet");
+      try {
+        const user = await loginFacebook(response.authResponse.accessToken);
+        store.setUser(user);
+        this.$router.replace("cabinet");
+      } catch(err) {
+        store.setSnackbar({
+          message: "errors.facebook",
+          color: "error",
+          active: true
+        });
+      }
     });
   }
   onSignInError(error: Error) {
-    console.log(
-      "Something went wrong with Facebook login, please, try again later.",
-      error
-    );
+    store.setSnackbar({
+      message: "errors.facebook",
+      color: "error",
+      active: true
+    });
   }
 }
 </script>
