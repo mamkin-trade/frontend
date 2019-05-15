@@ -55,6 +55,7 @@ import { Big } from "big.js";
 import { minimumOrderSize, maximumOrderSize } from "../utils/orderSize";
 import { precision } from "../utils/precision";
 import { Watch } from "vue-property-decorator";
+import { updateUser } from "../utils/dataUpdater";
 
 @Component
 export default class OrderForm extends Vue {
@@ -219,6 +220,7 @@ export default class OrderForm extends Vue {
         color: "success",
         active: true
       });
+      updateUser();
     } catch (err) {
       store.setSnackbar({
         message: "errors.general",

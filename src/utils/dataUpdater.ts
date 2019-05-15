@@ -13,7 +13,7 @@ export function startUpdatingData() {
 }
 
 let leaderboardUpdating = false
-async function updateLeaderboard() {
+export async function updateLeaderboard() {
   if (leaderboardUpdating) {
     return
   }
@@ -26,7 +26,7 @@ async function updateLeaderboard() {
 }
 
 let tickersUpdating = false
-async function updateTickers() {
+export async function updateTickers() {
   if (tickersUpdating) {
     return
   }
@@ -39,7 +39,7 @@ async function updateTickers() {
 }
 
 let userUpdating = false
-async function updateUser() {
+export async function updateUser() {
   if (userUpdating) {
     return
   }

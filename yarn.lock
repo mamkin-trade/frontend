@@ -6252,6 +6252,11 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
+titlecaps@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/titlecaps/-/titlecaps-0.3.2.tgz#e115ff5985d1fd9dd1286148e1935b38a048b2c3"
+  integrity sha1-4RX/WYXR/Z3RKGFI4ZNbOKBIssM=
+
 to-arraybuffer@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/to-arraybuffer/-/to-arraybuffer-1.0.1.tgz#7d229b1fcc637e466ca081180836a7aabff83f43"
@@ -6319,6 +6324,11 @@ tough-cookie@~2.4.3:
   dependencies:
     psl "^1.1.24"
     punycode "^1.4.1"
+
+translit-rus-eng@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/translit-rus-eng/-/translit-rus-eng-1.0.7.tgz#02e1a1297ef6ee41979e8ba2aab0fc336787a505"
+  integrity sha1-AuGhKX727kGXnouiqrD8M2eHpQU=
 
 tryer@^1.0.0:
   version "1.0.1"

@@ -15,6 +15,8 @@ import Component from "vue-class-component";
 import * as store from "../plugins/store";
 import { formatNumber } from "../utils/format";
 import { i18n } from "../plugins/i18n";
+const translitRusEng = require("translit-rus-eng");
+const caps = require("titlecaps");
 
 @Component({
   props: {
@@ -44,6 +46,11 @@ export default class Leaderboard extends Vue {
     return store.leaderboard().map((u, i) => {
       const userCopy = Object.assign({}, u) as any;
       userCopy.index = i + 1;
+      if (i18n.locale !== "ru") {
+        userCopy.name = caps.titlecaps(
+          translitRusEng(userCopy.name).replace("`", "")
+        );
+      }
       return userCopy;
     });
   }
