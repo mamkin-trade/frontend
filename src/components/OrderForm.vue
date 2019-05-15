@@ -38,7 +38,8 @@
       depressed
       @click='submit'
       :loading='loading'
-      :disabled='loading') {{$t("orderForm.submit")}}
+      :disabled='loading'
+      :class='isDark ? "darken-1" : ""') {{$t("orderForm.submit")}}
 </template>
 
 <script lang="ts">
@@ -92,6 +93,9 @@ export default class OrderForm extends Vue {
   }
   get isMarket() {
     return this.type === "market";
+  }
+  get isDark() {
+    return store.dark();
   }
 
   // Rules
