@@ -4,10 +4,14 @@
       // Title
       v-toolbar-title.text-uppercase.grey--text
         v-tooltip(v-if='user' bottom)
-          span(slot='activator') {{$t('title')}}
+          span.hidden-xs-only(slot='activator') {{$t('title')}}
+          span.hidden-sm-and-up(slot='activator') {{$t('shortTitle')}}
           span {{user.name}}, {{user.email}}
         span(v-else slot='activator') {{$t('title')}}
       v-spacer
+      // Dark mode
+      v-btn(flat fab color='grey' @click='toggleMode')
+        v-icon(small) brightness_2
       // Language picker
       v-menu(offset-y)
         v-btn(flat slot='activator' color='grey' fab) {{currentLocale.icon}}
@@ -45,6 +49,9 @@ export default class Navbar extends Vue {
     return store.user();
   }
 
+  toggleMode() {
+    store.setDark(!store.dark());
+  }
   changeLanguage(locale: string) {
     i18n.locale = locale;
     store.setLanguage(locale);

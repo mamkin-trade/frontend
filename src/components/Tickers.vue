@@ -3,10 +3,13 @@
     v-card(flat)
       v-card-title.py-0 {{$t("tickers.title")}}
         v-spacer
-        v-text-field(append-icon='search'
-        :label='$t("search")'
-        single-line
-        v-model='search')
+        v-tooltip(bottom)
+          v-text-field(append-icon='search'
+          :label='$t("search")'
+          single-line
+          v-model='search'
+          slot='activator')
+          span {{$t("orderForm.searchHint")}}
     v-data-table(:headers='headers'
     :items='tickers'
     :loading='!tickers.length'
@@ -17,7 +20,7 @@
     :rows-per-page-text='$t("rowsPerPageText")'
     disable-initial-sort)
       template(v-slot:items='props')
-        tr(:class='isSelected(props.item.pair) ? "blue lighten-5" : ""'
+        tr(:class='isSelected(props.item.pair) ? isDark ? "blue-grey darken-2" : "blue-grey lighten-5" : ""'
         @click='select(props.item.pair)')
           td {{formatPair(props.item.pair)}}
           td {{formatNumber(props.item.lastPrice)}}
@@ -61,6 +64,10 @@ export default class Tickers extends Vue {
 
   get tickers() {
     return store.tickers();
+  }
+
+  get isDark() {
+    return store.dark();
   }
 
   volumeClass(ticker: Ticker) {

@@ -1,6 +1,7 @@
 export const messages = {
   ru: {
     title: '*МАМКИН ТРЕЙДЕР*',
+    shortTitle: '*МТ*',
     home: {
       info:
         'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для вашего психического здоровья',
@@ -59,6 +60,7 @@ export const messages = {
       title: 'Добавить ордер',
       submit: 'Добавить ордер',
       useAll: 'Использовать все',
+      searchHint: 'Попробуйте BTC/USD/ETH',
     },
     available: 'Доступно',
     total: 'Всего',
@@ -70,7 +72,8 @@ export const messages = {
       maximumOrderSize: 'Максимальный ордер {maximumOrderSize}',
       greaterThanMinimumPrice: 'Минимальная цена {minimumPrice}',
       lessThanMaximumPrice: 'Максимальная цена {maximumPrice}',
-      facebook: 'Не получилось зайти через Фейсбук, у вас верифицирован email на Фейсбуке?',
+      facebook:
+        'Не получилось зайти через Фейсбук, у вас верифицирован email на Фейсбуке?',
     },
     close: 'Закрыть',
     snackbar: {
@@ -82,6 +85,7 @@ export const messages = {
   },
   en: {
     title: '*MAMKIN TRADE*',
+    shortTitle: '*MT*',
     home: {
       info:
         'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health',
@@ -140,6 +144,7 @@ export const messages = {
       title: 'Add order',
       submit: 'Add order',
       useAll: 'Use all',
+      searchHint: 'Try BTC/USD/ETH',
     },
     available: 'Available',
     total: 'Total',
@@ -151,7 +156,8 @@ export const messages = {
       maximumOrderSize: 'Maximum order is {maximumOrderSize}',
       greaterThanMinimumPrice: 'Minimum price {minimumPrice}',
       lessThanMaximumPrice: 'Maximum price is {maximumPrice}',
-      facebook: 'Could not sign in with Facebook, do you have a verified email on Facebook?',
+      facebook:
+        'Could not sign in with Facebook, do you have a verified email on Facebook?',
     },
     close: 'Close',
     snackbar: {

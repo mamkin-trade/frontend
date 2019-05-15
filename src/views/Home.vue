@@ -73,3 +73,4 @@ export default class Home extends Vue {
   color: #fff;
 }
 </style>
+z

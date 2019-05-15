@@ -17,6 +17,8 @@ interface State {
   snackbar: SnackbarState
 
   language?: String
+
+  dark: Boolean
 }
 
 interface SnackbarState {
@@ -42,6 +44,8 @@ const storeOptions = {
     },
 
     string: undefined,
+
+    dark: false,
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -68,6 +72,9 @@ const storeOptions = {
     setLanguage(state: State, language: String) {
       state.language = language
     },
+    setDark(state: State, dark: Boolean) {
+      state.dark = dark
+    },
   },
   getters: {
     user: (state: State) => state.user,
@@ -89,6 +96,7 @@ const storeOptions = {
     snackbar: (state: State) => state.snackbar,
 
     language: (state: State) => state.language,
+    dark: (state: State) => state.dark,
   },
   plugins: [createPersistedState()],
 }
@@ -111,6 +119,7 @@ export const currentTicker = () => getters.currentTicker as Ticker
 export const snackbar = () => getters.snackbar as SnackbarState
 
 export const language = () => getters.language as string | undefined
+export const dark = () => getters.dark as boolean
 
 // Mutations
 export const setUser = (user: User) => {
@@ -133,11 +142,13 @@ export const setPair = (pair: String) => {
 export const setSnackbar = (snackbar: SnackbarState) => {
   store.commit('setSnackbar', snackbar)
 }
-
 export const hideSnackbar = () => {
   store.commit('setSnackbar', { ...store.state.snackbar, active: false })
 }
 
 export const setLanguage = (language: String) => {
   store.commit('setLanguage', language)
+}
+export const setDark = (dark: Boolean) => {
+  store.commit('setDark', dark)
 }
