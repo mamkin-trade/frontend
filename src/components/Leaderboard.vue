@@ -7,6 +7,8 @@
         td {{ props.item.index }}
         td {{ props.item.name }}
         td ${{ formatNumber(props.item.overallBalance, { sig: 2 }) }}
+        td
+          v-icon(small @click='open(props.item._id)') link
 </template>
 
 <script lang="ts">
@@ -38,7 +40,8 @@ export default class Leaderboard extends Vue {
         text: i18n.t("leaderboard.balance"),
         value: "overallBalance",
         sortable: false
-      }
+      },
+      { sortable: false }
     ];
   }
 
@@ -53,6 +56,10 @@ export default class Leaderboard extends Vue {
       }
       return userCopy;
     });
+  }
+
+  open(id: string) {
+    window.open(`https://mamkin.trade/user/${id}`, "_blank");
   }
 }
 </script>

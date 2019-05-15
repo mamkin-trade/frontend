@@ -1,12 +1,15 @@
 <template lang="pug">
-  .balance
+  .div
     v-card(flat)
-      v-card-title {{$t("balance.title")}}
+      v-card-title
+        | {{$t("balance.title")}}{{$props.userId ? " — " + this.user.name : ""}}
+        v-icon(small @click='open').pl-2 link
     v-data-table(:headers='headers'
     :items='balance'
     :rowsPerPageItems='rowsPerPageItems()'
     :rows-per-page-text='$t("rowsPerPageText")'
-    disable-initial-sort)
+    disable-initial-sort
+    :loading='userLoading')
       template(v-slot:items='props')
         td {{ props.item.currency }}
         td {{ props.item.amount }}
@@ -23,11 +26,34 @@ import * as store from "../plugins/store";
 import { formatNumber } from "../utils/format";
 import { i18n } from "../plugins/i18n";
 import { rowsPerPageItems } from "../utils/rowsPerPageItems";
+import { getUser } from "../utils/api";
+import { User } from "../models/user";
 
-@Component
+@Component({
+  props: {
+    userId: String
+  }
+})
 export default class Balance extends Vue {
   formatNumber = formatNumber;
   rowsPerPageItems = rowsPerPageItems;
+
+  userLoading = false;
+
+  user?: any = {};
+
+  async mounted() {
+    if (this.$props.userId) {
+      this.userLoading = true;
+      try {
+        this.user = await getUser(this.$props.userId);
+      } finally {
+        this.userLoading = false;
+      }
+    } else {
+      this.user = store.user();
+    }
+  }
 
   get headers() {
     return [
@@ -37,27 +63,37 @@ export default class Balance extends Vue {
   }
 
   get balance() {
-    const user = store.user();
-    if (!user) {
+    if (!this.user || !this.user.balance) {
       return [];
     }
-    return Object.keys(user.balance)
+    return Object.keys(this.user.balance)
       .map(key => {
+        if (!this.user) {
+          return undefined;
+        }
         return {
           currency: key.toUpperCase(),
-          amount: formatNumber(user.balance[key], { currency: key }),
-          numberAmount: user.balance[key]
+          amount: formatNumber(this.user.balance[key], { currency: key }),
+          numberAmount: this.user.balance[key]
         };
       })
-      .filter(v => v.numberAmount > 0);
+      .filter(v => !!v)
+      .filter(v => v!.numberAmount > 0);
   }
 
   get overallBalance() {
-    const user = store.user();
-    if (!user) {
+    if (!this.user || !this.user.balance) {
       return formatNumber(0);
     }
-    return formatNumber(user.overallBalance, { currency: "USD" });
+    return formatNumber(this.user.overallBalance, { currency: "USD" });
+  }
+
+  open() {
+    const user = store.user();
+    if (!user) {
+      return;
+    }
+    window.open(`https://mamkin.trade/user/${user._id}`, "_blank");
   }
 }
 </script>

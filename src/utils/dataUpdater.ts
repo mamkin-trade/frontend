@@ -49,7 +49,11 @@ export async function updateUser() {
   try {
     const user = store.user()
     if (user) {
-      store.setUser({ ...(await api.getUser(user._id)), token: user.token })
+      store.setUser({
+        ...(await api.getUser(user._id)),
+        token: user.token,
+        email: user.email,
+      })
     }
   } finally {
     userUpdating = false

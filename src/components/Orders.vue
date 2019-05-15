@@ -12,7 +12,7 @@
     :loading='loading'
     disable-initial-sort)
       template(v-slot:items='props')
-        td.pa-0.text-xs-center
+        td(v-if='!$props.userId').pa-0.text-xs-center
           v-icon(small
           v-if='!props.item.cancelled && !props.item.completed' 
           :disabled='orderDeleting'
@@ -29,7 +29,7 @@
         td {{$t(props.item.type)}}
         td {{formatBool(props.item.completed)}}
         td {{formatBool(props.item.cancelled)}}
-        td(v-if='props.item.completionDate')
+        td(v-if='!props.item.completionDate')
           v-tooltip(bottom)
             span(slot='activator') {{formatShortDate(props.item.completionDate)}}
             span {{formatDate(props.item.completionDate)}}
@@ -54,7 +54,11 @@ import { i18n } from "../plugins/i18n";
 import { rowsPerPageItems } from "../utils/rowsPerPageItems";
 import { Order } from "../models/order";
 
-@Component
+@Component({
+  props: {
+    userId: String
+  }
+})
 export default class Orders extends Vue {
   formatNumber = formatNumber;
   formatPair = formatPair;
@@ -72,10 +76,7 @@ export default class Orders extends Vue {
   };
 
   get headers() {
-    return [
-      {
-        sortable: false
-      },
+    const result: object[] = [
       {
         text: i18n.t("orders.created"),
         value: "createdAt",
@@ -118,6 +119,12 @@ export default class Orders extends Vue {
         sortable: false
       }
     ];
+    if (!this.$props.userId) {
+      result.unshift({
+        sortable: false
+      });
+    }
+    return result;
   }
 
   timer?: NodeJS.Timeout;
@@ -154,9 +161,8 @@ export default class Orders extends Vue {
     }
     try {
       const { page, rowsPerPage } = this.pagination;
-
       const response = await api.getOrders(
-        user,
+        this.$props.userId || user,
         page * rowsPerPage,
         rowsPerPage
       );

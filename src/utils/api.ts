@@ -17,9 +17,15 @@ export async function getLeaderboard() {
   return (await axios.get(`${base}/users/leaderboard`)).data as User[]
 }
 
-export async function getOrders(user: User, skip: number, limit: number) {
+export async function getOrders(
+  user: User | string,
+  skip: number,
+  limit: number
+) {
   return (await axios.get(
-    `${base}/orders/user/${user._id}?skip=${skip}&limit=${limit}`
+    `${base}/orders/user/${
+      typeof user === 'string' ? user : (user as User)._id
+    }?skip=${skip}&limit=${limit}`
   )).data as {
     count: number
     orders: Order[]
