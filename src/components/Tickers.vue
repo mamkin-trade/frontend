@@ -25,7 +25,7 @@
         tr(:class='isSelected(props.item.pair) ? isDark ? "blue-grey darken-2" : "blue-grey lighten-5" : ""'
         @click='select(props.item.pair)')
           td {{formatPair(props.item.pair)}}
-          td {{formatNumber(props.item.lastPrice)}}
+          td.text-no-wrap {{formatNumber(props.item.lastPrice)}}
           td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
           td.text-no-wrap
             v-tooltip(bottom)
