@@ -1,19 +1,20 @@
 <template lang="pug">
-  .home.pa-4
-    .text-xs-center
-      .headline
-        span(v-html='$t("home.info")')
-      .py-4
-        p {{$t('home.rules.register')}}
-        p {{$t('home.rules.money')}}
-        p {{$t('home.rules.success')}}
-      
-      fb-signin-button(:params='{ scope: "email", return_scopes: true}' @success='onSignInSuccess' @error='onSignInError') {{$t('home.facebook')}}
+  .v-container.pa-4
+    v-layout(row justify-space-around)
+      v-flex(xs12 md10).text-xs-center
+        .headline
+          span(v-html='$t("home.info")')
+        .py-4
+          p {{$t('home.rules.register')}}
+          p {{$t('home.rules.money')}}
+          p {{$t('home.rules.success')}}
+        
+        fb-signin-button(:params='{ scope: "email", return_scopes: true}' @success='onSignInSuccess' @error='onSignInError') {{$t('home.facebook')}}
 
-      .headline.pt-4.pb-2 {{ $t('leaderboard.title') }}
-
-    .md-6
-      Leaderboard.pb-4
+        .headline.pt-4.pb-3 {{ $t('leaderboard.title') }}
+    v-layout(row justify-space-around)
+      v-flex(xs12 sm10 md6 lg4)
+        Leaderboard.pb-4
 
     .caption.text-xs-center
       div(v-html='$t("home.opensource")')
@@ -43,7 +44,7 @@ export default class Home extends Vue {
         const user = await loginFacebook(response.authResponse.accessToken);
         store.setUser(user);
         this.$router.replace("cabinet");
-      } catch(err) {
+      } catch (err) {
         store.setSnackbar({
           message: "errors.facebook",
           color: "error",
