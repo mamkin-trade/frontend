@@ -15,6 +15,8 @@ interface State {
   pair: String
 
   snackbar: SnackbarState
+
+  language?: String
 }
 
 interface SnackbarState {
@@ -38,6 +40,8 @@ const storeOptions = {
       submessage: undefined,
       color: 'success',
     },
+
+    string: undefined,
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -60,6 +64,10 @@ const storeOptions = {
     setSnackbar(state: State, snackbar: SnackbarState) {
       state.snackbar = snackbar
     },
+
+    setLanguage(state: State, language: String) {
+      state.language = language
+    },
   },
   getters: {
     user: (state: State) => state.user,
@@ -79,6 +87,8 @@ const storeOptions = {
     },
 
     snackbar: (state: State) => state.snackbar,
+
+    language: (state: State) => state.language,
   },
   plugins: [createPersistedState()],
 }
@@ -99,6 +109,8 @@ export const isLoggedIn = () => getters.isLoggedIn as boolean
 export const currentTicker = () => getters.currentTicker as Ticker
 
 export const snackbar = () => getters.snackbar as SnackbarState
+
+export const language = () => getters.language as string | undefined
 
 // Mutations
 export const setUser = (user: User) => {
@@ -124,4 +136,8 @@ export const setSnackbar = (snackbar: SnackbarState) => {
 
 export const hideSnackbar = () => {
   store.commit('setSnackbar', { ...store.state.snackbar, active: false })
+}
+
+export const setLanguage = (language: String) => {
+  store.commit('setLanguage', language)
 }
