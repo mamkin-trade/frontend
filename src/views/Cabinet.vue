@@ -11,6 +11,8 @@
         Orders
       v-flex.pa-1(xs12)
         Leaderboard(needsTitle)
+    .text-xs-center.pt-4
+      div(v-html='$t("support")')
 </template>
 
 <script lang="ts">

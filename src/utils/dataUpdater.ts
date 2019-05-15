@@ -6,10 +6,12 @@ export function startUpdatingData() {
   updateLeaderboard()
   updateTickers()
   updateUser()
+  updateStats()
 
   setInterval(updateLeaderboard, 10 * 1000)
   setInterval(updateTickers, 10 * 1000)
   setInterval(updateUser, 10 * 1000)
+  setInterval(updateStats, 60 * 1000)
 }
 
 let leaderboardUpdating = false
@@ -51,5 +53,18 @@ export async function updateUser() {
     }
   } finally {
     userUpdating = false
+  }
+}
+
+let statsUpdating = false
+export async function updateStats() {
+  if (statsUpdating) {
+    return
+  }
+  statsUpdating = true
+  try {
+    store.setStats(await api.getStats())
+  } finally {
+    statsUpdating = false
   }
 }

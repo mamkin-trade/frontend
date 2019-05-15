@@ -12,7 +12,7 @@ export const messages = {
       },
       facebook: 'Войти через Facebook',
       opensource:
-        'Код в <a href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>',
+        'Код в <a target="_blank" href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>',
       privacy: 'Политика конфиденциальности',
     },
     loading: 'Загружается...',
@@ -82,6 +82,10 @@ export const messages = {
     },
     cancel: 'Отменить',
     pairTip: 'Попробуйте выбрать тикер',
+    support:
+      'Вопросы? Пишите <a target="_blank" href="https://t.me/borodutch">@borodutch</a>',
+    stats:
+      'Пользователей: {userCount}, ордеров: {ordersCount}, торгуется: ${totalUSDTraded}',
   },
   en: {
     title: '*MAMKIN TRADE*',
@@ -96,7 +100,7 @@ export const messages = {
       },
       facebook: 'Login with Facebook',
       opensource:
-        'Fully <a href="https://github.com/mamkin-trade"><b>open source</b></a>',
+        'Fully <a target="_blank" href="https://github.com/mamkin-trade"><b>open source</b></a>',
       privacy: 'Privacy policy',
     },
     loading: 'Loading...',
@@ -166,5 +170,9 @@ export const messages = {
     },
     cancel: 'Cancel',
     pairTip: 'Try selecting a ticker',
+    support:
+      'Questions? Contact <a target="_blank" href="https://t.me/borodutch">@borodutch</a>',
+    stats:
+      'Users: {userCount}, orders: {ordersCount}, traded: ${totalUSDTraded}',
   },
 }

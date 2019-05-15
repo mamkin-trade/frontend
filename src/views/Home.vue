@@ -16,9 +16,12 @@
       v-flex(xs12 sm10 md6 lg4)
         Leaderboard.pb-4
 
-    .caption.text-xs-center
+    .text-xs-center
+      div {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded, { sig: 2 }) })}}
+      div(v-html='$t("support")')
       div(v-html='$t("home.opensource")')
-      router-link(to='/privacy') {{ $t('home.privacy') }}
+      .caption
+        router-link(to='/privacy') {{ $t('home.privacy') }}
 </template>
 
 <script lang="ts">
@@ -28,6 +31,7 @@ import Leaderboard from "../components/Leaderboard.vue";
 import { loginFacebook } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
+import { formatNumber } from "../utils/format";
 
 // FB object is global, declaring here for TS
 declare const FB: any;
@@ -38,6 +42,11 @@ declare const FB: any;
   }
 })
 export default class Home extends Vue {
+  formatNumber = formatNumber;
+
+  get stats() {
+    return store.stats();
+  }
   onSignInSuccess(response: any) {
     FB.api("/me", async (dude: any) => {
       try {

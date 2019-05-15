@@ -9,18 +9,20 @@ Vue.use(Vuex)
 
 interface State {
   user?: User
-
   tickers: Ticker[]
   leaderboard: User[]
   pair: String
-
   snackbar: SnackbarState
-
   language?: String
-
   dark: Boolean
-
   favPairs: String[]
+  stats?: StatsState
+}
+
+export interface StatsState {
+  userCount: number
+  ordersCounr: number
+  totalUSDTraded: number
 }
 
 interface SnackbarState {
@@ -33,23 +35,19 @@ interface SnackbarState {
 const storeOptions = {
   state: {
     user: undefined,
-
     tickers: [],
     leaderboard: [],
     pair: 'BTCUSD',
-
     snackbar: {
       message: '',
       active: false,
       submessage: undefined,
       color: 'success',
     },
-
     string: undefined,
-
     dark: false,
-
     favPairs: [],
+    stats: undefined,
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -58,7 +56,6 @@ const storeOptions = {
     logout(state: State) {
       state.user = undefined
     },
-
     setTickers(state: State, tickers: Ticker[]) {
       state.tickers = tickers
     },
@@ -68,31 +65,28 @@ const storeOptions = {
     setPair(state: State, pair: String) {
       state.pair = pair
     },
-
     setSnackbar(state: State, snackbar: SnackbarState) {
       state.snackbar = snackbar
     },
-
     setLanguage(state: State, language: String) {
       state.language = language
     },
     setDark(state: State, dark: Boolean) {
       state.dark = dark
     },
-
     setFavPairs(state: State, favPairs: String[]) {
       state.favPairs = favPairs
+    },
+    setStats(state: State, stats: StatsState) {
+      state.stats = stats
     },
   },
   getters: {
     user: (state: State) => state.user,
-
     tickers: (state: State) => state.tickers,
     leaderboard: (state: State) => state.leaderboard,
     pair: (state: State) => state.pair,
-
     isLoggedIn: (state: State) => !!state.user,
-
     currentTicker: (state: State) => {
       for (const ticker of state.tickers) {
         if (ticker.pair === state.pair) {
@@ -100,13 +94,11 @@ const storeOptions = {
         }
       }
     },
-
     snackbar: (state: State) => state.snackbar,
-
     language: (state: State) => state.language,
     dark: (state: State) => state.dark,
-
     favPairs: (state: State) => state.favPairs,
+    stats: (state: State) => state.stats,
   },
   plugins: [createPersistedState()],
 }
@@ -118,20 +110,15 @@ const getters = store.getters
 
 export const user = () => getters.user as User | undefined
 export const pair = () => getters.pair as string
-
 export const tickers = () => getters.tickers as Ticker[]
 export const leaderboard = () => getters.leaderboard as User[]
-
 export const isLoggedIn = () => getters.isLoggedIn as boolean
-
 export const currentTicker = () => getters.currentTicker as Ticker
-
 export const snackbar = () => getters.snackbar as SnackbarState
-
 export const language = () => getters.language as string | undefined
 export const dark = () => getters.dark as boolean
-
 export const favPairs = () => getters.favPairs as string[]
+export const stats = () => getters.stats as StatsState
 
 // Mutations
 export const setUser = (user: User) => {
@@ -140,7 +127,6 @@ export const setUser = (user: User) => {
 export const logout = () => {
   store.commit('logout')
 }
-
 export const setTickers = (tickers: Ticker[]) => {
   store.commit('setTickers', tickers)
 }
@@ -150,21 +136,21 @@ export const setLeaderboard = (leaderboard: User[]) => {
 export const setPair = (pair: String) => {
   store.commit('setPair', pair)
 }
-
 export const setSnackbar = (snackbar: SnackbarState) => {
   store.commit('setSnackbar', snackbar)
 }
 export const hideSnackbar = () => {
   store.commit('setSnackbar', { ...store.state.snackbar, active: false })
 }
-
 export const setLanguage = (language: String) => {
   store.commit('setLanguage', language)
 }
 export const setDark = (dark: Boolean) => {
   store.commit('setDark', dark)
 }
-
 export const setFavPairs = (favPairs: String[]) => {
   store.commit('setFavPairs', favPairs)
+}
+export const setStats = (stats: StatsState) => {
+  store.commit('setStats', stats)
 }

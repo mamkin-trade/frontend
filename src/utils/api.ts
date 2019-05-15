@@ -1,3 +1,5 @@
+// Dependencies
+import { StatsState } from '../plugins/store'
 import axios from 'axios'
 import { Ticker } from '../models/ticker'
 import { User } from '../models/user'
@@ -53,4 +55,8 @@ export async function loginFacebook(accessToken: string) {
 
 export async function getUser(id: string) {
   return (await axios.get(`${base}/users/${id}`)).data as User
+}
+
+export async function getStats() {
+  return (await axios.get(`${base}/stats`)).data as StatsState
 }
