@@ -29,7 +29,7 @@
 import Vue from "vue";
 import axios from "axios";
 import Leaderboard from "../components/Leaderboard.vue";
-import { loginFacebook } from "../utils/api";
+import { loginFacebook, loginTelegram } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
@@ -72,8 +72,18 @@ export default class Home extends Vue {
       active: true
     });
   }
-  onTelegramAuth(user: any) {
-    alert(JSON.stringify(user));
+  async onTelegramAuth(loginInfo: any) {
+    try {
+      const user = await loginTelegram(loginInfo);
+      store.setUser(user);
+      this.$router.replace("cabinet");
+    } catch (err) {
+      store.setSnackbar({
+        message: "errors.telegram",
+        color: "error",
+        active: true
+      });
+    }
   }
 }
 </script>
@@ -88,4 +98,3 @@ export default class Home extends Vue {
   color: #fff;
 }
 </style>
-z

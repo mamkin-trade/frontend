@@ -59,6 +59,10 @@ export async function loginFacebook(accessToken: string) {
   })).data as User
 }
 
+export async function loginTelegram(loginInfo: any) {
+  return (await axios.post(`${base}/login/telegram`, loginInfo)).data as User
+}
+
 export async function getUser(id: string) {
   return (await axios.get(`${base}/users/${id}`)).data as User
 }
