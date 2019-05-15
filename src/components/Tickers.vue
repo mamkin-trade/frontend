@@ -27,7 +27,7 @@
           td {{formatPair(props.item.pair)}}
           td {{formatNumber(props.item.lastPrice)}}
           td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
-          td
+          td.text-no-wrap
             v-tooltip(bottom)
               span(slot='activator') {{formatVolume(props.item.volume)}}
               span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
