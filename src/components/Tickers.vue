@@ -18,7 +18,9 @@
     :search='search'
     :rowsPerPageItems='rowsPerPageItems()'
     :rows-per-page-text='$t("rowsPerPageText")'
-    disable-initial-sort)
+    disable-initial-sort
+    :filter='filter'
+    :custom-sort='sort')
       template(v-slot:items='props')
         tr(:class='isSelected(props.item.pair) ? isDark ? "blue-grey darken-2" : "blue-grey lighten-5" : ""'
         @click='select(props.item.pair)')
@@ -111,6 +113,68 @@ export default class Tickers extends Vue {
       favPairs.push(pair);
       store.setFavPairs(favPairs);
     }
+  }
+
+  filter(val: string, search: string) {
+    const searches = search.split("/").filter(v => !!v);
+    for (const search of searches) {
+      if (`${val}`.toUpperCase().indexOf(search.toUpperCase()) > -1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  sort(items: Ticker[], index: string, isDescending: boolean) {
+    const favPairs = store.favPairs();
+    if (index === null) {
+      const favTickers = items.filter(t => favPairs.indexOf(t.pair) > -1);
+      const usualTickers = items.filter(t => favPairs.indexOf(t.pair) < 0);
+      return favTickers.concat(usualTickers);
+    }
+    return items.sort((a, b) => {
+      const aFav = favPairs.indexOf(a.pair) > -1;
+      const bFav = favPairs.indexOf(b.pair) > -1;
+      if (aFav && !bFav) {
+        return -1;
+      } else if (!aFav && bFav) {
+        return 1;
+      } else {
+        if (index === "pair") {
+          return a.pair > b.pair
+            ? isDescending
+              ? -1
+              : 1
+            : isDescending
+            ? 1
+            : -1;
+        } else if (index === "lastPrice") {
+          return (a.lastPrice || 0) > (b.lastPrice || 0)
+            ? isDescending
+              ? -1
+              : 1
+            : isDescending
+            ? 1
+            : -1;
+        } else if (index === "dailyChangePerc") {
+          return (a.dailyChangePerc || 0) > (b.dailyChangePerc || 0)
+            ? isDescending
+              ? -1
+              : 1
+            : isDescending
+            ? 1
+            : -1;
+        } else {
+          return (a.volume || 0) > (b.volume || 0)
+            ? isDescending
+              ? -1
+              : 1
+            : isDescending
+            ? 1
+            : -1;
+        }
+      }
+    });
   }
 }
 </script>
