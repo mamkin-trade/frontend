@@ -73,7 +73,6 @@ export default class Home extends Vue {
     });
   }
   async onTelegramAuth(loginInfo: any) {
-    alert(JSON.stringify(loginInfo));
     try {
       const user = await loginTelegram(loginInfo);
       store.setUser(user);
