@@ -6,7 +6,7 @@
         v-tooltip(v-if='user' bottom)
           span.hidden-xs-only(slot='activator') {{$t('title')}}
           span.hidden-sm-and-up(slot='activator') {{$t('shortTitle')}}
-          span {{user.name}}, {{user.email}}
+          span {{user.name}}, {{user.email || user.facebookId}}
         span(v-else slot='activator') {{$t('title')}}
       v-spacer
       // Dark mode

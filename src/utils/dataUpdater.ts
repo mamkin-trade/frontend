@@ -53,6 +53,7 @@ export async function updateUser() {
         ...(await api.getUser(user._id)),
         token: user.token,
         email: user.email,
+        facebookId: user.facebookId,
       })
     }
   } finally {
