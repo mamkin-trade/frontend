@@ -72,8 +72,7 @@ export const messages = {
       maximumOrderSize: 'Максимальный ордер {maximumOrderSize}',
       greaterThanMinimumPrice: 'Минимальная цена {minimumPrice}',
       lessThanMaximumPrice: 'Максимальная цена {maximumPrice}',
-      facebook:
-        'Не получилось зайти через Фейсбук, у вас верифицирован email на Фейсбуке?',
+      facebook: 'Не получилось зайти через Facebook',
     },
     close: 'Закрыть',
     snackbar: {
@@ -160,8 +159,7 @@ export const messages = {
       maximumOrderSize: 'Maximum order is {maximumOrderSize}',
       greaterThanMinimumPrice: 'Minimum price {minimumPrice}',
       lessThanMaximumPrice: 'Maximum price is {maximumPrice}',
-      facebook:
-        'Could not sign in with Facebook, do you have a verified email on Facebook?',
+      facebook: 'Could not sign in with Facebook',
     },
     close: 'Close',
     snackbar: {
