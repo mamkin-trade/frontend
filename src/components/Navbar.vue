@@ -2,12 +2,13 @@
   nav
     v-toolbar(flat app)
       // Title
-      v-toolbar-title.text-uppercase.grey--text
-        v-tooltip(v-if='user' bottom)
-          span.hidden-xs-only(slot='activator') {{$t('title')}}
-          span.hidden-sm-and-up(slot='activator') {{$t('shortTitle')}}
-          span {{user.name}}, {{user.email || user.facebookId || user.telegramId}}
-        span(v-else slot='activator') {{$t('title')}}
+      router-link(:to='isLoggedIn ? "/cabinet" : "/"')
+        v-toolbar-title.text-uppercase.grey--text
+          v-tooltip(v-if='user' bottom)
+            span.hidden-xs-only(slot='activator') {{$t('title')}}
+            span.hidden-sm-and-up(slot='activator') {{$t('shortTitle')}}
+            span {{user.name}}, {{user.email || user.facebookId || user.telegramId}}
+          span(v-else slot='activator') {{$t('title')}}
       v-spacer
       // Dark mode
       v-btn(flat fab color='grey' @click='toggleMode')
@@ -62,4 +63,22 @@ export default class Navbar extends Vue {
   }
 }
 </script>
+
+<style>
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+}
+</style>
 
