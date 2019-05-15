@@ -9,7 +9,7 @@
           p {{$t('home.rules.money')}}
           p {{$t('home.rules.success')}}
         
-        vue-telegram-login(mode='callback' telegram-login='mamkintrade_bot' @callback='yourCallbackFunction' radius='3')
+        vue-telegram-login.pb2(mode='callback' telegram-login='mamkintrade_bot' @callback='yourCallbackFunction' radius='3' userpic='false')
         fb-signin-button(:params='{ scope: "email", return_scopes: true}' @success='onSignInSuccess' @error='onSignInError') {{$t('home.facebook')}}
 
         .headline.pt-4.pb-3 {{ $t('leaderboard.title') }}
