@@ -9,6 +9,7 @@
           p {{$t('home.rules.money')}}
           p {{$t('home.rules.success')}}
         
+        //- vue-telegram-login(mode='callback' telegram-login='mamkintrade_bot' @callback='yourCallbackFunction' radius='3')
         fb-signin-button(:params='{ scope: "email", return_scopes: true}' @success='onSignInSuccess' @error='onSignInError') {{$t('home.facebook')}}
 
         .headline.pt-4.pb-3 {{ $t('leaderboard.title') }}
@@ -17,7 +18,7 @@
         Leaderboard.pb-4
 
     .text-xs-center
-      div {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded, { sig: 2 }) })}}
+      div(v-if='!!stats') {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded, { sig: 2 }) })}}
       div(v-html='$t("support")')
       div(v-html='$t("home.opensource")')
       .caption
@@ -32,13 +33,15 @@ import { loginFacebook } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
+const { vueTelegramLogin } = require("vue-telegram-login");
 
 // FB object is global, declaring here for TS
 declare const FB: any;
 
 @Component({
   components: {
-    Leaderboard
+    Leaderboard,
+    vueTelegramLogin
   }
 })
 export default class Home extends Vue {
@@ -68,6 +71,18 @@ export default class Home extends Vue {
       color: "error",
       active: true
     });
+  }
+  onTelegramAuth(user: any) {
+    alert(
+      "Logged in as " +
+        user.first_name +
+        " " +
+        user.last_name +
+        " (" +
+        user.id +
+        (user.username ? ", @" + user.username : "") +
+        ")"
+    );
   }
 }
 </script>

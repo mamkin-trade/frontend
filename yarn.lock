@@ -6681,6 +6681,11 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
+vue-telegram-login@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/vue-telegram-login/-/vue-telegram-login-2.1.0.tgz#a3b80acb88ab031ef46503975c1415fcc5d26c5f"
+  integrity sha512-d8ZdNQpWk9SDtGjMSjXv9yHJZePVtclPbacyBdyJjBLqhStEkfjivpyNz+1w/EJt5AozdZvYNgkHLOJo00zaTA==
+
 vue-template-compiler@^2.5.21:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.6.10.tgz#323b4f3495f04faa3503337a82f5d6507799c9cc"
