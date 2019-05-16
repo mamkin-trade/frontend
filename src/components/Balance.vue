@@ -2,7 +2,7 @@
   .div
     v-card(flat)
       v-card-title
-        | {{$t("balance.title")}}{{$props.userId ? " — " + this.user.name : ""}}
+        | {{$t("balance.title")}}{{$props.userId && this.user.name ? " — " + this.user.name : ""}}
         v-icon(small @click='open').pl-2 link
     v-data-table(:headers='headers'
     :items='balance'
