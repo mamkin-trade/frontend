@@ -11,17 +11,17 @@
           span(v-else slot='activator') {{$t('title')}}
       v-spacer
       // Dark mode
-      v-btn(flat fab color='grey' @click='toggleMode')
+      v-btn(flat icon color='grey' @click='toggleMode')
         v-icon(small) brightness_2
       // Language picker
       v-menu(offset-y)
-        v-btn(flat slot='activator' color='grey' fab) {{currentLocale.icon}}
+        v-btn(flat icon slot='activator' color='grey') {{currentLocale.icon}}
         v-list
           v-list-tile(v-for='locale in locales' @click='changeLanguage(locale.code)')
             v-list-tile-title {{locale.icon}}
       // Logout
       div(v-if='isLoggedIn')
-        v-btn(flat fab color='grey' @click='logout')
+        v-btn(flat icon color='grey' @click='logout')
           v-icon exit_to_app
 </template>
 
