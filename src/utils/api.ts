@@ -72,7 +72,11 @@ export async function getStats() {
 }
 
 export async function reset(user: User) {
-  return (await axios.post(`${base}/users/reset`, {
-    headers: { token: user.token },
-  })).data as Order
+  return (await axios.post(
+    `${base}/users/reset`,
+    {},
+    {
+      headers: { token: user.token },
+    }
+  )).data as Order
 }
