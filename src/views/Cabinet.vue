@@ -9,6 +9,8 @@
         Balance
       v-flex.pa-1(xs12 md8 lg12)
         Orders
+      v-flex.pa-1(xs12 md8 lg12)
+        Chart
       v-flex.pa-1(xs12)
         Leaderboard(needsTitle)
     .text-xs-center.pt-4
@@ -20,6 +22,7 @@ import Vue from "vue";
 import axios from "axios";
 import Leaderboard from "../components/Leaderboard.vue";
 import Tickers from "../components/Tickers.vue";
+import Chart from "../components/Chart.vue";
 import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
 import OrderForm from "../components/OrderForm.vue";
@@ -33,6 +36,7 @@ import { formatNumber } from "../utils/format";
     Tickers,
     Balance,
     Orders,
+    Chart,
     OrderForm
   }
 })
