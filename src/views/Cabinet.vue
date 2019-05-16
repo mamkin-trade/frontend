@@ -3,14 +3,14 @@
     v-layout(row wrap)
       v-flex.pa-1(xs12 md4 lg3)
         OrderForm
-      v-flex.pa-1(xs12 md8 lg6)
+      v-flex.pa-1(xs12 md8 lg9)
         Tickers
-      v-flex.pa-1(xs12 md4 lg3)
+      v-flex.pa-1(xs12)
+        Chart
+      v-flex.pa-1(xs12 md4)
         Balance
-      v-flex.pa-1(xs12 md8 lg12)
+      v-flex.pa-1(xs12 md8)
         Orders
-      //- v-flex.pa-1(xs12 md8 lg12)
-      //-   Chart
       v-flex.pa-1(xs12)
         Leaderboard(needsTitle)
     .text-xs-center.pt-4

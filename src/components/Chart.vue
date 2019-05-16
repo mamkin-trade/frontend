@@ -1,8 +1,10 @@
 <template lang="pug">
-  div
-    v-card(flat)
-      v-card-title {{$t("chart.title")}}
-      TradingView(:options="tvOptions")
+  v-card(flat)
+    v-expansion-panel.elevation-0(flat v-model='chartExpanded')
+      v-expansion-panel-content
+        template(v-slot:header)
+          v-card-title {{$t("chart.title")}}
+        TradingView(:options="tvOptions")
 </template>
 
 <script lang="ts">
@@ -17,6 +19,12 @@ import TradingView from "../components/TradingView.vue";
   }
 })
 export default class Home extends Vue {
+  get chartExpanded() {
+    return store.chartExpanded()
+  }
+  set chartExpanded(chartExpanded: boolean) {
+    store.setChartExpanded(chartExpanded)
+  }
   get tvOptions() {
     return {
       symbol: "BITFINEX:" + store.pair(),
