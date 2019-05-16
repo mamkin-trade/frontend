@@ -12,28 +12,29 @@
     :loading='loading'
     disable-initial-sort)
       template(v-slot:items='props')
-        td(v-if='!$props.userId').pa-0.text-xs-center
-          v-icon(small
-          v-if='!props.item.cancelled && !props.item.completed' 
-          :disabled='orderDeleting'
-          @click='deleteOrder(props.item)') delete
-          span(v-else) —
-        td
-          v-tooltip(bottom)
-            span(slot='activator') {{formatShortDate(props.item.createdAt)}}
-            span {{formatDate(props.item.createdAt)}}
-        td {{formatPair(props.item.symbol)}}
-        td {{props.item.amount}}
-        td {{props.item.price}}
-        td {{$t(props.item.side)}}
-        td {{$t(props.item.type)}}
-        td {{formatBool(props.item.completed)}}
-        td {{formatBool(props.item.cancelled)}}
-        td(v-if='props.item.completionDate')
-          v-tooltip(bottom)
-            span(slot='activator') {{formatShortDate(props.item.completionDate)}}
-            span {{formatDate(props.item.completionDate)}}
-        td(v-else) —
+        tr(:class='props.item.completed || props.item.cancelled ? isDark ? "grey--text" : "grey--text text--darken-1" : ""')
+          td(v-if='!$props.userId').pa-0.text-xs-center
+            v-icon(small
+            v-if='!props.item.cancelled && !props.item.completed' 
+            :disabled='orderDeleting'
+            @click='deleteOrder(props.item)') delete
+            span(v-else) —
+          td
+            v-tooltip(bottom)
+              span(slot='activator') {{formatShortDate(props.item.createdAt)}}
+              span {{formatDate(props.item.createdAt)}}
+          td {{formatPair(props.item.symbol)}}
+          td {{props.item.amount}}
+          td {{props.item.price}}
+          td {{$t(props.item.side)}}
+          td {{$t(props.item.type)}}
+          td {{formatBool(props.item.completed)}}
+          td {{formatBool(props.item.cancelled)}}
+          td(v-if='props.item.completionDate')
+            v-tooltip(bottom)
+              span(slot='activator') {{formatShortDate(props.item.completionDate)}}
+              span {{formatDate(props.item.completionDate)}}
+          td(v-else) —
 </template>
 
 <script lang="ts">
@@ -75,6 +76,9 @@ export default class Orders extends Vue {
     rowsPerPage: number;
   };
 
+  get isDark() {
+    return store.dark();
+  }
   get headers() {
     const result: object[] = [
       {
