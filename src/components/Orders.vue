@@ -152,7 +152,7 @@ export default class Orders extends Vue {
       return;
     }
     const user = store.user();
-    if (!user) {
+    if (!user && !this.$props.userId) {
       return;
     }
     this.ordersUpdating = true;
