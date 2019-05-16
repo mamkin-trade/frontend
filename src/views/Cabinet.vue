@@ -9,8 +9,8 @@
         Balance
       v-flex.pa-1(xs12 md8 lg12)
         Orders
-      v-flex.pa-1(xs12 md8 lg12)
-        Chart
+      //- v-flex.pa-1(xs12 md8 lg12)
+      //-   Chart
       v-flex.pa-1(xs12)
         Leaderboard(needsTitle)
     .text-xs-center.pt-4
