@@ -37,7 +37,7 @@
 import Vue from "vue";
 import axios from "axios";
 import Leaderboard from "../components/Leaderboard.vue";
-import { loginFacebook, loginTelegram } from "../utils/api";
+import { loginFacebook, loginTelegram, loginGoogle } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
@@ -84,11 +84,18 @@ export default class Home extends Vue {
       active: true
     });
   }
-  onGoogleSignInSuccess(googleUser: any) {
-    console.log(
-      googleUser.getBasicProfile(),
-      googleUser.getAuthResponse().id_token
-    );
+  async onGoogleSignInSuccess(googleUser: any) {
+    try {
+      const user = await loginGoogle(googleUser.getAuthResponse().id_token);
+      store.setUser(user);
+      this.$router.replace("cabinet");
+    } catch (err) {
+      store.setSnackbar({
+        message: "errors.google",
+        color: "error",
+        active: true
+      });
+    }
   }
   onGoogleSignInError(error: Error) {
     store.setSnackbar({

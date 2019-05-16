@@ -59,6 +59,12 @@ export async function loginFacebook(accessToken: string) {
   })).data as User
 }
 
+export async function loginGoogle(accessToken: string) {
+  return (await axios.post(`${base}/login/google`, {
+    accessToken,
+  })).data as User
+}
+
 export async function loginTelegram(loginInfo: any) {
   return (await axios.post(`${base}/login/telegram`, loginInfo)).data as User
 }
