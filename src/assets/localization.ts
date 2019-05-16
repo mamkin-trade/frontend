@@ -10,7 +10,8 @@ export const messages = {
         money: 'Получаете виртуальные $10,000 💰',
         success: 'Показываете всем, на что способны 💣',
       },
-      facebook: 'Войти через Facebook',
+      facebook: 'Войти через Фейсбук',
+      google: 'Войти через Гугл',
       opensource:
         'Код в <a target="_blank" href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>',
       privacy: 'Политика конфиденциальности',
@@ -77,6 +78,7 @@ export const messages = {
       lessThanMaximumPrice: 'Максимальная цена {maximumPrice}',
       facebook: 'Не получилось зайти через Фейсбук',
       telegram: 'Не получилось зайти через Телеграм',
+      google: 'Не получилось зайти через Гугл',
     },
     close: 'Закрыть',
     snackbar: {
@@ -107,6 +109,7 @@ export const messages = {
         success: "Show'em how it's done 💣",
       },
       facebook: 'Login with Facebook',
+      google: 'Login with Google',
       opensource:
         'Fully <a target="_blank" href="https://github.com/mamkin-trade"><b>open source</b></a>',
       privacy: 'Privacy policy',
@@ -173,6 +176,7 @@ export const messages = {
       lessThanMaximumPrice: 'Maximum price is {maximumPrice}',
       facebook: 'Could not sign in with Facebook',
       telegram: 'Could not sign in with Telegram',
+      google: 'Could not sign in with Google',
     },
     close: 'Close',
     snackbar: {

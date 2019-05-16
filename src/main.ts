@@ -6,6 +6,7 @@ import { store } from './plugins/store'
 import { i18n } from './plugins/i18n'
 import { startUpdatingData } from './utils/dataUpdater'
 import './plugins/facebook'
+import './plugins/google'
 import './plugins/vuetify'
 
 Vue.config.productionTip = true

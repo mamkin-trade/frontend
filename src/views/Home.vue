@@ -1,28 +1,36 @@
 <template lang="pug">
   .v-container.pa-4
-    v-layout(row justify-space-around)
-      v-flex(xs12 md10).text-xs-center
-        .headline
+    v-layout(column justify-center align-center).text-xs-center
+      v-flex(xs12 md10)
+        .headline.pb-4
           span(v-html='$t("home.info")')
-        .py-4
-          p {{$t('home.rules.register')}}
-          p {{$t('home.rules.money')}}
-          p {{$t('home.rules.success')}}
+        p {{$t('home.rules.register')}}
+        p {{$t('home.rules.money')}}
+        p {{$t('home.rules.success')}}
         
-        vue-telegram-login.pb2(mode='callback' telegram-login='mamkintrade_bot' @callback='onTelegramAuth' radius='3' :userpic='false')
-        fb-signin-button(:params='{ scope: "email", return_scopes: true}' @success='onSignInSuccess' @error='onSignInError') {{$t('home.facebook')}}
+      v-flex.pt-4
+        vue-telegram-login(mode='callback'
+        telegram-login='mamkintrade_bot'
+        @callback='onTelegramAuth'
+        radius='3'
+        :userpic='false')
+        g-signin-button(:params='{ client_id: googleClientId }'
+        @success='onGoogleSignInSuccess'
+        @error='onGoogleSignInError') {{$t("home.google")}}
+        fb-signin-button(:params='{ scope: "email", return_scopes: true}'
+        @success='onFacebookSignInSuccess'
+        @error='onFacebookSignInError') {{$t('home.facebook')}}
 
-        .headline.pt-4.pb-3 {{ $t('leaderboard.title') }}
-    v-layout(row justify-space-around)
-      v-flex(xs12 sm10 md6 lg4)
-        Leaderboard.pb-4
+      v-flex(xs12 sm10 md6 lg4).pt-4
+        .headline.pb-2 {{ $t('leaderboard.title') }}
+        Leaderboard
 
-    .text-xs-center
-      div(v-if='!!stats') {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded || 0, { sig: 2 }) })}}
-      div(v-html='$t("support")')
-      div(v-html='$t("home.opensource")')
-      .caption
-        router-link(to='/privacy') {{ $t('home.privacy') }}
+      v-flex.pt-2
+        div(v-if='!!stats') {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded || 0, { sig: 2 }) })}}
+        div(v-html='$t("support")')
+        div(v-html='$t("home.opensource")')
+        .caption
+          router-link(to='/privacy') {{ $t('home.privacy') }}
 </template>
 
 <script lang="ts">
@@ -50,7 +58,11 @@ export default class Home extends Vue {
   get stats() {
     return store.stats();
   }
-  onSignInSuccess(response: any) {
+  get googleClientId() {
+    return "906458427314-vrgseuf6gsroa41l88005jqko24g8shs.apps.googleusercontent.com";
+  }
+
+  onFacebookSignInSuccess(response: any) {
     FB.api("/me", async (dude: any) => {
       try {
         const user = await loginFacebook(response.authResponse.accessToken);
@@ -65,9 +77,22 @@ export default class Home extends Vue {
       }
     });
   }
-  onSignInError(error: Error) {
+  onFacebookSignInError(error: Error) {
     store.setSnackbar({
       message: "errors.facebook",
+      color: "error",
+      active: true
+    });
+  }
+  onGoogleSignInSuccess(googleUser: any) {
+    console.log(
+      googleUser.getBasicProfile(),
+      googleUser.getAuthResponse().id_token
+    );
+  }
+  onGoogleSignInError(error: Error) {
+    store.setSnackbar({
+      message: "errors.google",
       color: "error",
       active: true
     });
@@ -91,10 +116,20 @@ export default class Home extends Vue {
 <style>
 .fb-signin-button {
   cursor: pointer;
-  display: inline-block;
+  display: block;
   padding: 10px 46px;
   border-radius: 3px;
-  background-color: #4267b2;
+  background-color: #647daf;
+  color: #fff;
+  margin: 10px;
+}
+.g-signin-button {
+  margin: 10px;
+  cursor: pointer;
+  display: block;
+  padding: 10px 46px;
+  border-radius: 3px;
+  background-color: #ce5658;
   color: #fff;
 }
 </style>
