@@ -18,7 +18,7 @@
         Leaderboard.pb-4
 
     .text-xs-center
-      div(v-if='!!stats') {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded, { sig: 2 }) })}}
+      div(v-if='!!stats') {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded || 0, { sig: 2 }) })}}
       div(v-html='$t("support")')
       div(v-html='$t("home.opensource")')
       .caption

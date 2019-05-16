@@ -21,8 +21,24 @@
             v-list-tile-title {{locale.icon}}
       // Logout
       div(v-if='isLoggedIn')
-        v-btn(flat icon color='grey' @click='logout')
-          v-icon exit_to_app
+        v-dialog(v-model='resetDialog')
+          template(v-slot:activator='{ on }')
+            v-menu(offset-y)
+              v-btn(flat icon color='grey' slot='activator')
+                v-icon more_horiz
+              v-list
+                v-list-tile(@click='logout')
+                  v-list-tile-title {{$t("logout")}}
+                v-list-tile(v-on='on')
+                  v-list-tile-title {{$t("reset")}}
+          v-card
+            v-card-title {{$t("resetMessage")}}
+            v-card-actions.pb-3
+              v-spacer
+              v-btn(color='primary' @click='resetDialog = false') {{$t("cancel")}}
+              v-btn(color='error' :loading='resetLoading' @click='reset') {{$t("reset")}}
+              v-spacer
+        
 </template>
 
 <script lang="ts">
@@ -30,9 +46,14 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import * as store from "../plugins/store";
 import { i18n } from "../plugins/i18n";
+import * as api from "../utils/api";
+import { updateUser } from "../utils/dataUpdater";
 
 @Component
 export default class Navbar extends Vue {
+  resetDialog = false;
+  resetLoading = false;
+
   get isLoggedIn() {
     return store.isLoggedIn();
   }
@@ -60,6 +81,30 @@ export default class Navbar extends Vue {
   logout() {
     store.logout();
     this.$router.replace("/");
+  }
+  async reset() {
+    if (!this.user) {
+      return;
+    }
+    this.resetLoading = true;
+    try {
+      await api.reset(this.user);
+      store.setSnackbar({
+        message: "resetSuccess",
+        color: "success",
+        active: true
+      });
+      this.resetDialog = false;
+      updateUser();
+    } catch (err) {
+      store.setSnackbar({
+        message: "errors.general",
+        color: "error",
+        active: true
+      });
+    } finally {
+      this.resetLoading = false;
+    }
   }
 }
 </script>

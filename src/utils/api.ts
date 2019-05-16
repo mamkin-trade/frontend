@@ -70,3 +70,9 @@ export async function getUser(id: string) {
 export async function getStats() {
   return (await axios.get(`${base}/stats`)).data as StatsState
 }
+
+export async function reset(user: User) {
+  return (await axios.post(`${base}/users/reset`, {
+    headers: { token: user.token },
+  })).data as Order
+}
