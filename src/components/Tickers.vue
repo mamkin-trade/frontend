@@ -31,6 +31,9 @@
             v-tooltip(bottom)
               span(slot='activator') {{formatVolume(props.item.volume)}}
               span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
+          td.text-no-wrap {{formatNumber(props.item.ask)}}
+          td.text-no-wrap {{formatNumber(props.item.bid)}}
+          td.text-no-wrap {{formatNumber(subtract(props.item.ask, props.item.bid), { sig: 5 })}}
           td
             v-icon(small @click='toggleFav(props.item.pair)') {{isFavorite(props.item.pair) ? "star" : "star_border"}}
 </template>
@@ -44,6 +47,7 @@ import { Ticker } from "../models/ticker";
 import { getChangeDirection, ChangeDirection } from "../utils/changeDirection";
 import { i18n } from "../plugins/i18n";
 import { rowsPerPageItems } from "../utils/rowsPerPageItems";
+import { Big } from "big.js";
 
 @Component
 export default class Tickers extends Vue {
@@ -63,6 +67,9 @@ export default class Tickers extends Vue {
       { text: i18n.t("price"), value: "lastPrice" },
       { text: i18n.t("tickers.change"), value: "dailyChangePerc" },
       { text: i18n.t("tickers.volume"), value: "volume" },
+      { text: i18n.t("tickers.buy"), value: "buy" },
+      { text: i18n.t("tickers.sell"), value: "sell" },
+      { text: i18n.t("tickers.spread"), value: "spread" },
       {
         sortable: false
       }
@@ -164,8 +171,32 @@ export default class Tickers extends Vue {
             : isDescending
             ? 1
             : -1;
-        } else {
+        } else if (index === "volume") {
           return (a.volume || 0) > (b.volume || 0)
+            ? isDescending
+              ? -1
+              : 1
+            : isDescending
+            ? 1
+            : -1;
+        } else if (index === "buy") {
+          return (a.ask || 0) > (b.ask || 0)
+            ? isDescending
+              ? -1
+              : 1
+            : isDescending
+            ? 1
+            : -1;
+        } else if (index === "sell") {
+          return (a.bid || 0) > (b.bid || 0)
+            ? isDescending
+              ? -1
+              : 1
+            : isDescending
+            ? 1
+            : -1;
+        } else {
+          return (a.ask || 0) - (a.bid || 0) > (b.ask || 0) - (b.bid || 0)
             ? isDescending
               ? -1
               : 1
@@ -175,6 +206,10 @@ export default class Tickers extends Vue {
         }
       }
     });
+  }
+
+  subtract(a: number, b: number) {
+    return new Big(a).sub(b);
   }
 }
 </script>
