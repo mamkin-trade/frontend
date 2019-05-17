@@ -30,6 +30,7 @@
           td {{$t(props.item.type)}}
           td {{formatBool(props.item.completed)}}
           td {{formatBool(props.item.cancelled)}}
+          td {{props.item.fee)}}
           td(v-if='props.item.completionDate')
             v-tooltip(bottom)
               span(slot='activator') {{formatShortDate(props.item.completionDate)}}
@@ -115,6 +116,11 @@ export default class Orders extends Vue {
       {
         text: i18n.t("orders.cancelled"),
         value: "cancelled",
+        sortable: false
+      },
+      {
+        text: i18n.t("orders.fee"),
+        value: "fee",
         sortable: false
       },
       {
