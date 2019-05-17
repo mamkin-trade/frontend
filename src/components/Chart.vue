@@ -20,10 +20,10 @@ import TradingView from "../components/TradingView.vue";
 })
 export default class Home extends Vue {
   get chartExpanded() {
-    return store.chartExpanded()
+    return store.chartExpanded();
   }
   set chartExpanded(chartExpanded: boolean) {
-    store.setChartExpanded(chartExpanded)
+    store.setChartExpanded(chartExpanded);
   }
   get tvOptions() {
     return {
@@ -31,8 +31,8 @@ export default class Home extends Vue {
       theme: store.dark() ? "dark" : "light",
       locale: store.language() || "en",
       autosize: false,
-      width: 'auto',
-      height: 500,
+      width: "auto",
+      height: 500
     };
   }
 }
