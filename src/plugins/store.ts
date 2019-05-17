@@ -17,6 +17,7 @@ interface State {
   dark: Boolean
   favPairs: String[]
   stats?: StatsState
+  chartExpanded: Boolean
 }
 
 export interface StatsState {
@@ -48,6 +49,7 @@ const storeOptions = {
     dark: false,
     favPairs: [],
     stats: undefined,
+    chartExpanded: true,
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -80,6 +82,9 @@ const storeOptions = {
     setStats(state: State, stats: StatsState) {
       state.stats = stats
     },
+    setChartExpanded(state: State, chartExpanded: Boolean) {
+      state.chartExpanded = chartExpanded
+    }
   },
   getters: {
     user: (state: State) => state.user,
@@ -99,6 +104,7 @@ const storeOptions = {
     dark: (state: State) => state.dark,
     favPairs: (state: State) => state.favPairs,
     stats: (state: State) => state.stats,
+    chartExpanded: (state: State) => state.chartExpanded
   },
   plugins: [createPersistedState()],
 }
@@ -119,6 +125,7 @@ export const language = () => getters.language as string | undefined
 export const dark = () => getters.dark as boolean
 export const favPairs = () => getters.favPairs as string[]
 export const stats = () => getters.stats as StatsState
+export const chartExpanded = () => getters.chartExpanded as boolean
 
 // Mutations
 export const setUser = (user: User) => {
@@ -153,4 +160,7 @@ export const setFavPairs = (favPairs: String[]) => {
 }
 export const setStats = (stats: StatsState) => {
   store.commit('setStats', stats)
+}
+export const setChartExpanded = (chartExpanded: Boolean) => {
+  store.commit('setChartExpanded', chartExpanded)
 }

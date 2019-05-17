@@ -32,6 +32,9 @@ export const messages = {
       sell: 'Продажа',
       spread: 'Разница',
     },
+    chart: {
+      title: 'График'
+    },
     pair: 'Пара',
     price: 'Цена',
     balance: {
@@ -130,6 +133,9 @@ export const messages = {
       buy: 'Buy',
       sell: 'Sell',
       spread: 'Spread',
+    },
+    chart: {
+      title: 'Chart'
     },
     pair: 'Pair',
     price: 'Price',
