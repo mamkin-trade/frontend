@@ -9,4 +9,5 @@ export interface Order {
   completed: boolean
   cancelled: boolean
   completionDate: Date
+  fee: number
 }
