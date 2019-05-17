@@ -7,7 +7,7 @@
         Tickers
       v-flex.pa-1(xs12 md4 lg3)
         Balance
-      v-flex.pa-1(xs12 md8)
+      v-flex.pa-1(xs12 md8 lg12)
         Orders
       v-flex.pa-1(xs12)
         Chart
