@@ -1,7 +1,7 @@
 <template lang="pug">
-  v-card(flat v-if='needsTitle')
+  v-card
     slot
-    v-card-title {{$t("leaderboard.title")}}
+    v-card-title(flat v-if='needsTitle') {{$t("leaderboard.title")}}
     v-data-table(hide-actions :headers='headers' :items='leaderboard' :loading='!leaderboard.length' :no-data-text='$t("loading")')
       template(v-slot:items='props')
         td {{ props.item.index }}

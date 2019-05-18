@@ -25,7 +25,7 @@
         .headline.pb-2 {{ $t('leaderboard.title') }}
         Leaderboard
 
-      v-flex.pt-2
+      v-flex.pt-4
         div(v-if='!!stats') {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded || 0, { sig: 2 }) })}}
         div(v-html='$t("support")')
         div(v-html='$t("home.opensource")')
