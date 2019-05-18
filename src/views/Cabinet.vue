@@ -47,7 +47,6 @@ export default class Cabinet extends Vue {
   formatNumber = formatNumber;
 
   get layout() {
-    console.log(JSON.stringify(store.layout()));
     return store.layout();
   }
 
