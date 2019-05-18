@@ -1,7 +1,7 @@
 <template lang='pug'>
-  .tickers
-    v-card(flat)
-      v-card-title {{$t("orders.title")}}
+  v-card(flat)
+    slot
+    v-card-title {{$t("orders.title")}}
     v-data-table(:headers='headers'
     :items='orders'
     :pagination.sync='pagination'

@@ -7,6 +7,11 @@ import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
+interface CardState {
+  name: String
+  width: Number
+}
+
 interface State {
   user?: User
   tickers: Ticker[]
@@ -18,6 +23,8 @@ interface State {
   favPairs: String[]
   stats?: StatsState
   chartExpanded: Boolean
+  layout: CardState[]
+  viewEditActive: Boolean
 }
 
 export interface StatsState {
@@ -50,6 +57,15 @@ const storeOptions = {
     favPairs: [],
     stats: undefined,
     chartExpanded: true,
+    layout: [
+      { name: 'OrderForm', width: 3 },
+      { name: 'Tickers', width: 9 },
+      { name: 'Chart', width: 12 },
+      { name: 'Balance', width: 4 },
+      { name: 'Orders', width: 8 },
+      { name: 'Leaderboard', width: 12 },
+    ],
+    viewEditActive: false,
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -84,7 +100,13 @@ const storeOptions = {
     },
     setChartExpanded(state: State, chartExpanded: Boolean) {
       state.chartExpanded = chartExpanded
-    }
+    },
+    setLayout(state: State, layout: CardState[]) {
+      state.layout = layout
+    },
+    setViewEditActive(state: State, viewEditActive: Boolean) {
+      state.viewEditActive = viewEditActive
+    },
   },
   getters: {
     user: (state: State) => state.user,
@@ -104,7 +126,9 @@ const storeOptions = {
     dark: (state: State) => state.dark,
     favPairs: (state: State) => state.favPairs,
     stats: (state: State) => state.stats,
-    chartExpanded: (state: State) => state.chartExpanded
+    chartExpanded: (state: State) => state.chartExpanded,
+    layout: (state: State) => state.layout,
+    viewEditActive: (state: State) => state.viewEditActive,
   },
   plugins: [createPersistedState()],
 }
@@ -126,6 +150,8 @@ export const dark = () => getters.dark as boolean
 export const favPairs = () => getters.favPairs as string[]
 export const stats = () => getters.stats as StatsState
 export const chartExpanded = () => getters.chartExpanded as boolean
+export const layout = () => getters.layout as CardState[]
+export const viewEditActive = () => getters.viewEditActive as Boolean
 
 // Mutations
 export const setUser = (user: User) => {
@@ -163,4 +189,50 @@ export const setStats = (stats: StatsState) => {
 }
 export const setChartExpanded = (chartExpanded: Boolean) => {
   store.commit('setChartExpanded', chartExpanded)
+}
+export const setLayout = (layout: CardState[]) => {
+  store.commit('setLayout', layout)
+}
+export const setViewEditActive = (viewEditActive: Boolean) => {
+  store.commit('setViewEditActive', viewEditActive)
+}
+
+export const moveCard = (name: string, forward: boolean) => {
+  const layout = store.state.layout
+  let index = undefined
+  for (const card of layout) {
+    if (card.name === name) {
+      index = layout.indexOf(card)
+      break
+    }
+  }
+  if (
+    index === undefined ||
+    (index <= 0 && !forward) ||
+    (index >= layout.length - 1 && forward)
+  ) {
+    return
+  }
+  const card = layout.splice(index, 1)[0]
+  layout.splice(forward ? index + 1 : index - 1, 0, card)
+  store.commit('setLayout', layout)
+}
+export const changeCardSize = (name: string, increment: boolean) => {
+  const layout = store.state.layout
+  let index = undefined
+  for (const card of layout) {
+    if (card.name === name) {
+      index = layout.indexOf(card)
+      break
+    }
+  }
+  if (index === undefined) {
+    return
+  }
+  const card = layout.splice(index, 1)[0]
+  if ((card.width < 12 && increment) || (card.width > 3 && !increment)) {
+    card.width = increment ? Number(card.width) + 1 : Number(card.width) - 1
+  }
+  layout.splice(index, 0, card)
+  store.commit('setLayout', layout)
 }

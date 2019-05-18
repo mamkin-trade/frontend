@@ -1,15 +1,15 @@
 <template lang="pug">
-  div
-    v-card(flat)
-      v-card-title.py-0 {{$t("tickers.title")}}
-        v-spacer
-        v-tooltip(bottom)
-          v-text-field(append-icon='search'
-          :label='$t("search")'
-          single-line
-          v-model='search'
-          slot='activator')
-          span {{$t("orderForm.searchHint")}}
+  v-card(flat)
+    slot
+    v-card-title.py-0 {{$t("tickers.title")}}
+      v-spacer
+      v-tooltip(bottom)
+        v-text-field(append-icon='search'
+        :label='$t("search")'
+        single-line
+        v-model='search'
+        slot='activator')
+        span {{$t("orderForm.searchHint")}}
     v-data-table(:headers='headers'
     :items='tickers'
     :loading='!tickers.length'

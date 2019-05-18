@@ -1,5 +1,6 @@
 <template lang='pug'>
   v-card(flat)
+    slot
     v-card-title {{$t("orderForm.title")}}
     v-form(ref='form').pa-4
       v-tooltip(right)

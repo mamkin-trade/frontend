@@ -19,9 +19,11 @@
         v-list
           v-list-tile(v-for='locale in locales' @click='changeLanguage(locale.code)')
             v-list-tile-title {{locale.icon}}
-      // Logout
+      // Menu
       div(v-if='isLoggedIn')
-        v-dialog(v-model='resetDialog')
+        v-btn(v-if='viewEditActive' flat icon color='grey' @click='toggleViewEdit')
+          v-icon done
+        v-dialog(v-else v-model='resetDialog')
           template(v-slot:activator='{ on }')
             v-menu(offset-y)
               v-btn(flat icon color='grey' slot='activator')
@@ -31,6 +33,8 @@
                   v-list-tile-title {{$t("logout")}}
                 v-list-tile(v-on='on')
                   v-list-tile-title {{$t("reset")}}
+                v-list-tile(@click='toggleViewEdit')
+                  v-list-tile-title {{$t("view")}}
           v-card
             v-card-title {{$t("resetMessage")}}
             v-card-actions.pb-3
@@ -38,7 +42,6 @@
               v-btn(color='primary' @click='resetDialog = false') {{$t("cancel")}}
               v-btn(color='error' :loading='resetLoading' @click='reset') {{$t("reset")}}
               v-spacer
-        
 </template>
 
 <script lang="ts">
@@ -69,6 +72,9 @@ export default class Navbar extends Vue {
   }
   get user() {
     return store.user();
+  }
+  get viewEditActive() {
+    return store.viewEditActive();
   }
 
   toggleMode() {
@@ -105,6 +111,9 @@ export default class Navbar extends Vue {
     } finally {
       this.resetLoading = false;
     }
+  }
+  toggleViewEdit() {
+    store.setViewEditActive(!store.viewEditActive());
   }
 }
 </script>

@@ -33,7 +33,7 @@ export const messages = {
       spread: 'Разница',
     },
     chart: {
-      title: 'График'
+      title: 'График',
     },
     pair: 'Пара',
     price: 'Цена',
@@ -100,6 +100,7 @@ export const messages = {
     resetMessage:
       'Вы уверены, что хотите удалить все данные? Данные включают в себя ваши ордера и баланс. Я повторяю: вы начнете снова. Назад пути не будет. Вы начнете снова с $10 000 и пустой историей ордеров. Нажав на "Сброс", вы соглашаетесь потерять все.',
     resetSuccess: 'Сброс прошел успешно',
+    view: 'Вид',
   },
   en: {
     title: '*MAMKIN TRADE*',
@@ -135,7 +136,7 @@ export const messages = {
       spread: 'Spread',
     },
     chart: {
-      title: 'Chart'
+      title: 'Chart',
     },
     pair: 'Pair',
     price: 'Price',
@@ -202,5 +203,6 @@ export const messages = {
     resetMessage:
       'Are you sure you want to delete all data? It includes your orders and balance. I repeat: you will start over. There will be no turning back. You will start again with $10 000 and no order history. By pressing the "Reset" button below you agree to loosing everything.',
     resetSuccess: 'Reset succeeded',
+    view: 'View',
   },
 }

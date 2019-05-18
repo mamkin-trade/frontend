@@ -1,18 +1,19 @@
 <template lang="pug">
   v-container
     v-layout(row wrap)
-      v-flex.pa-1(xs12 md4 lg3)
-        OrderForm
-      v-flex.pa-1(xs12 md8 lg6)
-        Tickers
-      v-flex.pa-1(xs12 md4 lg3)
-        Balance
-      v-flex.pa-1(xs12 md8 lg12)
-        Orders
-      v-flex.pa-1(xs12)
-        Chart
-      v-flex.pa-1(xs12)
-        Leaderboard(needsTitle)
+      v-flex.pa-1(v-for='card in layout' xs12 :class='`md${card.width}`')
+        OrderForm(v-if='card.name === "OrderForm"')
+          ViewControls(:name='card.name')
+        Tickers(v-if='card.name === "Tickers"')
+          ViewControls(:name='card.name')
+        Balance(v-if='card.name === "Balance"')
+          ViewControls(:name='card.name')
+        Orders(v-if='card.name === "Orders"')
+          ViewControls(:name='card.name')
+        Chart(v-if='card.name === "Chart"')
+          ViewControls(:name='card.name')
+        Leaderboard(v-if='card.name === "Leaderboard"' needsTitle)
+          ViewControls(:name='card.name')
     .text-xs-center.pt-4
       div(v-html='$t("support")')
 </template>
@@ -26,6 +27,7 @@ import Chart from "../components/Chart.vue";
 import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
 import OrderForm from "../components/OrderForm.vue";
+import ViewControls from "../components/ViewControls.vue";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
@@ -37,11 +39,17 @@ import { formatNumber } from "../utils/format";
     Balance,
     Orders,
     Chart,
-    OrderForm
+    OrderForm,
+    ViewControls
   }
 })
 export default class Cabinet extends Vue {
   formatNumber = formatNumber;
+
+  get layout() {
+    console.log(JSON.stringify(store.layout()));
+    return store.layout();
+  }
 
   overallBalance() {
     const user = store.user();

@@ -1,5 +1,6 @@
 <template lang="pug">
   v-card(flat)
+    slot
     v-expansion-panel.elevation-0(flat v-model='chartExpanded')
       v-expansion-panel-content
         template(v-slot:header)
