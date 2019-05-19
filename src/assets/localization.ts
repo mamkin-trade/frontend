@@ -2,6 +2,7 @@ export const messages = {
   ru: {
     title: '*МАМКИН ТРЕЙДЕР*',
     shortTitle: '*МТ*',
+    strippedTitle: 'Мамкин Трейдер',
     home: {
       info:
         'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для вашего психического здоровья',
@@ -105,6 +106,7 @@ export const messages = {
   en: {
     title: '*MAMKIN TRADE*',
     shortTitle: '*MT*',
+    strippedTitle: 'Mamkin Trade',
     home: {
       info:
         'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health',

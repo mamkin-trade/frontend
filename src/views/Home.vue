@@ -41,6 +41,7 @@ import { loginFacebook, loginTelegram, loginGoogle } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
+import { i18n } from "../plugins/i18n";
 const { vueTelegramLogin } = require("vue-telegram-login");
 
 // FB object is global, declaring here for TS
@@ -60,6 +61,10 @@ export default class Home extends Vue {
   }
   get googleClientId() {
     return "906458427314-vrgseuf6gsroa41l88005jqko24g8shs.apps.googleusercontent.com";
+  }
+
+  mounted() {
+    document.title = i18n.t("strippedTitle") as string;
   }
 
   onFacebookSignInSuccess(response: any) {

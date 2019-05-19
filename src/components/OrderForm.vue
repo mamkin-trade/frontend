@@ -202,6 +202,15 @@ export default class OrderForm extends Vue {
     }
   }
 
+  @Watch("currentPrice")
+  onCurrentPriceChanged() {
+    this.updateTitleWithPrice();
+  }
+
+  mounted() {
+    this.updateTitleWithPrice();
+  }
+
   async submit() {
     if (!(this.$refs.form as any).validate()) {
       return;
@@ -242,6 +251,16 @@ export default class OrderForm extends Vue {
       precision(this.pair),
       0
     )}`;
+  }
+
+  updateTitleWithPrice() {
+    for (const ticker of store.store.state.tickers) {
+      if (ticker.pair === store.store.state.pair) {
+        document.title = `${ticker.lastPrice} ${ticker.pair} — ${i18n.t(
+          "strippedTitle"
+        )}`;
+      }
+    }
   }
 }
 </script>

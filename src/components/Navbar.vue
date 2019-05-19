@@ -83,6 +83,7 @@ export default class Navbar extends Vue {
   changeLanguage(locale: string) {
     i18n.locale = locale;
     store.setLanguage(locale);
+    document.title = i18n.t("strippedTitle") as string;
   }
   logout() {
     store.logout();
