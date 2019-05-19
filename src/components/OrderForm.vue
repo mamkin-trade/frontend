@@ -237,7 +237,7 @@ export default class OrderForm extends Vue {
       updateUser();
     } catch (err) {
       store.setSnackbar({
-        message: "errors.general",
+        message: err.response.data,
         color: "error",
         active: true
       });

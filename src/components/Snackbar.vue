@@ -23,7 +23,10 @@ export default class Snackbar extends Vue {
     return store.snackbar().color;
   }
   get text() {
-    return i18n.t(store.snackbar().message.toString());
+    const msg = store.snackbar().message;
+    return typeof msg === "string"
+      ? i18n.t(store.snackbar().message.toString())
+      : (msg as any)[i18n.locale];
   }
 }
 </script>

@@ -33,9 +33,13 @@ export interface StatsState {
   totalUSDTraded: number
 }
 
+interface LocalizedError {
+  en: string
+  ru: string
+}
+
 interface SnackbarState {
-  message: String
-  submessage?: String
+  message: String | LocalizedError
   active: Boolean
   color: String
 }
@@ -49,7 +53,6 @@ const storeOptions = {
     snackbar: {
       message: '',
       active: false,
-      submessage: undefined,
       color: 'success',
     },
     string: undefined,
