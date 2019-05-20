@@ -28,17 +28,15 @@
           td {{props.item.price}}
           td {{$t(props.item.side)}}
           td {{$t(props.item.type)}}
-          td {{formatBool(props.item.completed)}}
-          td {{formatBool(props.item.cancelled)}}
+          td(v-if='props.item.completionDate')
+            v-tooltip(bottom)
+              span(slot='activator') {{$t(orderStatus(props.item))}}
+              span {{formatDate(props.item.completionDate)}}
+          td(v-else) {{$t(orderStatus(props.item))}}
           td
             v-tooltip(bottom)
               span(slot='activator') {{props.item.fee}}
               span {{props.item.fee ? "0.2%" : "0%"}}
-          td(v-if='props.item.completionDate')
-            v-tooltip(bottom)
-              span(slot='activator') {{formatShortDate(props.item.completionDate)}}
-              span {{formatDate(props.item.completionDate)}}
-          td(v-else) —
 </template>
 
 <script lang="ts">
@@ -112,23 +110,13 @@ export default class Orders extends Vue {
         sortable: false
       },
       {
-        text: i18n.t("orders.completed"),
-        value: "completed",
-        sortable: false
-      },
-      {
-        text: i18n.t("orders.cancelled"),
-        value: "cancelled",
+        text: i18n.t("orders.status"),
+        value: "status",
         sortable: false
       },
       {
         text: i18n.t("orders.fee"),
         value: "fee",
-        sortable: false
-      },
-      {
-        text: i18n.t("orders.executed"),
-        value: "completionDate",
         sortable: false
       }
     ];
@@ -213,6 +201,16 @@ export default class Orders extends Vue {
       });
     } finally {
       this.orderDeleting = true;
+    }
+  }
+
+  oderStatus(order: Order) {
+    if (order.cancelled) {
+      return "cancelled";
+    } else if (order.completed) {
+      return "completed";
+    } else {
+      return "active";
     }
   }
 }
