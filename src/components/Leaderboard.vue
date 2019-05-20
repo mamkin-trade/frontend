@@ -7,7 +7,7 @@
         td {{ props.item.index }}
         td {{ props.item.name }}
         td.text-no-wrap ${{ formatNumber(props.item.overallBalance || 0, { sig: 2 }) }}
-        td.text-no-wrap ${{ props.item.subCount }}
+        td.text-no-wrap {{ formatNumber(props.item.subCount, { sig: 0 }) }}
         td
           v-icon(small @click='open(props.item._id)') link
 </template>
