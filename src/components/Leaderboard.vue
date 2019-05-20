@@ -42,11 +42,11 @@ export default class Leaderboard extends Vue {
         value: "overallBalance",
         sortable: false
       },
-      {
-        text: i18n.t("leaderboard.subs"),
-        value: "subCount",
-        sortable: false
-      },
+      // {
+      //   text: i18n.t("leaderboard.subs"),
+      //   value: "subCount",
+      //   sortable: false
+      // },
       { sortable: false }
     ];
   }
