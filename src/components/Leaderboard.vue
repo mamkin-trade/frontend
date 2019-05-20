@@ -3,11 +3,11 @@
     slot
     v-card-title(flat v-if='needsTitle') {{$t("leaderboard.title")}}
     v-data-table(hide-actions :headers='headers' :items='leaderboard' :loading='!leaderboard.length' :no-data-text='$t("loading")')
-      template(v-slot:items='props')
+      template(v-slot:items='props').text-xs-left
         td {{ props.item.index }}
         td {{ props.item.name }}
         td.text-no-wrap ${{ formatNumber(props.item.overallBalance || 0, { sig: 2 }) }}
-        td.text-no-wrap {{ formatNumber(props.item.subCount, { sig: 0 }) }}
+        td.text-no-wrap.text-xs-center {{ formatNumber(props.item.subCount, { sig: 0 }) }}
         td
           v-icon(small @click='open(props.item._id)') link
 </template>
