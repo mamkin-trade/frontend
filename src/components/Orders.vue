@@ -200,7 +200,7 @@ export default class Orders extends Vue {
         active: true
       });
     } finally {
-      this.orderDeleting = true;
+      this.orderDeleting = false;
     }
   }
 
