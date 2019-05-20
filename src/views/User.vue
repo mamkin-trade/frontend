@@ -1,5 +1,6 @@
 <template lang="pug">
   v-container
+    v-btn(flat small @click='subscribe') {{$t('subscribe')}}
     v-layout(row wrap)
       v-flex.pa-1(xs12 md4 lg3)
         Balance(:userId='id')
@@ -32,6 +33,10 @@ export default class Cabinet extends Vue {
 
   get id() {
     return this.$route.params.id;
+  }
+
+  subscribe() {
+    window.open(`https://t.me/mamkintrade_bot?start=${this.id}`, "_blank");
   }
 }
 </script>
