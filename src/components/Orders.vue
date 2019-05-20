@@ -204,13 +204,13 @@ export default class Orders extends Vue {
     }
   }
 
-  oderStatus(order: Order) {
+  orderStatus(order: Order) {
     if (order.cancelled) {
-      return "cancelled";
+      return "orders.cancelled";
     } else if (order.completed) {
-      return "completed";
+      return "orders.completed";
     } else {
-      return "active";
+      return "orders.active";
     }
   }
 }
