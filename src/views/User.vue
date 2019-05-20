@@ -4,7 +4,7 @@
     v-layout(row wrap)
       v-flex.pa-1(xs12 md4 lg3)
         Balance(:userId='$route.params.id')
-      v-flex.pa-1(xs12 md8 lg12)
+      v-flex.pa-1(xs12 md8 lg9)
         Orders(:userId='$route.params.id')
     .text-xs-center.pt-4
       div(v-html='$t("support")')
