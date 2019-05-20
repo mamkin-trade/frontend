@@ -66,7 +66,7 @@ export default class OrderForm extends Vue {
   side = "sell";
   sides = ["sell", "buy"];
   type = "market";
-  types = ["limit", "market"];
+  types = ["limit", "market", "stop"];
 
   price = "";
   amount = "";

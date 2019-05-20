@@ -66,6 +66,7 @@ export const messages = {
     },
     market: 'Маркет',
     limit: 'Лимит',
+    stop: 'Стоп',
     orderForm: {
       title: 'Добавить ордер',
       submit: 'Добавить ордер',
@@ -171,6 +172,7 @@ export const messages = {
     },
     market: 'Market',
     limit: 'Limit',
+    stop: 'Stop',
     orderForm: {
       title: 'Add order',
       submit: 'Add order',
