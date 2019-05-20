@@ -3,7 +3,8 @@
     slot
     v-card-title
       | {{$t("balance.title")}}{{$props.userId && this.user.name ? " — " + this.user.name : ""}}
-      v-icon(v-if='!$props.userId' small @click='open').pl-2 link
+      v-btn(v-if='!$props.userId' flat icon color='grey' @click='open')
+        v-icon(small) link
     v-data-table(:headers='headers'
     :items='balance'
     :rowsPerPageItems='rowsPerPageItems()'

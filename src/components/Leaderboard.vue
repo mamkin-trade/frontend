@@ -9,7 +9,8 @@
         td.text-no-wrap ${{ formatNumber(props.item.overallBalance || 0, { sig: 2 }) }}
         //- td.text-no-wrap {{ formatNumber(props.item.subCount, { sig: 0 }) }}
         td
-          v-icon(small @click='open(props.item._id)') link
+          v-btn(flat icon color='grey' @click='open(props.item._id)')
+            v-icon(small) link
 </template>
 
 <script lang="ts">
