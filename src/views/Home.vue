@@ -23,7 +23,7 @@
 
       v-flex(xs12 sm10 md6 lg4).pt-4
         .headline.pb-2 {{ $t('leaderboard.title') }}
-        Leaderboard
+        Leaderboard.text-xs-left
 
       v-flex.pt-4
         div(v-if='!!stats') {{$t("stats", { ...stats, totalUSDTraded: formatNumber(stats.totalUSDTraded || 0, { sig: 2 }) })}}
