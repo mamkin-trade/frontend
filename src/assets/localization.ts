@@ -24,6 +24,7 @@ export const messages = {
       title: 'Рейтинг',
       name: 'Имя',
       balance: 'Баланс',
+      subs: 'Подписчики',
     },
     tickers: {
       title: 'Тикеры',
@@ -130,6 +131,7 @@ export const messages = {
       title: 'Leaderboard',
       name: 'Name',
       balance: 'Balance',
+      subs: 'Subscribers',
     },
     tickers: {
       title: 'Tickers',

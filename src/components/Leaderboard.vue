@@ -7,6 +7,7 @@
         td {{ props.item.index }}
         td {{ props.item.name }}
         td.text-no-wrap ${{ formatNumber(props.item.overallBalance || 0, { sig: 2 }) }}
+        td.text-no-wrap ${{ props.item.subCount }}
         td
           v-icon(small @click='open(props.item._id)') link
 </template>
@@ -39,6 +40,11 @@ export default class Leaderboard extends Vue {
       {
         text: i18n.t("leaderboard.balance"),
         value: "overallBalance",
+        sortable: false
+      },
+      {
+        text: i18n.t("leaderboard.subs"),
+        value: "subCount",
         sortable: false
       },
       { sortable: false }
