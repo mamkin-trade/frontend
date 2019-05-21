@@ -13,6 +13,7 @@ export const messages = {
       },
       facebook: 'Войти через Фейсбук',
       google: 'Войти через Гугл',
+      vk: 'Войти через ВКонтакте',
       opensource:
         'Код в <a target="_blank" href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>',
       privacy: 'Политика конфиденциальности',
@@ -121,6 +122,7 @@ export const messages = {
         success: "Show'em how it's done 💣",
       },
       facebook: 'Login with Facebook',
+      vk: 'Login with VK',
       google: 'Login with Google',
       opensource:
         'Fully <a target="_blank" href="https://github.com/mamkin-trade"><b>open source</b></a>',

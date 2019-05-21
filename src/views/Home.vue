@@ -20,6 +20,13 @@
         fb-signin-button(:params='{ scope: "email", return_scopes: true}'
         @success='onFacebookSignInSuccess'
         @error='onFacebookSignInError') {{$t('home.facebook')}}
+        v-dialog(v-model='vkDialog')
+          template(v-slot:activator='{ on }')
+            .vk-signin-button(v-on='on') {{$t('home.vk')}}
+          v-card.text-xs-center
+            v-layout.pa-4(align-center column)
+              div(id='vk_auth')
+              v-btn(color='primary' @click='vkDialog = false') {{$t("cancel")}}
 
       v-flex(xs12 sm10 md6 lg4).pt-4
         .headline.pb-2 {{ $t('leaderboard.title') }}
@@ -55,6 +62,7 @@ declare const FB: any;
 })
 export default class Home extends Vue {
   formatNumber = formatNumber;
+  vkDialog = false;
 
   get stats() {
     return store.stats();
@@ -65,6 +73,13 @@ export default class Home extends Vue {
 
   mounted() {
     document.title = i18n.t("strippedTitle") as string;
+
+    (global as any).VK.init({
+      apiId: 6991313
+    });
+    (global as any).VK.Widgets.Auth("vk_auth", {
+      onAuth: this.onVkAuth
+    });
   }
 
   onFacebookSignInSuccess(response: any) {
@@ -122,6 +137,9 @@ export default class Home extends Vue {
       });
     }
   }
+  onVkAuth(user: any) {
+    console.log(user);
+  }
 }
 </script>
 
@@ -142,6 +160,15 @@ export default class Home extends Vue {
   padding: 10px 46px;
   border-radius: 3px;
   background-color: #ce5658;
+  color: #fff;
+}
+.vk-signin-button {
+  margin: 10px;
+  cursor: pointer;
+  display: block;
+  padding: 10px 46px;
+  border-radius: 3px;
+  background-color: #416b9e;
   color: #fff;
 }
 </style>
