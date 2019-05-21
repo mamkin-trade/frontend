@@ -44,7 +44,12 @@
 import Vue from "vue";
 import axios from "axios";
 import Leaderboard from "../components/Leaderboard.vue";
-import { loginFacebook, loginTelegram, loginGoogle } from "../utils/api";
+import {
+  loginFacebook,
+  loginTelegram,
+  loginVk,
+  loginGoogle
+} from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
 import { formatNumber } from "../utils/format";
@@ -137,8 +142,18 @@ export default class Home extends Vue {
       });
     }
   }
-  onVkAuth(user: any) {
-    console.log(user);
+  async onVkAuth(loginInfo: any) {
+    try {
+      const user = await loginVk(loginInfo);
+      store.setUser(user);
+      this.$router.replace("cabinet");
+    } catch (err) {
+      store.setSnackbar({
+        message: "errors.vk",
+        color: "error",
+        active: true
+      });
+    }
   }
 }
 </script>

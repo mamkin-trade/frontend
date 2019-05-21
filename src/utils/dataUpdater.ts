@@ -55,6 +55,7 @@ export async function updateUser() {
         email: user.email,
         facebookId: user.facebookId,
         telegramId: user.telegramId,
+        vkId: user.vkId,
       })
     }
   } finally {
