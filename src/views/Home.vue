@@ -143,6 +143,7 @@ export default class Home extends Vue {
     }
   }
   async onVkAuth(loginInfo: any) {
+    this.vkDialog = false;
     try {
       const user = await loginVk(loginInfo);
       store.setUser(user);
