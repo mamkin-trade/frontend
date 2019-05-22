@@ -13,7 +13,7 @@ interface CardState {
   width: Number
 }
 
-interface State {
+export interface State {
   user?: User
   tickers: Ticker[]
   nasdaqTickers: NasdaqTicker[]
