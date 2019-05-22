@@ -1,19 +1,37 @@
 // Dependencies
-import { Ticker } from './../models/ticker'
+import { Ticker } from '../models/ticker'
 import * as store from '../plugins/store'
+import { NasdaqTicker } from '../models/nasdaqTicker'
+import { isCrypto } from './isCrypto'
+import { feeMultiplier } from './fee'
 
-export function maxAvailable(pair: string, side: string, price?: number) {
+export function maxAvailable(
+  pair: string,
+  side: string,
+  isMarket: boolean,
+  price?: number
+) {
   // Split symbols
-  const first = pair.slice(0, 3).toLowerCase()
-  const second = pair.slice(3).toLowerCase()
+  const first = isCrypto(pair) ? pair.slice(0, 3).toLowerCase() : pair
+  const second = isCrypto(pair) ? pair.slice(3).toLowerCase() : 'usd'
   // Get ticker
-  let ticker: Ticker | undefined
+  let ticker: Ticker | NasdaqTicker | undefined
   for (const t of store.tickers()) {
     if (t.pair === pair) {
       ticker = t
     }
   }
-  if (!ticker || !ticker.lastPrice) {
+  for (const t of store.nasdaqTickers()) {
+    if (t.symbol === pair) {
+      ticker = t
+    }
+  }
+  if (
+    !ticker ||
+    ('ask' in ticker && !ticker.ask) ||
+    ('currentPrice' in ticker &&
+      (!ticker.currentPrice || !ticker.currentPrice.raw))
+  ) {
     return 0
   }
   // Get balance
@@ -24,7 +42,14 @@ export function maxAvailable(pair: string, side: string, price?: number) {
   const balance = user.balance
   // Return max available
   if (side === 'buy') {
-    return balance[second] / (price || ticker.lastPrice)
+    if (isCrypto(pair)) {
+      return balance[second] / (price || (ticker as Ticker).ask!)
+    } else {
+      return Math.floor(
+        (balance[second] * feeMultiplier(isMarket)) /
+          (price || (ticker as NasdaqTicker).currentPrice.raw)
+      )
+    }
   } else {
     return balance[first]
   }

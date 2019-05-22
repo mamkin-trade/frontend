@@ -5,7 +5,7 @@
     v-form(ref='form').pa-4
       v-tooltip(right)
         v-text-field(:label='$t("pair")'
-        :value='formatPair(pair)'
+        :value='formatPair($store.state.pair)'
         disabled
         slot='activator')
         span {{$t("pairTip")}}
@@ -40,7 +40,7 @@
       @click='submit'
       :loading='loading'
       :disabled='loading'
-      :class='isDark ? "darken-1" : ""') {{$t("orderForm.submit")}}
+      :class='$store.state.dark ? "darken-1" : ""') {{$t("orderForm.submit")}}
 </template>
 
 <script lang="ts">
@@ -58,10 +58,13 @@ import { minimumOrderSize, maximumOrderSize } from "../utils/orderSize";
 import { precision } from "../utils/precision";
 import { Watch } from "vue-property-decorator";
 import { updateUser } from "../utils/dataUpdater";
+import { isCrypto } from "../utils/isCrypto";
+import { feeMultiplier } from "../utils/fee";
 
 @Component
 export default class OrderForm extends Vue {
   formatPair = formatPair;
+  pair = store.pair;
 
   side = "sell";
   sides = ["sell", "buy"];
@@ -73,20 +76,13 @@ export default class OrderForm extends Vue {
 
   loading = false;
 
-  get pair() {
-    return store.pair();
-  }
   get firstCurrency() {
-    if (this.pair.length < 6) {
-      return this.pair;
-    }
-    return this.pair.substr(0, 3);
+    const pair = this.pair();
+    return isCrypto(pair) ? pair.substr(0, 3) : pair;
   }
   get secondCurrency() {
-    if (this.pair.length < 6) {
-      return "USD";
-    }
-    return this.pair.substr(3);
+    const pair = this.pair();
+    return isCrypto(pair) ? pair.substr(3) : "USD";
   }
   get localizedSides() {
     return this.sides.map(t => {
@@ -100,9 +96,6 @@ export default class OrderForm extends Vue {
   }
   get isMarket() {
     return this.type === "market";
-  }
-  get isDark() {
-    return store.dark();
   }
 
   // Rules
@@ -137,22 +130,29 @@ export default class OrderForm extends Vue {
     ];
   }
   get amountRules() {
-    return [
+    const rules = [
       (v: string) =>
         new Big(v || "0").s === 1 || i18n.t("errors.greaterThanZero"),
       (v: string) =>
         +v <= +this.maximumAmount || i18n.t("errors.insufficientFunds"),
       (v: string) =>
-        new Big(v || "0").gte(minimumOrderSize(this.pair)) ||
+        new Big(v || "0").gte(minimumOrderSize(this.pair())) ||
         i18n.t("errors.minimumOrderSize", {
-          minimumOrderSize: minimumOrderSize(this.pair)
+          minimumOrderSize: minimumOrderSize(this.pair())
         }),
       (v: string) =>
-        new Big(v || "0").lte(maximumOrderSize(this.pair)) ||
+        new Big(v || "0").lte(maximumOrderSize(this.pair())) ||
         i18n.t("errors.maximumOrderSize", {
-          maximumOrderSize: maximumOrderSize(this.pair)
+          maximumOrderSize: maximumOrderSize(this.pair())
         })
     ];
+    if (!isCrypto(this.pair())) {
+      rules.push(
+        (v: string) =>
+          new Big(v || "0").mod(1).eq(0) || i18n.t("errors.integer")
+      );
+    }
+    return rules;
   }
 
   // Amounts
@@ -165,23 +165,29 @@ export default class OrderForm extends Vue {
             : (ticker as any).currentPrice.raw || 0
         )
       : new Big(this.price || 0);
-    return price
-      .mul(new Big(this.amount || 0))
-      .round(precision(this.secondCurrency), 0);
+    return isCrypto(this.pair())
+      ? price
+          .mul(new Big(this.amount || 0))
+          .round(precision(this.secondCurrency), 0)
+      : price
+          .mul(new Big(this.amount || 0))
+          .div(feeMultiplier(this.isMarket))
+          .round(precision(this.secondCurrency), 0);
   }
 
   // Computed
   get amountHint() {
     return `${i18n.t("available")} ${new Big(this.maximumAmount).round(
-      precision(this.pair),
+      precision(this.pair()),
       0
     )} ${this.firstCurrency}`;
   }
   get maximumAmount() {
     return (
       maxAvailable(
-        store.pair(),
+        this.pair(),
         this.side,
+        this.isMarket,
         this.isMarket ? undefined : +this.price
       ) || 0
     );
@@ -239,7 +245,7 @@ export default class OrderForm extends Vue {
     try {
       await api.postOrder(
         user,
-        store.pair(),
+        this.pair(),
         this.amount,
         this.side,
         this.type,
@@ -264,7 +270,7 @@ export default class OrderForm extends Vue {
 
   useAll() {
     this.amount = `${new Big(this.maximumAmount).round(
-      precision(this.pair),
+      precision(this.pair()),
       0
     )}`;
   }

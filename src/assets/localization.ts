@@ -100,6 +100,7 @@ export const messages = {
       telegram: 'Не получилось зайти через Телеграм',
       vk: 'Не получилось зайти через ВКонтакте',
       google: 'Не получилось зайти через Гугл',
+      integer: 'Должно быть целым числом',
     },
     close: 'Закрыть',
     snackbar: {
@@ -220,6 +221,7 @@ export const messages = {
       telegram: 'Could not sign in with Telegram',
       vk: 'Could not sign in with VK',
       google: 'Could not sign in with Google',
+      integer: 'Should be an integer',
     },
     close: 'Close',
     snackbar: {
