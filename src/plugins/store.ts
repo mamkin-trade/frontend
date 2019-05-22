@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Ticker } from '../models/ticker'
+import { NasdaqTicker } from '../models/nasdaqTicker'
 import { User } from '../models/user'
 import createPersistedState from 'vuex-persistedstate'
 
@@ -15,6 +16,7 @@ interface CardState {
 interface State {
   user?: User
   tickers: Ticker[]
+  nasdaqTickers: NasdaqTicker[]
   leaderboard: User[]
   pair: String
   snackbar: SnackbarState
@@ -25,6 +27,7 @@ interface State {
   chartExpanded: Boolean
   layout: CardState[]
   viewEditActive: Boolean
+  tickersSelected: String
 }
 
 export interface StatsState {
@@ -48,6 +51,7 @@ const storeOptions = {
   state: {
     user: undefined,
     tickers: [],
+    nasdaqTickers: [],
     leaderboard: [],
     pair: 'BTCUSD',
     snackbar: {
@@ -69,6 +73,7 @@ const storeOptions = {
       { name: 'Leaderboard', width: 12 },
     ],
     viewEditActive: false,
+    tickersSelected: 'crypto',
   },
   mutations: {
     setUser(state: State, user: User) {
@@ -79,6 +84,9 @@ const storeOptions = {
     },
     setTickers(state: State, tickers: Ticker[]) {
       state.tickers = tickers
+    },
+    setNasdaqTickers(state: State, nasdaqTickers: NasdaqTicker[]) {
+      state.nasdaqTickers = nasdaqTickers
     },
     setLeaderboard(state: State, leaderboard: User[]) {
       state.leaderboard = leaderboard
@@ -110,16 +118,25 @@ const storeOptions = {
     setViewEditActive(state: State, viewEditActive: Boolean) {
       state.viewEditActive = viewEditActive
     },
+    setTickersSelected(state: State, tickersSelected: String) {
+      state.tickersSelected = tickersSelected
+    },
   },
   getters: {
     user: (state: State) => state.user,
     tickers: (state: State) => state.tickers,
+    nasdaqTickers: (state: State) => state.nasdaqTickers,
     leaderboard: (state: State) => state.leaderboard,
     pair: (state: State) => state.pair,
     isLoggedIn: (state: State) => !!state.user,
     currentTicker: (state: State) => {
       for (const ticker of state.tickers) {
         if (ticker.pair === state.pair) {
+          return ticker
+        }
+      }
+      for (const ticker of state.nasdaqTickers) {
+        if (ticker.symbol === state.pair) {
           return ticker
         }
       }
@@ -132,6 +149,7 @@ const storeOptions = {
     chartExpanded: (state: State) => state.chartExpanded,
     layout: (state: State) => state.layout,
     viewEditActive: (state: State) => state.viewEditActive,
+    tickersSelected: (state: State) => state.tickersSelected,
   },
   plugins: [createPersistedState()],
 }
@@ -144,9 +162,11 @@ const getters = store.getters
 export const user = () => getters.user as User | undefined
 export const pair = () => getters.pair as string
 export const tickers = () => getters.tickers as Ticker[]
+export const nasdaqTickers = () => getters.nasdaqTickers as NasdaqTicker[]
 export const leaderboard = () => getters.leaderboard as User[]
 export const isLoggedIn = () => getters.isLoggedIn as boolean
-export const currentTicker = () => getters.currentTicker as Ticker
+export const currentTicker = () =>
+  getters.currentTicker as Ticker | NasdaqTicker
 export const snackbar = () => getters.snackbar as SnackbarState
 export const language = () => getters.language as string | undefined
 export const dark = () => getters.dark as boolean
@@ -155,6 +175,7 @@ export const stats = () => getters.stats as StatsState
 export const chartExpanded = () => getters.chartExpanded as boolean
 export const layout = () => getters.layout as CardState[]
 export const viewEditActive = () => getters.viewEditActive as Boolean
+export const tickersSelected = () => getters.tickersSelected as String
 
 // Mutations
 export const setUser = (user: User) => {
@@ -165,6 +186,9 @@ export const logout = () => {
 }
 export const setTickers = (tickers: Ticker[]) => {
   store.commit('setTickers', tickers)
+}
+export const setNasdaqTickers = (nasdaqTickers: NasdaqTicker[]) => {
+  store.commit('setNasdaqTickers', nasdaqTickers)
 }
 export const setLeaderboard = (leaderboard: User[]) => {
   store.commit('setLeaderboard', leaderboard)
@@ -198,6 +222,9 @@ export const setLayout = (layout: CardState[]) => {
 }
 export const setViewEditActive = (viewEditActive: Boolean) => {
   store.commit('setViewEditActive', viewEditActive)
+}
+export const setTickersSelected = (tickersSelected: String) => {
+  store.commit('setTickersSelected', tickersSelected)
 }
 
 export const moveCard = (name: string, forward: boolean) => {

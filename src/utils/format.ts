@@ -30,6 +30,9 @@ export function formatNumber(
 }
 
 export function formatPair(pair: string) {
+  if (pair.length < 6) {
+    return pair
+  }
   return `${pair.slice(0, 3)}/${pair.slice(3)}`
 }
 

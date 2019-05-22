@@ -77,9 +77,15 @@ export default class OrderForm extends Vue {
     return store.pair();
   }
   get firstCurrency() {
+    if (this.pair.length < 6) {
+      return this.pair;
+    }
     return this.pair.substr(0, 3);
   }
   get secondCurrency() {
+    if (this.pair.length < 6) {
+      return "USD";
+    }
     return this.pair.substr(3);
   }
   get localizedSides() {
@@ -151,8 +157,13 @@ export default class OrderForm extends Vue {
 
   // Amounts
   get total() {
+    const ticker = store.currentTicker();
     let price = this.isMarket
-      ? new Big(store.currentTicker().lastPrice || 0)
+      ? new Big(
+          "lastPrice" in ticker
+            ? ticker.lastPrice
+            : (ticker as any).currentPrice.raw || 0
+        )
       : new Big(this.price || 0);
     return price
       .mul(new Big(this.amount || 0))
@@ -176,9 +187,14 @@ export default class OrderForm extends Vue {
     );
   }
   get currentPrice() {
+    const ticker = store.currentTicker();
     return this.side === "buy"
-      ? new Big(store.currentTicker().ask || 0).toString()
-      : new Big(store.currentTicker().bid || 0).toString();
+      ? new Big(
+          "ask" in ticker ? ticker.ask : (ticker as any).currentPrice.raw || 0
+        ).toString()
+      : new Big(
+          "bid" in ticker ? ticker.bid : (ticker as any).currentPrice.raw || 0
+        ).toString();
   }
 
   @Watch("side")

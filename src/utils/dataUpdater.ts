@@ -5,11 +5,13 @@ import * as store from '../plugins/store'
 export function startUpdatingData() {
   updateLeaderboard()
   updateTickers()
+  updateNasdaqTickers()
   updateUser()
   updateStats()
 
   setInterval(updateLeaderboard, 10 * 1000)
   setInterval(updateTickers, 10 * 1000)
+  setInterval(updateNasdaqTickers, 10 * 1000)
   setInterval(updateUser, 10 * 1000)
   setInterval(updateStats, 60 * 1000)
 }
@@ -37,6 +39,19 @@ export async function updateTickers() {
     store.setTickers(Object.values(await api.getTickers()))
   } finally {
     tickersUpdating = false
+  }
+}
+
+let nasdaqTickersUpdating = false
+export async function updateNasdaqTickers() {
+  if (nasdaqTickersUpdating) {
+    return
+  }
+  nasdaqTickersUpdating = true
+  try {
+    store.setNasdaqTickers(Object.values(await api.getNasdaqTickers()))
+  } finally {
+    nasdaqTickersUpdating = false
   }
 }
 

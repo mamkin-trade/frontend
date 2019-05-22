@@ -1,41 +1,65 @@
 <template lang="pug">
+.tickers
   v-card(flat)
     slot
-    v-card-title.py-0 {{$t("tickers.title")}}
+    v-card-title
+      v-btn(depressed small :class='tickersSelected === "crypto" ? "primary" : ""' @click='setTickersSelected("crypto")') {{$t('tickers.crypto')}}
+      v-btn(depressed small :class='tickersSelected === "stocks" ? "primary" : ""' @click='setTickersSelected("stocks")') {{$t('tickers.stocks')}}
       v-spacer
-      v-tooltip(bottom)
+      v-tooltip.px-2(bottom)
         v-text-field(append-icon='search'
         :label='$t("search")'
         single-line
         v-model='search'
         slot='activator')
-        span {{$t("orderForm.searchHint")}}
-    v-data-table(:headers='headers'
-    :items='tickers'
-    :loading='!tickers.length'
-    :no-data-text='$t("loading")'
-    :no-results-text='$t("noResults")'
-    :search='search'
-    :rowsPerPageItems='rowsPerPageItems()'
-    :rows-per-page-text='$t("rowsPerPageText")'
-    disable-initial-sort
-    :filter='filter'
-    :custom-sort='sort')
-      template(v-slot:items='props')
-        tr(:class='isSelected(props.item.pair) ? isDark ? "blue-grey darken-2" : "blue-grey lighten-5" : ""'
-        @click='select(props.item.pair)')
-          td {{formatPair(props.item.pair)}}
-          td.text-no-wrap {{formatNumber(props.item.lastPrice)}}
-          td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
-          td.text-no-wrap
-            v-tooltip(bottom)
-              span(slot='activator') {{formatVolume(props.item.volume)}}
-              span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
-          td.text-no-wrap {{formatNumber(props.item.ask)}}
-          td.text-no-wrap {{formatNumber(props.item.bid)}}
-          td.text-no-wrap {{formatNumber(subtract(props.item.ask, props.item.bid), { sig: 5 })}}
-          td
-            v-icon(small @click='toggleFav(props.item.pair)') {{isFavorite(props.item.pair) ? "star" : "star_border"}}
+        span {{$t(tickersSelected === 'crypto' ? "orderForm.searchHint" : "orderForm.searchStocksHint")}}
+  v-data-table(v-if='tickersSelected === "crypto"'
+  :headers='headers'
+  :items='tickers'
+  :loading='!tickers.length'
+  :no-data-text='$t("loading")'
+  :no-results-text='$t("noResults")'
+  :search='search'
+  :rowsPerPageItems='rowsPerPageItems()'
+  :rows-per-page-text='$t("rowsPerPageText")'
+  disable-initial-sort
+  :filter='filter'
+  :custom-sort='sort')
+    template(v-slot:items='props')
+      tr(:class='isSelected(props.item.pair) ? isDark ? "blue-grey darken-2" : "blue-grey lighten-5" : ""'
+      @click='select(props.item.pair)')
+        td {{formatPair(props.item.pair)}}
+        td.text-no-wrap {{formatNumber(props.item.lastPrice)}}
+        td(:class='volumeClass(props.item)') {{(props.item.dailyChangePerc * 100).toFixed(2)}}%
+        td.text-no-wrap
+          v-tooltip(bottom)
+            span(slot='activator') {{formatVolume(props.item.volume)}}
+            span {{formatNumber((props.item.volume * props.item.lastPrice).toFixed(3))}}
+        td.text-no-wrap {{formatNumber(props.item.ask)}}
+        td.text-no-wrap {{formatNumber(props.item.bid)}}
+        td.text-no-wrap {{formatNumber(subtract(props.item.ask, props.item.bid), { sig: 5 })}}
+        td
+          v-icon(small @click='toggleFav(props.item.pair)') {{isFavorite(props.item.pair) ? "star" : "star_border"}}
+  v-data-table(v-if='tickersSelected === "stocks"'
+  :headers='nasdaqHeaders'
+  :items='nasdaqTickers'
+  :loading='!nasdaqTickers.length'
+  :no-data-text='$t("loading")'
+  :no-results-text='$t("noResults")'
+  :search='search'
+  :rowsPerPageItems='rowsPerPageItems()'
+  :rows-per-page-text='$t("rowsPerPageText")'
+  disable-initial-sort
+  :filter='filter')
+    template(v-slot:items='props')
+      tr(:class='isSelected(props.item.symbol) ? isDark ? "blue-grey darken-2" : "blue-grey lighten-5" : ""'
+      @click='select(props.item.symbol)')
+        td {{props.item.symbol}}
+        td {{props.item.currentPrice.fmt}}
+        td {{props.item.totalCash ? props.item.totalCash.fmt : '—'}}
+        td {{props.item.grossProfits ? props.item.grossProfits.fmt : '—'}}
+        td
+          v-icon(small @click='toggleFav(props.item.symbol)') {{isFavorite(props.item.symbol) ? "star" : "star_border"}}
 </template>
 
 <script lang="ts">
@@ -76,8 +100,31 @@ export default class Tickers extends Vue {
     ];
   }
 
+  get nasdaqHeaders() {
+    return [
+      {
+        text: i18n.t("symbol"),
+        value: "symbol"
+      },
+      { text: i18n.t("price"), value: "lastPrice" },
+      { text: i18n.t("tickers.totalCash"), value: "totalCash" },
+      { text: i18n.t("tickers.grossProfits"), value: "grossProfits" },
+      {
+        sortable: false
+      }
+    ];
+  }
+
+  get tickersSelected() {
+    return store.tickersSelected();
+  }
+
   get tickers() {
     return store.tickers();
+  }
+
+  get nasdaqTickers() {
+    return store.nasdaqTickers();
   }
 
   get isDark() {
@@ -211,5 +258,15 @@ export default class Tickers extends Vue {
   subtract(a: number, b: number) {
     return new Big(a).sub(b);
   }
+
+  setTickersSelected(tickerSelected: string) {
+    store.setTickersSelected(tickerSelected);
+  }
 }
 </script>
+
+<style>
+.tickers .v-card__title {
+  padding: 0px;
+}
+</style>

@@ -2,6 +2,7 @@
 import { StatsState } from '../plugins/store'
 import axios from 'axios'
 import { Ticker } from '../models/ticker'
+import { NasdaqTicker } from '../models/nasdaqTicker'
 import { User } from '../models/user'
 import { Order } from '../models/order'
 
@@ -10,6 +11,12 @@ const base = 'https://backend.mamkin.trade'
 export async function getTickers() {
   return (await axios.get(`${base}/market/tickers`)).data as {
     [index: string]: Ticker
+  }
+}
+
+export async function getNasdaqTickers() {
+  return (await axios.get(`${base}/market/nasdaq`)).data as {
+    [index: string]: NasdaqTicker
   }
 }
 

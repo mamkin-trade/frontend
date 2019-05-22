@@ -28,7 +28,8 @@ export default class Home extends Vue {
   }
   get tvOptions() {
     return {
-      symbol: "BITFINEX:" + store.pair(),
+      symbol:
+        (store.pair().length === 6 ? "BITFINEX:" : "NASDAQ:") + store.pair(),
       theme: store.dark() ? "dark" : "light",
       locale: store.language() || "en",
       autosize: false,

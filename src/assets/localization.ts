@@ -5,7 +5,7 @@ export const messages = {
     strippedTitle: 'Мамкин Трейдер',
     home: {
       info:
-        'Площадка для крипто <b>трейдинга</b>, официально признанная безопасной для вашего психического здоровья',
+        'Площадка для виртуального <b>трейдинга</b> криптовалютами и акциями, официально признанная безопасной для вашего психического здоровья',
       rules: {
         register: 'Регистрируетесь 💪',
         money: 'Получаете виртуальные $10,000 💰',
@@ -28,17 +28,25 @@ export const messages = {
       subs: 'Подписчики',
     },
     tickers: {
-      title: 'Тикеры',
       change: 'Изменение',
       volume: 'Объем',
       buy: 'Покупка',
       sell: 'Продажа',
       spread: 'Разница',
+      crypto: 'Крипта',
+      stocks: 'Акции',
+      totalCash: 'Капитализация',
+      totalCashPerShare: 'Капитализация/акция',
+      totalRevenue: 'Выручка',
+      grossProfits: 'Прибыль',
+      earningsGrowth: 'Рост выручки',
+      revenueGrowth: 'Рост прибыли',
     },
     chart: {
       title: 'График',
     },
     pair: 'Пара',
+    symbol: 'Символ',
     price: 'Цена',
     balance: {
       title: 'Баланс',
@@ -76,6 +84,7 @@ export const messages = {
       submit: 'Добавить ордер',
       useAll: 'Использовать все',
       searchHint: 'Попробуйте BTC/USD/ETH',
+      searchStocksHint: 'Попробуйте AAPL/MSFT/GOOG',
     },
     available: 'Доступно',
     total: 'Всего',
@@ -116,7 +125,7 @@ export const messages = {
     strippedTitle: 'Mamkin Trade',
     home: {
       info:
-        'Cryptocurrency <b>trading</b> platform, officially declared to be safe for your mental health',
+        'Crypto and stocks virtual <b>trading</b> platform, officially declared to be safe for your mental health',
       rules: {
         register: 'Login 💪',
         money: 'Get virtual $10,000 💰',
@@ -139,17 +148,25 @@ export const messages = {
       subs: 'Subscribers',
     },
     tickers: {
-      title: 'Tickers',
       change: 'Change',
       volume: 'Volume',
       buy: 'Buy',
       sell: 'Sell',
       spread: 'Spread',
+      crypto: 'Crypto',
+      stocks: 'Stocks',
+      totalCash: 'Total cash',
+      totalCashPerShare: 'Cash/stock',
+      totalRevenue: 'Revenue',
+      grossProfits: 'Profits',
+      earningsGrowth: 'Revenue growth',
+      revenueGrowth: 'Profit growth',
     },
     chart: {
       title: 'Chart',
     },
     pair: 'Pair',
+    symbol: 'Symbol',
     price: 'Price',
     balance: {
       title: 'Balance',
@@ -187,6 +204,7 @@ export const messages = {
       submit: 'Add order',
       useAll: 'Use all',
       searchHint: 'Try BTC/USD/ETH',
+      searchStocksHint: 'Try AAPL/MSFT/GOOG',
     },
     available: 'Available',
     total: 'Total',
