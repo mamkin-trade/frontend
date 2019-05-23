@@ -34,9 +34,10 @@
               span {{formatDate(props.item.completionDate)}}
           td(v-else) {{$t(orderStatus(props.item))}}
           td
-            v-tooltip(bottom)
+            v-tooltip(v-if='props.item.crypto' bottom)
               span(slot='activator') {{props.item.fee}}
-              span {{props.item.fee ? "0.2%" : "0%"}}
+              span {{props.item.fee ? props.item.type === "market" ? "0.2%" : "0.1%" : "0%"}}
+            span(v-else) {{props.item.fee}}
 </template>
 
 <script lang="ts">

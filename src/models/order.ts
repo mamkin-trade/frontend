@@ -10,4 +10,5 @@ export interface Order {
   cancelled: boolean
   completionDate: Date
   fee: number
+  crypto: boolean
 }

@@ -12,7 +12,9 @@ export function maxAvailable(
   price?: number
 ) {
   // Split symbols
-  const first = isCrypto(pair) ? pair.slice(0, 3).toLowerCase() : pair
+  const first = isCrypto(pair)
+    ? pair.slice(0, 3).toLowerCase()
+    : pair.toLowerCase()
   const second = isCrypto(pair) ? pair.slice(3).toLowerCase() : 'usd'
   // Get ticker
   let ticker: Ticker | NasdaqTicker | undefined
