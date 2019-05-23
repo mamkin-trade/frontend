@@ -283,6 +283,13 @@ export default class OrderForm extends Vue {
         )}`;
       }
     }
+    for (const ticker of store.store.state.nasdaqTickers) {
+      if (ticker.symbol === store.store.state.pair) {
+        document.title = `${ticker.currentPrice.raw} ${
+          ticker.symbol
+        } — ${i18n.t("strippedTitle")}`;
+      }
+    }
   }
 }
 </script>
