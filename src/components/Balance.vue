@@ -13,11 +13,15 @@
     :loading='userLoading')
       template(v-slot:items='props')
         tr(@click='select(props.item.currency)')
-          td {{ props.item.currency }}
-          td {{ props.item.amount }}
+          td {{props.item.currency}}
+          td {{props.item.amount}}
       template(v-slot:footer)
-        td(:colspan="headers.length")
-          strong {{$t("balance.overall")}}: ${{overallBalance}}
+        tr
+          td {{$t("orders.title")}}
+          td {{ordersBalance}} USD
+        tr
+          td(:colspan="headers.length")
+            strong {{$t("balance.overall")}}: ${{overallBalance}}
     </template>
 </template>
 
@@ -88,6 +92,14 @@ export default class Balance extends Vue {
       return formatNumber(0);
     }
     return formatNumber(user.overallBalance, { currency: "USD" });
+  }
+
+  get ordersBalance() {
+    const user = this.$props.userId ? this.user : store.user();
+    if (!user || !user.balance) {
+      return formatNumber(0);
+    }
+    return formatNumber(user.ordersBalance, { currency: "USD" });
   }
 
   open() {

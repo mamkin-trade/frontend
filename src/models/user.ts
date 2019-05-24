@@ -8,6 +8,7 @@ export interface User {
   name: string
   balance: { [index: string]: number }
   overallBalance: number
+  ordersBalance: number
 
   token?: string
 }
