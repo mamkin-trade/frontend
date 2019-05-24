@@ -17,7 +17,6 @@ export interface State {
   user?: User
   tickers: Ticker[]
   nasdaqTickers: NasdaqTicker[]
-  leaderboard: User[]
   pair: String
   snackbar: SnackbarState
   language?: String
@@ -52,7 +51,6 @@ const storeOptions = {
     user: undefined,
     tickers: [],
     nasdaqTickers: [],
-    leaderboard: [],
     pair: 'BTCUSD',
     snackbar: {
       message: '',
@@ -87,9 +85,6 @@ const storeOptions = {
     },
     setNasdaqTickers(state: State, nasdaqTickers: NasdaqTicker[]) {
       state.nasdaqTickers = nasdaqTickers
-    },
-    setLeaderboard(state: State, leaderboard: User[]) {
-      state.leaderboard = leaderboard
     },
     setPair(state: State, pair: String) {
       state.pair = pair
@@ -126,7 +121,6 @@ const storeOptions = {
     user: (state: State) => state.user,
     tickers: (state: State) => state.tickers,
     nasdaqTickers: (state: State) => state.nasdaqTickers,
-    leaderboard: (state: State) => state.leaderboard,
     pair: (state: State) => state.pair,
     isLoggedIn: (state: State) => !!state.user,
     currentTicker: (state: State) => {
@@ -163,7 +157,6 @@ export const user = () => getters.user as User | undefined
 export const pair = () => getters.pair as string
 export const tickers = () => getters.tickers as Ticker[]
 export const nasdaqTickers = () => getters.nasdaqTickers as NasdaqTicker[]
-export const leaderboard = () => getters.leaderboard as User[]
 export const isLoggedIn = () => getters.isLoggedIn as boolean
 export const currentTicker = () =>
   getters.currentTicker as Ticker | NasdaqTicker
@@ -189,9 +182,6 @@ export const setTickers = (tickers: Ticker[]) => {
 }
 export const setNasdaqTickers = (nasdaqTickers: NasdaqTicker[]) => {
   store.commit('setNasdaqTickers', nasdaqTickers)
-}
-export const setLeaderboard = (leaderboard: User[]) => {
-  store.commit('setLeaderboard', leaderboard)
 }
 export const setPair = (pair: String) => {
   store.commit('setPair', pair)

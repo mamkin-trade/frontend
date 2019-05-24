@@ -80,3 +80,23 @@ export function ordersHeaders(i18n: VueI18n, userId?: string) {
   }
   return result
 }
+
+export function leaderboardHeaders(i18n: VueI18n) {
+  return [
+    {
+      text: '#',
+      value: 'index',
+      sortable: false,
+    },
+    { text: i18n.t('leaderboard.name'), value: 'name', sortable: false },
+    {
+      text: i18n.t('leaderboard.balance'),
+      value: 'overallBalance',
+    },
+    {
+      text: i18n.t('leaderboard.subs'),
+      value: 'subCount',
+    },
+    { sortable: false },
+  ]
+}

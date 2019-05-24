@@ -20,8 +20,15 @@ export async function getNasdaqTickers() {
   }
 }
 
-export async function getLeaderboard() {
-  return (await axios.get(`${base}/users/leaderboard`)).data as User[]
+export async function getLeaderboard(sortBy?: string, descending?: boolean) {
+  let url = `${base}/users/leaderboard?`
+  if (sortBy !== undefined) {
+    url = `${url}&sortBy=${sortBy}`
+  }
+  if (descending !== undefined) {
+    url = `${url}&descending=${descending}`
+  }
+  return (await axios.get(url)).data as User[]
 }
 
 export async function getOrders(
