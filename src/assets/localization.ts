@@ -38,7 +38,7 @@ export const messages = {
       spread: 'Разница',
       crypto: 'Крипта',
       stocks: 'Акции',
-      totalCash: 'Капитализация',
+      totalCash: 'Общий кеш',
       totalCashPerShare: 'Капитализация/акция',
       totalRevenue: 'Выручка',
       grossProfits: 'Прибыль',
