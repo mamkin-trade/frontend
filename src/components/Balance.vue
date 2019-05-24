@@ -16,7 +16,7 @@
           td {{props.item.currency}}
           td {{props.item.amount}}
       template(v-slot:footer)
-        tr
+        tr(v-if='+ordersBalance >= 0')
           td {{$t("orders.title")}}
           td {{ordersBalance}} USD
         tr
