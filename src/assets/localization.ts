@@ -18,6 +18,9 @@ export const messages = {
         'Код в <a target="_blank" href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>',
       privacy: 'Политика конфиденциальности',
     },
+    cookieButton: 'Понятно!',
+    cookieMessage:
+      'Этот вебсайт использует печеньки. Мы не следим за вами. Но Фейсбук, возможно.',
     loading: 'Загружается...',
     noResults: 'Нет результатов',
     search: 'Поиск',
@@ -139,6 +142,9 @@ export const messages = {
         'Fully <a target="_blank" href="https://github.com/mamkin-trade"><b>open source</b></a>',
       privacy: 'Privacy policy',
     },
+    cookieButton: 'Got it!',
+    cookieMessage:
+      'This website uses cookies. We do not track you. But Facebook might.',
     loading: 'Loading...',
     noResults: 'No results',
     search: 'Search',

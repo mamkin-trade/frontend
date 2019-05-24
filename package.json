@@ -19,6 +19,7 @@
     "translit-rus-eng": "^1.0.7",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
+    "vue-cookie-law": "^1.10.0",
     "vue-facebook-signin-button": "^1.0.1",
     "vue-google-signin-button": "^1.0.2",
     "vue-i18n": "^8.11.1",
