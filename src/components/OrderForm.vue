@@ -60,11 +60,12 @@ import { Watch } from "vue-property-decorator";
 import { updateUser } from "../utils/dataUpdater";
 import { isCrypto } from "../utils/isCrypto";
 import { feeMultiplier } from "../utils/fee";
+import { Ticker } from "../models/ticker";
+import { NasdaqTicker } from "../models/nasdaqTicker";
 
 @Component
 export default class OrderForm extends Vue {
   formatPair = formatPair;
-  pair = store.pair;
 
   side = "sell";
   sides = ["sell", "buy"];
@@ -76,12 +77,15 @@ export default class OrderForm extends Vue {
 
   loading = false;
 
+  get pair() {
+    return store.pair();
+  }
   get firstCurrency() {
-    const pair = this.pair();
+    const pair = this.pair;
     return isCrypto(pair) ? pair.substr(0, 3) : pair;
   }
   get secondCurrency() {
-    const pair = this.pair();
+    const pair = this.pair;
     return isCrypto(pair) ? pair.substr(3) : "USD";
   }
   get localizedSides() {
@@ -136,17 +140,17 @@ export default class OrderForm extends Vue {
       (v: string) =>
         +v <= +this.maximumAmount || i18n.t("errors.insufficientFunds"),
       (v: string) =>
-        new Big(v || "0").gte(minimumOrderSize(this.pair())) ||
+        new Big(v || "0").gte(minimumOrderSize(this.pair)) ||
         i18n.t("errors.minimumOrderSize", {
-          minimumOrderSize: minimumOrderSize(this.pair())
+          minimumOrderSize: minimumOrderSize(this.pair)
         }),
       (v: string) =>
-        new Big(v || "0").lte(maximumOrderSize(this.pair())) ||
+        new Big(v || "0").lte(maximumOrderSize(this.pair)) ||
         i18n.t("errors.maximumOrderSize", {
-          maximumOrderSize: maximumOrderSize(this.pair())
+          maximumOrderSize: maximumOrderSize(this.pair)
         })
     ];
-    if (!isCrypto(this.pair())) {
+    if (!isCrypto(this.pair)) {
       rules.push(
         (v: string) =>
           new Big(v || "0").mod(1).eq(0) || i18n.t("errors.integer")
@@ -165,7 +169,7 @@ export default class OrderForm extends Vue {
             : (ticker as any).currentPrice.raw || 0
         )
       : new Big(this.price || 0);
-    return isCrypto(this.pair())
+    return isCrypto(this.pair)
       ? price
           .mul(new Big(this.amount || 0))
           .round(precision(this.secondCurrency), 0)
@@ -178,14 +182,14 @@ export default class OrderForm extends Vue {
   // Computed
   get amountHint() {
     return `${i18n.t("available")} ${new Big(this.maximumAmount).round(
-      precision(this.pair()),
+      precision(this.pair),
       0
     )} ${this.firstCurrency}`;
   }
   get maximumAmount() {
     return (
       maxAvailable(
-        this.pair(),
+        this.pair,
         this.side,
         this.isMarket,
         this.isMarket ? undefined : +this.price
@@ -221,6 +225,15 @@ export default class OrderForm extends Vue {
   onPairChanged(val: any, oldVal: any) {
     if (val !== oldVal) {
       (this.$refs.form as any).resetValidation();
+
+      const ticker = store.currentTicker();
+      this.price = `${
+        "ask" in ticker
+          ? this.side === "buy"
+            ? (ticker as Ticker).ask
+            : (ticker as Ticker).bid
+          : (ticker as NasdaqTicker).currentPrice.raw
+      }`;
     }
   }
 
@@ -245,7 +258,7 @@ export default class OrderForm extends Vue {
     try {
       await api.postOrder(
         user,
-        this.pair(),
+        this.pair,
         this.amount,
         this.side,
         this.type,
@@ -270,7 +283,7 @@ export default class OrderForm extends Vue {
 
   useAll() {
     this.amount = `${new Big(this.maximumAmount).round(
-      precision(this.pair()),
+      precision(this.pair),
       0
     )}`;
   }
