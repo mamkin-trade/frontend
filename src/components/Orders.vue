@@ -1,7 +1,13 @@
 <template lang='pug'>
-  v-card(flat)
-    slot
-    v-card-title {{$t("orders.title")}}
+  .orders
+    v-card(flat)
+      slot
+      v-card-title
+        span {{$t("orders.title")}}
+        v-spacer
+        v-select(:items='filterOptions'
+        dense
+        v-model='ordersFilter')
     v-data-table(:headers='headers'
     :items='orders'
     :pagination.sync='pagination'
@@ -12,7 +18,7 @@
     :loading='loading'
     disable-initial-sort)
       template(v-slot:items='props')
-        tr(:class='props.item.completed || props.item.cancelled ? isDark ? "grey--text" : "grey--text text--darken-1" : ""')
+        tr(:class='props.item.completed || props.item.cancelled ? $store.state.dark ? "grey--text" : "grey--text text--darken-1" : ""')
           td(v-if='!$props.userId').pa-0.text-xs-center
             v-icon(small
             v-if='!props.item.cancelled && !props.item.completed' 
@@ -60,6 +66,7 @@ import * as api from "../utils/api";
 import { i18n } from "../plugins/i18n";
 import { rowsPerPageItems } from "../utils/rowsPerPageItems";
 import { Order } from "../models/order";
+import { ordersHeaders } from "../utils/tableHeaders";
 
 @Component({
   props: {
@@ -81,55 +88,30 @@ export default class Orders extends Vue {
     page: number;
     rowsPerPage: number;
   };
+  ordersFilter = "all";
 
-  get isDark() {
-    return store.dark();
-  }
-  get headers() {
-    const result: object[] = [
+  get filterOptions() {
+    return [
       {
-        text: i18n.t("orders.created"),
-        value: "createdAt",
-        sortable: false
-      },
-      { text: i18n.t("pair"), value: "symbol", sortable: false },
-      {
-        text: i18n.t("amount"),
-        value: "amount",
-        sortable: false
+        value: "all",
+        text: i18n.t("all")
       },
       {
-        text: i18n.t("price"),
-        value: "price",
-        sortable: false
+        value: "active",
+        text: i18n.t("orders.active")
       },
       {
-        text: i18n.t("side"),
-        value: "side",
-        sortable: false
+        value: "completed",
+        text: i18n.t("orders.completed")
       },
       {
-        text: i18n.t("type"),
-        value: "type",
-        sortable: false
-      },
-      {
-        text: i18n.t("orders.status"),
-        value: "status",
-        sortable: false
-      },
-      {
-        text: i18n.t("orders.fee"),
-        value: "fee",
-        sortable: false
+        value: "cancelled",
+        text: i18n.t("orders.cancelled")
       }
     ];
-    if (!this.$props.userId) {
-      result.unshift({
-        sortable: false
-      });
-    }
-    return result;
+  }
+  get headers() {
+    return ordersHeaders(i18n, this.$props.userId);
   }
 
   timer?: NodeJS.Timeout;
@@ -169,7 +151,10 @@ export default class Orders extends Vue {
       const response = await api.getOrders(
         this.$props.userId || user,
         (page - 1) * rowsPerPage,
-        rowsPerPage
+        rowsPerPage,
+        this.ordersFilter === "completed" ? true : undefined,
+        this.ordersFilter === "cancelled" ? true : undefined,
+        this.ordersFilter === "active" ? true : undefined
       );
       this.totalOrders = response.count;
       this.orders = response.orders;
@@ -215,6 +200,13 @@ export default class Orders extends Vue {
       return "orders.completed";
     } else {
       return "orders.active";
+    }
+  }
+
+  @Watch("ordersFilter")
+  ordersFilterChanged(val: any, oldVal: any) {
+    if (val !== oldVal) {
+      this.updateOrders();
     }
   }
 }

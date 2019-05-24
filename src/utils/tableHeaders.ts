@@ -33,3 +33,50 @@ export function nasdaqHeaders(i18n: VueI18n) {
     },
   ]
 }
+
+export function ordersHeaders(i18n: VueI18n, userId?: string) {
+  const result: object[] = [
+    {
+      text: i18n.t('orders.created'),
+      value: 'createdAt',
+      sortable: false,
+    },
+    { text: i18n.t('pair'), value: 'symbol', sortable: false },
+    {
+      text: i18n.t('amount'),
+      value: 'amount',
+      sortable: false,
+    },
+    {
+      text: i18n.t('price'),
+      value: 'price',
+      sortable: false,
+    },
+    {
+      text: i18n.t('side'),
+      value: 'side',
+      sortable: false,
+    },
+    {
+      text: i18n.t('type'),
+      value: 'type',
+      sortable: false,
+    },
+    {
+      text: i18n.t('orders.status'),
+      value: 'status',
+      sortable: false,
+    },
+    {
+      text: i18n.t('orders.fee'),
+      value: 'fee',
+      sortable: false,
+    },
+  ]
+  if (!userId) {
+    result.unshift({
+      sortable: false,
+    })
+  }
+  return result
+}

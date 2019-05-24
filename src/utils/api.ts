@@ -27,13 +27,24 @@ export async function getLeaderboard() {
 export async function getOrders(
   user: User | string,
   skip: number,
-  limit: number
+  limit: number,
+  completed?: boolean,
+  cancelled?: boolean,
+  active?: boolean
 ) {
-  return (await axios.get(
-    `${base}/orders/user/${
-      typeof user === 'string' ? user : (user as User)._id
-    }?skip=${skip}&limit=${limit}`
-  )).data as {
+  let url = `${base}/orders/user/${
+    typeof user === 'string' ? user : (user as User)._id
+  }?skip=${skip}&limit=${limit}`
+  if (completed !== undefined) {
+    url = `${url}&completed=${completed}`
+  }
+  if (cancelled !== undefined) {
+    url = `${url}&cancelled=${cancelled}`
+  }
+  if (active !== undefined) {
+    url = `${url}&active=${active}`
+  }
+  return (await axios.get(url)).data as {
     count: number
     orders: Order[]
   }
