@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-card
+  v-card(flat)
     slot
     v-card-title(flat v-if='needsTitle') {{$t("leaderboard.title")}}
     v-data-table(hide-actions
