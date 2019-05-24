@@ -12,11 +12,12 @@
     disable-initial-sort
     :loading='userLoading')
       template(v-slot:items='props')
-        td {{ props.item.currency }}
-        td {{ props.item.amount }}
+        tr(@click='select(props.item.currency)')
+          td {{ props.item.currency }}
+          td {{ props.item.amount }}
       template(v-slot:footer)
         td(:colspan="headers.length")
-           strong {{$t("balance.overall")}}: ${{overallBalance}}
+          strong {{$t("balance.overall")}}: ${{overallBalance}}
     </template>
 </template>
 
@@ -95,6 +96,36 @@ export default class Balance extends Vue {
       return;
     }
     window.open(`https://mamkin.trade/user/${user._id}`, "_blank");
+  }
+
+  select(pair: string) {
+    const upprecasePair = pair.toUpperCase();
+    if (upprecasePair === "USD") {
+      return;
+    }
+    // Check if crypto
+    for (const ticker of store.tickers()) {
+      if (ticker.pair === `${upprecasePair}USD`) {
+        store.setTickersSelected("crypto");
+        store.setPair(ticker.pair);
+        return;
+      }
+    }
+    for (const ticker of store.tickers()) {
+      if (ticker.pair === `${upprecasePair}BTC`) {
+        store.setTickersSelected("crypto");
+        store.setPair(ticker.pair);
+        return;
+      }
+    }
+    // Check if stocks
+    for (const ticker of store.nasdaqTickers()) {
+      if (ticker.symbol === upprecasePair) {
+        store.setTickersSelected("stocks");
+        store.setPair(ticker.symbol);
+        return;
+      }
+    }
   }
 }
 </script>
