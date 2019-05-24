@@ -34,7 +34,7 @@
             v-tooltip(bottom)
               span(slot='activator') {{props.item.amount}}
               span {{formatNumber(props.item.amount * props.item.price, { currency: props.item.symbol })}}
-          td {{props.item.price}}
+          td {{formatNumber(props.item.price, { sig: 20 })}}
           td {{$t(props.item.side)}}
           td {{$t(props.item.type)}}
           td(v-if='props.item.completionDate')
