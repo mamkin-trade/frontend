@@ -24,7 +24,10 @@
               span(slot='activator') {{formatShortDate(props.item.createdAt)}}
               span {{formatDate(props.item.createdAt)}}
           td {{formatPair(props.item.symbol)}}
-          td {{props.item.amount}}
+          td 
+            v-tooltip(bottom)
+              span(slot='activator') {{props.item.amount}}
+              span {{formatNumber(props.item.amount * props.item.price, { currency: props.item.symbol })}}
           td {{props.item.price}}
           td {{$t(props.item.side)}}
           td {{$t(props.item.type)}}
