@@ -111,7 +111,7 @@ export const messages = {
       orderDeleted: 'Ордер успешно удален',
     },
     cancel: 'Отменить',
-    pairTip: 'Попробуйте выбрать тикер',
+    pairTip: 'Попробуйте выбрать тикер из списка рядом',
     support:
       'Вопросы? Присоединяйтесь к <a target="_blank" href="https://t.me/joinchat/BIlEBxNgY3QDF3bzmigJsQ">нашей Телеграм группе</a>',
     stats:
@@ -235,7 +235,7 @@ export const messages = {
       orderDeleted: 'Order was deleted successfully',
     },
     cancel: 'Cancel',
-    pairTip: 'Try selecting a ticker',
+    pairTip: 'Try selecting a ticker from the list beside',
     support:
       'Questions? Join <a target="_blank" href="https://t.me/joinchat/BIlEBxNgY3QDF3bzmigJsQ">our Telegram group</a>',
     stats:
