@@ -1,6 +1,9 @@
 <template lang="pug">
   v-container
     v-layout(row wrap)
+      v-flex.pa-1(xs12)
+        Profile(:userId='$store.state.user._id')
+    v-layout(row wrap)
       v-flex.pa-1(v-for='card in layout' xs12 :class='`md${card.width}`')
         OrderForm(v-if='card.name === "OrderForm"')
           ViewControls(:name='card.name')
@@ -26,6 +29,7 @@ import Tickers from "../components/Tickers.vue";
 import Chart from "../components/Chart.vue";
 import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
+import Profile from "../components/Profile.vue";
 import OrderForm from "../components/OrderForm.vue";
 import ViewControls from "../components/ViewControls.vue";
 import * as store from "../plugins/store";
@@ -40,7 +44,8 @@ import { formatNumber } from "../utils/format";
     Orders,
     Chart,
     OrderForm,
-    ViewControls
+    ViewControls,
+    Profile
   }
 })
 export default class Cabinet extends Vue {

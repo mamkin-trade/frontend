@@ -1,10 +1,7 @@
 <template lang="pug">
   v-card(flat)
     slot
-    v-card-title
-      | {{$t("balance.title")}}{{$props.userId && this.user.name ? " — " + this.user.name : ""}}
-      v-btn(v-if='!$props.userId' flat icon color='grey' @click='open')
-        v-icon(small) link
+    v-card-title {{$t("balance.title")}}
     v-data-table(:headers='headers'
     :items='balance'
     :rowsPerPageItems='rowsPerPageItems()'
@@ -100,14 +97,6 @@ export default class Balance extends Vue {
       return formatNumber(0);
     }
     return formatNumber(user.ordersBalance, { currency: "USD" });
-  }
-
-  open() {
-    const user = store.user();
-    if (!user) {
-      return;
-    }
-    window.open(`https://mamkin.trade/user/${user._id}`, "_blank");
   }
 
   select(pair: string) {

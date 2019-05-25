@@ -1,6 +1,8 @@
 <template lang="pug">
   v-container
-    v-btn(flat small @click='subscribe') {{$t('subscribe')}}
+    v-layout(row wrap)
+      v-flex.pa-1(xs12)
+        Profile(:userId='$route.params.id')
     v-layout(row wrap)
       v-flex.pa-1(xs12 md4 lg3)
         Balance(:userId='$route.params.id')
@@ -14,20 +16,15 @@
 import Vue from "vue";
 import Orders from "../components/Orders.vue";
 import Balance from "../components/Balance.vue";
+import Profile from "../components/Profile.vue";
 import Component from "vue-class-component";
 
 @Component({
   components: {
     Balance,
-    Orders
+    Orders,
+    Profile
   }
 })
-export default class Cabinet extends Vue {
-  subscribe() {
-    window.open(
-      `https://t.me/mamkintrade_bot?start=${this.$route.params.id}`,
-      "_blank"
-    );
-  }
-}
+export default class Cabinet extends Vue {}
 </script>
