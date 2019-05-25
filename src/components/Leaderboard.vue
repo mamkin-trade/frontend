@@ -1,7 +1,15 @@
 <template lang="pug">
   v-card(flat)
     slot
-    v-card-title(flat v-if='needsTitle') {{$t("leaderboard.title")}}
+    v-card-title(flat v-if='needsTitle')
+      span {{$t("leaderboard.title")}}
+      v-spacer
+      v-tooltip(v-if='updatedAt' bottom)
+        v-btn(flat icon color='grey' @click='updateLeaderboard' slot='activator')
+          v-icon(small) autorenew
+        span {{$t("updated")}} {{formatDate(updatedAt, true)}}
+      v-btn(v-else flat icon color='grey' @click='updateLeaderboard')
+        v-icon(small) autorenew
     v-data-table(hide-actions
     :headers='headers'
     :totalItems='10'
@@ -24,7 +32,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as store from "../plugins/store";
-import { formatNumber } from "../utils/format";
+import { formatNumber, formatDate } from "../utils/format";
 import { i18n } from "../plugins/i18n";
 import { User } from "../models/user";
 import { leaderboardHeaders } from "../utils/tableHeaders";
@@ -40,6 +48,7 @@ const caps = require("titlecaps");
 })
 export default class Leaderboard extends Vue {
   formatNumber = formatNumber;
+  formatDate = formatDate;
 
   leaderboard = [] as User[];
   loading = true;
@@ -51,6 +60,8 @@ export default class Leaderboard extends Vue {
     descending: boolean | null;
   };
 
+  updatedAt: Date | null = null;
+
   get headers() {
     return leaderboardHeaders(i18n);
   }
@@ -61,7 +72,7 @@ export default class Leaderboard extends Vue {
 
     this.timer = setInterval(() => {
       this.updateLeaderboard(false);
-    }, 10 * 1000);
+    }, 60 * 1000);
   }
   beforeDestroy() {
     if (this.timer) {
@@ -98,6 +109,7 @@ export default class Leaderboard extends Vue {
         sortBy !== null ? sortBy : undefined,
         descending !== null ? descending : undefined
       );
+      this.updatedAt = new Date();
     } finally {
       this.leaderboardUpdating = false;
       this.loading = false;

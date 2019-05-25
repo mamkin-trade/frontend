@@ -40,8 +40,8 @@ export function formatVolume(volume: number) {
   return formatNumber(volume, { sig: 3 })
 }
 
-export function formatDate(date: string) {
-  return moment(date).format('DD.MM.YYYY hh:mm')
+export function formatDate(date: string, seconds = false) {
+  return moment(date).format(`DD.MM.YYYY hh:mm${seconds ? ':ss' : ''}`)
 }
 
 export function formatShortDate(date: string) {

@@ -9,7 +9,7 @@ export function startUpdatingData() {
   updateStats()
 
   setInterval(updateTickers, 10 * 1000)
-  setInterval(updateNasdaqTickers, 10 * 1000)
+  setInterval(updateNasdaqTickers, 30 * 60 * 1000)
   setInterval(updateUser, 10 * 1000)
   setInterval(updateStats, 60 * 1000)
 }
@@ -22,6 +22,7 @@ export async function updateTickers() {
   tickersUpdating = true
   try {
     store.setTickers(Object.values(await api.getTickers()))
+    store.setTickersUpdated(new Date())
   } finally {
     tickersUpdating = false
   }
@@ -35,6 +36,7 @@ export async function updateNasdaqTickers() {
   nasdaqTickersUpdating = true
   try {
     store.setNasdaqTickers(Object.values(await api.getNasdaqTickers()))
+    store.setNasdaqTickersUpdated(new Date())
   } finally {
     nasdaqTickersUpdating = false
   }
@@ -57,6 +59,7 @@ export async function updateUser() {
         telegramId: user.telegramId,
         vkId: user.vkId,
       })
+      store.setUserUpdated(new Date())
     }
   } finally {
     userUpdating = false

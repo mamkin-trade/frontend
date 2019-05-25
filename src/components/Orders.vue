@@ -8,6 +8,20 @@
         v-select(:items='filterOptions'
         dense
         v-model='ordersFilter')
+        v-tooltip(v-if='updatedAt' bottom)
+          v-btn(flat
+          icon
+          color='grey'
+          @click='updateOrders'
+          slot='activator')
+            v-icon(small) autorenew
+          span {{$t("updated")}} {{formatDate(updatedAt, true)}}
+        v-btn(v-else
+        flat
+        icon
+        color='grey'
+        @click='updateOrders')
+          v-icon(small) autorenew
     v-data-table(:headers='headers'
     :items='orders'
     :pagination.sync='pagination'
@@ -89,6 +103,8 @@ export default class Orders extends Vue {
   };
   ordersFilter = "all";
 
+  updatedAt: Date | null = null;
+
   get filterOptions() {
     return [
       {
@@ -157,6 +173,7 @@ export default class Orders extends Vue {
       );
       this.totalOrders = response.count;
       this.orders = response.orders;
+      this.updatedAt = new Date();
     } finally {
       this.ordersUpdating = false;
       this.loading = false;

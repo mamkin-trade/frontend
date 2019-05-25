@@ -13,6 +13,20 @@
         v-model='search'
         slot='activator')
         span {{$t($store.state.tickersSelected === 'crypto' ? "orderForm.searchHint" : "orderForm.searchStocksHint")}}
+      v-tooltip(v-if='tickersUpdated' bottom)
+        v-btn(flat
+        icon
+        color='grey'
+        @click='update'
+        slot='activator')
+          v-icon(small) autorenew
+        span {{$t("updated")}} {{formatDate(tickersUpdated, true)}}
+      v-btn(v-else
+      flat
+      icon
+      color='grey'
+      @click='update')
+        v-icon(small) autorenew
   v-data-table(v-if='$store.state.tickersSelected === "crypto"'
   :headers='cryptoHeaders'
   :items='$store.state.tickers'
@@ -67,7 +81,12 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as store from "../plugins/store";
-import { formatVolume, formatNumber, formatPair } from "../utils/format";
+import {
+  formatVolume,
+  formatNumber,
+  formatPair,
+  formatDate
+} from "../utils/format";
 import { Ticker } from "../models/ticker";
 import { getChangeDirection, ChangeDirection } from "../utils/changeDirection";
 import { i18n } from "../plugins/i18n";
@@ -76,12 +95,14 @@ import { Big } from "big.js";
 import { Store } from "vuex";
 import * as tableHeaders from "../utils/tableHeaders";
 import { NasdaqTicker } from "../models/nasdaqTicker";
+import { updateTickers, updateNasdaqTickers } from "../utils/dataUpdater";
 
 @Component
 export default class Tickers extends Vue {
   formatVolume = formatVolume;
   formatPair = formatPair;
   formatNumber = formatNumber;
+  formatDate = formatDate;
   rowsPerPageItems = rowsPerPageItems;
   setPair = store.setPair;
   setTickersSelected = store.setTickersSelected;
@@ -94,6 +115,13 @@ export default class Tickers extends Vue {
 
   get nasdaqHeaders() {
     return tableHeaders.nasdaqHeaders(i18n);
+  }
+
+  get tickersUpdated() {
+    console.log(store.tickersUpdated(), store.nasdaqTickersUpdated());
+    return store.tickersSelected() === "crypto"
+      ? store.tickersUpdated()
+      : store.nasdaqTickersUpdated();
   }
 
   volumeClass(ticker: Ticker) {
@@ -223,6 +251,14 @@ export default class Tickers extends Vue {
     } else {
       favPairs.push(pair);
       store.setFavPairs(favPairs);
+    }
+  }
+
+  update() {
+    if (store.tickersSelected() === "crypto") {
+      updateTickers();
+    } else {
+      updateNasdaqTickers();
     }
   }
 }

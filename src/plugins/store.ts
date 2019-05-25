@@ -15,8 +15,11 @@ interface CardState {
 
 export interface State {
   user?: User
+  userUpdated: Date | null
   tickers: Ticker[]
+  tickersUpdated: Date | null
   nasdaqTickers: NasdaqTicker[]
+  nasdaqTickersUpdated: Date | null
   pair: String
   snackbar: SnackbarState
   language?: String
@@ -49,8 +52,11 @@ interface SnackbarState {
 const storeOptions = {
   state: {
     user: undefined,
+    userUpdated: null,
     tickers: [],
+    tickersUpdated: null,
     nasdaqTickers: [],
+    nasdaqTickersUpdated: null,
     pair: 'BTCUSD',
     snackbar: {
       message: '',
@@ -77,14 +83,23 @@ const storeOptions = {
     setUser(state: State, user: User) {
       state.user = user
     },
+    setUserUpdated(state: State, userUpdated: Date) {
+      state.userUpdated = userUpdated
+    },
     logout(state: State) {
       state.user = undefined
     },
     setTickers(state: State, tickers: Ticker[]) {
       state.tickers = tickers
     },
+    setTickersUpdated(state: State, tickersUpdated: Date) {
+      state.tickersUpdated = tickersUpdated
+    },
     setNasdaqTickers(state: State, nasdaqTickers: NasdaqTicker[]) {
       state.nasdaqTickers = nasdaqTickers
+    },
+    setNasdaqTickersUpdated(state: State, nasdaqTickersUpdated: Date) {
+      state.nasdaqTickersUpdated = nasdaqTickersUpdated
     },
     setPair(state: State, pair: String) {
       state.pair = pair
@@ -119,8 +134,11 @@ const storeOptions = {
   },
   getters: {
     user: (state: State) => state.user,
+    userUpdated: (state: State) => state.userUpdated,
     tickers: (state: State) => state.tickers,
+    tickersUpdated: (state: State) => state.tickersUpdated,
     nasdaqTickers: (state: State) => state.nasdaqTickers,
+    nasdaqTickersUpdated: (state: State) => state.nasdaqTickersUpdated,
     pair: (state: State) => state.pair,
     isLoggedIn: (state: State) => !!state.user,
     currentTicker: (state: State) => {
@@ -154,9 +172,13 @@ export const store = new Vuex.Store<State>(storeOptions)
 const getters = store.getters
 
 export const user = () => getters.user as User | undefined
+export const userUpdated = () => getters.userUpdated as Date | null
 export const pair = () => getters.pair as string
 export const tickers = () => getters.tickers as Ticker[]
+export const tickersUpdated = () => getters.tickersUpdated as Date | null
 export const nasdaqTickers = () => getters.nasdaqTickers as NasdaqTicker[]
+export const nasdaqTickersUpdated = () =>
+  getters.nasdaqTickersUpdated as Date | null
 export const isLoggedIn = () => getters.isLoggedIn as boolean
 export const currentTicker = () =>
   getters.currentTicker as Ticker | NasdaqTicker
@@ -174,14 +196,23 @@ export const tickersSelected = () => getters.tickersSelected as String
 export const setUser = (user: User) => {
   store.commit('setUser', user)
 }
+export const setUserUpdated = (userUpdated: Date) => {
+  store.commit('setUserUpdated', userUpdated)
+}
 export const logout = () => {
   store.commit('logout')
 }
 export const setTickers = (tickers: Ticker[]) => {
   store.commit('setTickers', tickers)
 }
+export const setTickersUpdated = (tickersUpdated: Date) => {
+  store.commit('setTickersUpdated', tickersUpdated)
+}
 export const setNasdaqTickers = (nasdaqTickers: NasdaqTicker[]) => {
   store.commit('setNasdaqTickers', nasdaqTickers)
+}
+export const setNasdaqTickersUpdated = (nasdaqTickersUpdated: Date) => {
+  store.commit('setNasdaqTickersUpdated', nasdaqTickersUpdated)
 }
 export const setPair = (pair: String) => {
   store.commit('setPair', pair)

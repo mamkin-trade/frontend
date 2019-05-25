@@ -1,7 +1,24 @@
 <template lang="pug">
-  v-card(flat)
-    slot
-    v-card-title {{$t("balance.title")}}
+  div
+    v-card(flat)
+      slot
+      v-card-title
+        span {{$t("balance.title")}}
+        v-spacer
+        v-tooltip(v-if='$store.state.userUpdated' bottom)
+          v-btn(flat
+          icon
+          color='grey'
+          @click='update'
+          slot='activator')
+            v-icon(small) autorenew
+          span {{$t("updated")}} {{formatDate($store.state.userUpdated, true)}}
+        v-btn(v-else
+        flat
+        icon
+        color='grey'
+        @click='update')
+          v-icon(small) autorenew
     v-data-table(:headers='headers'
     :items='balance'
     :rowsPerPageItems='rowsPerPageItems()'
@@ -19,18 +36,18 @@
         tr
           td(:colspan="headers.length")
             strong {{$t("balance.overall")}}: ${{overallBalance}}
-    </template>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as store from "../plugins/store";
-import { formatNumber } from "../utils/format";
+import { formatNumber, formatDate } from "../utils/format";
 import { i18n } from "../plugins/i18n";
 import { rowsPerPageItems } from "../utils/rowsPerPageItems";
 import { getUser } from "../utils/api";
 import { User } from "../models/user";
+import { updateUser } from "../utils/dataUpdater";
 
 @Component({
   props: {
@@ -39,6 +56,7 @@ import { User } from "../models/user";
 })
 export default class Balance extends Vue {
   formatNumber = formatNumber;
+  formatDate = formatDate;
   rowsPerPageItems = rowsPerPageItems;
 
   userLoading = false;
@@ -127,6 +145,10 @@ export default class Balance extends Vue {
         return;
       }
     }
+  }
+
+  update() {
+    updateUser();
   }
 }
 </script>
