@@ -118,7 +118,6 @@ export default class Tickers extends Vue {
   }
 
   get tickersUpdated() {
-    console.log(store.tickersUpdated(), store.nasdaqTickersUpdated());
     return store.tickersSelected() === "crypto"
       ? store.tickersUpdated()
       : store.nasdaqTickersUpdated();
