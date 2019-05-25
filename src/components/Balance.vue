@@ -12,7 +12,7 @@
           @click='update'
           slot='activator')
             v-icon(small) autorenew
-          span {{$t("updated")}} {{formatDate($store.state.userUpdated, true)}}
+          span {{$t("updated")}} {{formatDate(updatedAt || $store.state.userUpdated, true)}}
         v-btn(v-else
         flat
         icon
@@ -63,15 +63,10 @@ export default class Balance extends Vue {
 
   user?: any = {};
 
+  updatedAt: Date | null = null;
+
   async mounted() {
-    if (this.$props.userId) {
-      this.userLoading = true;
-      try {
-        this.user = await getUser(this.$props.userId);
-      } finally {
-        this.userLoading = false;
-      }
-    }
+    this.getUser();
   }
 
   get headers() {
@@ -147,8 +142,24 @@ export default class Balance extends Vue {
     }
   }
 
+  async getUser() {
+    if (this.$props.userId) {
+      this.userLoading = true;
+      try {
+        this.user = await getUser(this.$props.userId);
+      } finally {
+        this.userLoading = false;
+      }
+    }
+  }
+
   update() {
-    updateUser();
+    if (this.$props.userId) {
+      this.getUser();
+      this.updatedAt = new Date();
+    } else {
+      updateUser();
+    }
   }
 }
 </script>
