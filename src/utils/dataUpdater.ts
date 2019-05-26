@@ -58,6 +58,7 @@ export async function updateUser() {
         facebookId: user.facebookId,
         telegramId: user.telegramId,
         vkId: user.vkId,
+        key: user.key,
       })
       store.setUserUpdated(new Date())
     }

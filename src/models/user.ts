@@ -11,4 +11,5 @@ export interface User {
   ordersBalance: number
 
   token?: string
+  key?: string
 }

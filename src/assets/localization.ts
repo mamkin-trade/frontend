@@ -17,6 +17,11 @@ export const messages = {
       opensource:
         'Код в <a target="_blank" href="https://github.com/mamkin-trade"><b>открытом доступе</b></a>',
       privacy: 'Политика конфиденциальности',
+      key: 'Войти с API ключом',
+      login: 'Войти',
+      apiKeyMessage:
+        'Вы можете создать API ключи в кабинете, зайдя другим способом',
+      apiKey: 'API ключ',
     },
     cookieButton: 'Понятно!',
     cookieMessage:
@@ -102,6 +107,7 @@ export const messages = {
       facebook: 'Не получилось зайти через Фейсбук',
       telegram: 'Не получилось зайти через Телеграм',
       vk: 'Не получилось зайти через ВКонтакте',
+      key: 'Не получилось зайти через API ключ',
       google: 'Не получилось зайти через Гугл',
       integer: 'Должно быть целым числом',
       internal: 'Что-то пошло не так на сервере, пожалуйста, попробуйте позже',
@@ -151,6 +157,11 @@ export const messages = {
       opensource:
         'Fully <a target="_blank" href="https://github.com/mamkin-trade"><b>open source</b></a>',
       privacy: 'Privacy policy',
+      key: 'Login with API key',
+      login: 'Login',
+      apiKeyMessage:
+        'You can create API keys in the cabinet after you sign in another way',
+      apiKey: 'API key',
     },
     cookieButton: 'Got it!',
     cookieMessage:
@@ -236,6 +247,7 @@ export const messages = {
       facebook: 'Could not sign in with Facebook',
       telegram: 'Could not sign in with Telegram',
       vk: 'Could not sign in with VK',
+      key: 'Could not sign in with API key',
       google: 'Could not sign in with Google',
       integer: 'Should be an integer',
       internal: 'Something went wrong on server, please, try again later',

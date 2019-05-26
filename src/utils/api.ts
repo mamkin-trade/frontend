@@ -68,13 +68,13 @@ export async function postOrder(
   return (await axios.post(
     `${base}/orders/order`,
     { symbol, amount, side, type, price },
-    { headers: { token: user.token } }
+    { headers: getHeaders(user) }
   )).data as Order
 }
 
 export async function deleteOrder(user: User, order: Order) {
   return (await axios.delete(`${base}/orders/order/${order._id}`, {
-    headers: { token: user.token },
+    headers: getHeaders(user),
   })).data as Order
 }
 
@@ -98,6 +98,10 @@ export async function loginVk(loginInfo: any) {
   return (await axios.post(`${base}/login/vk`, loginInfo)).data as User
 }
 
+export async function loginKey(key: string) {
+  return (await axios.post(`${base}/login/key`, { key })).data as User
+}
+
 export async function getUser(id: string) {
   return (await axios.get(`${base}/users/${id}`)).data as User
 }
@@ -111,25 +115,35 @@ export async function reset(user: User) {
     `${base}/users/reset`,
     {},
     {
-      headers: { token: user.token },
+      headers: getHeaders(user),
     }
   )).data as Order
 }
 
 export async function getKeys(user: User) {
   return (await axios.get(`${base}/users/keys`, {
-    headers: { token: user.token },
+    headers: getHeaders(user),
   })).data as string[]
 }
 
 export async function addKey(user: User) {
   return (await axios.post(`${base}/users/keys`, undefined, {
-    headers: { token: user.token },
+    headers: getHeaders(user),
   })).data as string
 }
 
 export async function deleteKey(user: User, key: string) {
   await axios.delete(`${base}/users/key/${key}`, {
-    headers: { token: user.token },
+    headers: getHeaders(user),
   })
+}
+
+function getHeaders(user: User) {
+  if (user.token) {
+    return { token: user.token }
+  } else if (user.key) {
+    return { key: user.key }
+  } else {
+    return undefined
+  }
 }

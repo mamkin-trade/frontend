@@ -1,5 +1,22 @@
 <template lang="pug">
   .v-container.pa-4
+    // Dialogs
+    v-dialog(v-model='keyDialog' max-width="600px")
+      v-card.text-xs-center
+        v-card-text
+          span {{$t('home.apiKeyMessage')}}
+          v-text-field(:label='$t("home.apiKey")' v-model='key')
+        v-card-actions
+          v-spacer
+          v-btn(color='primary' @click='onKeyAuth' depressed) {{$t("home.login")}}
+          v-btn(color='error' @click='keyDialog = false' depressed) {{$t("cancel")}}
+          v-spacer
+    v-dialog(v-model='vkDialog' max-width="600px")
+      v-card.text-xs-center
+        v-layout.pa-4(align-center column)
+          div(id='vk_auth')
+          v-btn(color='primary' @click='vkDialog = false') {{$t("cancel")}}
+    // Main content
     v-layout(column justify-center align-center).text-xs-center
       v-flex(xs12 md10)
         .headline.pb-4
@@ -20,13 +37,8 @@
         fb-signin-button(:params='{ scope: "email", return_scopes: true}'
         @success='onFacebookSignInSuccess'
         @error='onFacebookSignInError') {{$t('home.facebook')}}
-        v-dialog(v-model='vkDialog')
-          template(v-slot:activator='{ on }')
-            .vk-signin-button(v-on='on') {{$t('home.vk')}}
-          v-card.text-xs-center
-            v-layout.pa-4(align-center column)
-              div(id='vk_auth')
-              v-btn(color='primary' @click='vkDialog = false') {{$t("cancel")}}
+        .vk-signin-button(@click.stop='vkDialog = true') {{$t('home.vk')}}
+        .api-signin-button(@click.stop='keyDialog = true') {{$t('home.key')}}
 
       v-flex(xs12 sm10 md6 lg4).pt-4
         .headline.pb-2 {{ $t('leaderboard.title') }}
@@ -48,7 +60,8 @@ import {
   loginFacebook,
   loginTelegram,
   loginVk,
-  loginGoogle
+  loginGoogle,
+  loginKey
 } from "../utils/api";
 import * as store from "../plugins/store";
 import Component from "vue-class-component";
@@ -68,6 +81,9 @@ declare const FB: any;
 export default class Home extends Vue {
   formatNumber = formatNumber;
   vkDialog = false;
+  keyDialog = false;
+
+  key = "";
 
   get stats() {
     return store.stats();
@@ -156,6 +172,20 @@ export default class Home extends Vue {
       });
     }
   }
+  async onKeyAuth() {
+    try {
+      const user = await loginKey(this.key);
+      user.key = this.key;
+      store.setUser(user);
+      this.$router.replace("cabinet");
+    } catch (err) {
+      store.setSnackbar({
+        message: "errors.key",
+        color: "error",
+        active: true
+      });
+    }
+  }
 }
 </script>
 
@@ -185,6 +215,16 @@ export default class Home extends Vue {
   padding: 10px 46px;
   border-radius: 3px;
   background-color: #416b9e;
+  color: #fff;
+}
+
+.api-signin-button {
+  margin: 10px;
+  cursor: pointer;
+  display: block;
+  padding: 10px 46px;
+  border-radius: 3px;
+  background-color: #3a3a3a;
   color: #fff;
 }
 </style>

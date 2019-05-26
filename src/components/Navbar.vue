@@ -2,9 +2,9 @@
   nav
     v-toolbar(flat app)
       // Dialogs
-      v-dialog(v-model='resetDialog')
+      v-dialog(v-model='resetDialog' max-width="600px")
         ResetDialog(:close='closeResetDialog')
-      v-dialog(v-model='keysDialog')
+      v-dialog(v-model='keysDialog' max-width="600px")
         KeysDialog(:close='closeKeysDialog')
       // Title
       router-link(:to='$store.state.user ? "/cabinet" : "/"')
