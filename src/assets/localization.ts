@@ -104,6 +104,7 @@ export const messages = {
       vk: 'Не получилось зайти через ВКонтакте',
       google: 'Не получилось зайти через Гугл',
       integer: 'Должно быть целым числом',
+      internal: 'Что-то пошло не так на сервере, пожалуйста, попробуйте позже',
     },
     close: 'Закрыть',
     snackbar: {
@@ -123,6 +124,14 @@ export const messages = {
     resetSuccess: 'Сброс прошел успешно',
     view: 'Вид',
     updated: 'Обновлено',
+    apiKeys: {
+      title: 'API ключи',
+      message:
+        'Вы можете использовать API ключи для подключения к Мамкиному Трейдеру через торговые терминалы. API документацию можно найти вот <a href="https://backend.mamkin.trade" target="_blank">тут</a>.',
+      create: 'Создать ключ',
+      noKeysYet: 'Еще нет ключей',
+      refresh: 'Обновить',
+    },
   },
   en: {
     title: '*MAMKIN TRADE*',
@@ -229,6 +238,7 @@ export const messages = {
       vk: 'Could not sign in with VK',
       google: 'Could not sign in with Google',
       integer: 'Should be an integer',
+      internal: 'Something went wrong on server, please, try again later',
     },
     close: 'Close',
     snackbar: {
@@ -248,5 +258,13 @@ export const messages = {
     resetSuccess: 'Reset succeeded',
     view: 'View',
     updated: 'Updated',
+    apiKeys: {
+      title: 'API keys',
+      message:
+        'You can use API keys to access Mamkin Trade from trade terminals. API documentation is located <a href="https://backend.mamkin.trade" target="_blank">here</a>.',
+      create: 'Create key',
+      noKeysYet: 'No keys yet',
+      refresh: 'Refresh',
+    },
   },
 }

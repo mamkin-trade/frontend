@@ -25,7 +25,9 @@ export default class Snackbar extends Vue {
   get text() {
     const msg = store.snackbar().message;
     return typeof msg === "string"
-      ? i18n.t(store.snackbar().message.toString())
+      ? msg === "Internal Server Error"
+        ? i18n.t("errors.internal")
+        : i18n.t(store.snackbar().message.toString())
       : (msg as any)[i18n.locale];
   }
 }

@@ -1,13 +1,18 @@
 <template lang="pug">
   nav
     v-toolbar(flat app)
+      // Dialogs
+      v-dialog(v-model='resetDialog')
+        ResetDialog(:close='closeResetDialog')
+      v-dialog(v-model='keysDialog')
+        KeysDialog(:close='closeKeysDialog')
       // Title
-      router-link(:to='isLoggedIn ? "/cabinet" : "/"')
+      router-link(:to='$store.state.user ? "/cabinet" : "/"')
         v-toolbar-title.text-uppercase.grey--text
-          v-tooltip(v-if='user' bottom)
+          v-tooltip(v-if='$store.state.user' bottom)
             span.hidden-xs-only(slot='activator') {{$t('title')}}
             span.hidden-sm-and-up(slot='activator') {{$t('shortTitle')}}
-            span {{user.name}}, {{user.email || user.facebookId || user.telegramId || user.vkId}}
+            span {{$store.state.user.name}}, {{$store.state.user.email || $store.state.user.facebookId || $store.state.user.telegramId || $store.state.user.vkId}}
           span(v-else slot='activator') {{$t('title')}}
       v-spacer
       // Dark mode
@@ -20,28 +25,21 @@
           v-list-tile(v-for='locale in locales' @click='changeLanguage(locale.code)')
             v-list-tile-title {{locale.icon}}
       // Menu
-      div(v-if='isLoggedIn')
-        v-btn(v-if='viewEditActive' flat icon color='grey' @click='toggleViewEdit')
+      div(v-if='$store.state.user')
+        v-btn(v-if='$store.state.viewEditActive' flat icon color='grey' @click='toggleViewEdit')
           v-icon done
-        v-dialog(v-else v-model='resetDialog')
-          template(v-slot:activator='{ on }')
-            v-menu(offset-y)
-              v-btn(flat icon color='grey' slot='activator')
-                v-icon more_horiz
-              v-list
-                v-list-tile(@click='logout')
-                  v-list-tile-title {{$t("logout")}}
-                v-list-tile(v-on='on')
-                  v-list-tile-title {{$t("reset")}}
-                v-list-tile(@click='toggleViewEdit')
-                  v-list-tile-title {{$t("view")}}
-          v-card
-            v-card-title {{$t("resetMessage")}}
-            v-card-actions.pb-3
-              v-spacer
-              v-btn(color='primary' @click='resetDialog = false') {{$t("cancel")}}
-              v-btn(color='error' :loading='resetLoading' @click='reset') {{$t("reset")}}
-              v-spacer
+        v-menu(v-else offset-y)
+          v-btn(flat icon color='grey' slot='activator')
+            v-icon more_horiz
+          v-list
+            v-list-tile(@click='logout')
+              v-list-tile-title {{$t("logout")}}
+            v-list-tile(@click='toggleViewEdit')
+              v-list-tile-title {{$t("view")}}
+            v-list-tile(@click.stop='resetDialog = true')
+              v-list-tile-title {{$t("reset")}}
+            v-list-tile(@click.stop='keysDialog = true')
+              v-list-tile-title {{$t("apiKeys.title")}}
 </template>
 
 <script lang="ts">
@@ -50,16 +48,19 @@ import Component from "vue-class-component";
 import * as store from "../plugins/store";
 import { i18n } from "../plugins/i18n";
 import * as api from "../utils/api";
-import { updateUser } from "../utils/dataUpdater";
+import ResetDialog from "./ResetDialog.vue";
+import KeysDialog from "./KeysDialog.vue";
 
-@Component
+@Component({
+  components: {
+    ResetDialog,
+    KeysDialog
+  }
+})
 export default class Navbar extends Vue {
   resetDialog = false;
-  resetLoading = false;
+  keysDialog = false;
 
-  get isLoggedIn() {
-    return store.isLoggedIn();
-  }
   get locales() {
     return [{ icon: "🇺🇸", code: "en" }, { icon: "🇷🇺", code: "ru" }];
   }
@@ -69,12 +70,6 @@ export default class Navbar extends Vue {
         return locale;
       }
     }
-  }
-  get user() {
-    return store.user();
-  }
-  get viewEditActive() {
-    return store.viewEditActive();
   }
 
   toggleMode() {
@@ -89,32 +84,14 @@ export default class Navbar extends Vue {
     store.logout();
     this.$router.replace("/");
   }
-  async reset() {
-    if (!this.user) {
-      return;
-    }
-    this.resetLoading = true;
-    try {
-      await api.reset(this.user);
-      store.setSnackbar({
-        message: "resetSuccess",
-        color: "success",
-        active: true
-      });
-      this.resetDialog = false;
-      updateUser();
-    } catch (err) {
-      store.setSnackbar({
-        message: "errors.general",
-        color: "error",
-        active: true
-      });
-    } finally {
-      this.resetLoading = false;
-    }
-  }
   toggleViewEdit() {
     store.setViewEditActive(!store.viewEditActive());
+  }
+  closeResetDialog() {
+    this.resetDialog = false;
+  }
+  closeKeysDialog() {
+    this.keysDialog = false;
   }
 }
 </script>

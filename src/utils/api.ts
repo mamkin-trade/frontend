@@ -115,3 +115,21 @@ export async function reset(user: User) {
     }
   )).data as Order
 }
+
+export async function getKeys(user: User) {
+  return (await axios.get(`${base}/users/keys`, {
+    headers: { token: user.token },
+  })).data as string[]
+}
+
+export async function addKey(user: User) {
+  return (await axios.post(`${base}/users/keys`, undefined, {
+    headers: { token: user.token },
+  })).data as string
+}
+
+export async function deleteKey(user: User, key: string) {
+  await axios.delete(`${base}/users/key/${key}`, {
+    headers: { token: user.token },
+  })
+}
