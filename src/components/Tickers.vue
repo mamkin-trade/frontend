@@ -140,6 +140,9 @@ export default class Tickers extends Vue {
   }
 
   filter(val: string, search: string) {
+    if (!search) {
+      return true;
+    }
     const searches = search.split("/").filter(v => !!v);
     for (const search of searches) {
       if (`${val}`.toUpperCase().indexOf(search.toUpperCase()) > -1) {
