@@ -138,6 +138,7 @@ export const messages = {
       noKeysYet: 'Еще нет ключей',
       refresh: 'Обновить',
     },
+    top: 'Топ',
   },
   en: {
     title: '*MAMKIN TRADE*',
@@ -278,5 +279,6 @@ export const messages = {
       noKeysYet: 'No keys yet',
       refresh: 'Refresh',
     },
+    top: 'Top',
   },
 }

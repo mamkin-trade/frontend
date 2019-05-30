@@ -31,6 +31,10 @@ export async function getLeaderboard(sortBy?: string, descending?: boolean) {
   return (await axios.get(url)).data as User[]
 }
 
+export async function getLeaderboardPosition(id: string) {
+  return (await axios.get(`${base}/users/leaderboard/position/${id}`)).data
+}
+
 export async function getOrders(
   user: User | string,
   skip: number,
