@@ -32,7 +32,8 @@
     :loading='loading'
     disable-initial-sort)
       template(v-slot:items='props')
-        tr(:class='props.item.completed || props.item.cancelled ? $store.state.dark ? "grey--text" : "grey--text text--darken-1" : ""')
+        tr(:class='props.item.completed || props.item.cancelled ? $store.state.dark ? "grey--text" : "grey--text text--darken-1" : ""'
+        @click='select(props.item.symbol)')
           td(v-if='!$props.userId').pa-0.text-xs-center
             v-icon(small
             v-if='!props.item.cancelled && !props.item.completed' 
@@ -80,6 +81,7 @@ import { i18n } from "../plugins/i18n";
 import { rowsPerPageItems } from "../utils/rowsPerPageItems";
 import { Order } from "../models/order";
 import { ordersHeaders } from "../utils/tableHeaders";
+import { isCrypto } from "../utils/isCrypto";
 
 @Component({
   props: {
@@ -224,6 +226,14 @@ export default class Orders extends Vue {
     if (val !== oldVal) {
       this.updateOrders();
     }
+  }
+
+  select(pair: string) {
+    const upprecasePair = pair.toUpperCase();
+    // Check if crypto
+    store.setTickersSelected(isCrypto(upprecasePair) ? "crypto" : "stocks");
+    // Check if stocks
+    store.setPair(upprecasePair);
   }
 }
 </script>
