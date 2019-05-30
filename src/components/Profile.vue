@@ -2,7 +2,7 @@
   .profile
     v-card(flat v-if='user')
       v-card-title
-        span {{position ? `${position.absoluteNumberOfUsersAbove}. ` : ''}} {{user.name}}{{position ? ` — ${$t('top')} ${position.relativeNumberOfUsersAbove}%` : ''}}
+        span {{position ? `${position.absoluteNumberOfUsersAbove + 1}. ` : ''}} {{user.name}}{{position ? ` — ${$t('top')} ${position.relativeNumberOfUsersAbove}%` : ''}}
         v-btn(flat icon color='grey' @click='open')
           v-icon(small) link
         v-spacer
