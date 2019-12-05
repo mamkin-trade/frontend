@@ -89,7 +89,7 @@ export default class Home extends Vue {
     return store.stats();
   }
   get googleClientId() {
-    return "906458427314-vrgseuf6gsroa41l88005jqko24g8shs.apps.googleusercontent.com";
+    return "522764722800-5ik7k7j9ikoa2ral08h859gb2boslq72.apps.googleusercontent.com";
   }
 
   mounted() {
