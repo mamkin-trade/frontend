@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@types/big.js": "^4.0.5",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "big.js": "^5.2.2",
     "comma-number": "^2.0.1",
     "moment": "^2.24.0",
