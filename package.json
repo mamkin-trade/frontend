@@ -14,7 +14,7 @@
     "big.js": "^5.2.2",
     "comma-number": "^2.0.1",
     "moment": "^2.24.0",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "titlecaps": "^0.3.2",
     "translit-rus-eng": "^1.0.7",
